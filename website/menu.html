@@ -1,0 +1,1124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Menu — Kapai</title>
+  <link rel="stylesheet" href="style.css" />
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='22' fill='%233B4A27'/><text y='.9em' font-size='72' x='50%' text-anchor='middle' dy='0.1em'>K</text></svg>" />
+  <style>
+    .menu-page { display: grid; grid-template-columns: 240px 1fr; min-height: calc(100vh - 64px); }
+
+    .menu-sidebar {
+      background: var(--cream);
+      border-right: 1px solid var(--cream-dark);
+      padding: 28px 0;
+      position: sticky;
+      top: 64px;
+      height: calc(100vh - 64px);
+      overflow-y: auto;
+    }
+
+    .sidebar-title {
+      font-family: var(--font-display);
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.8px;
+      text-transform: uppercase;
+      color: var(--text-light);
+      padding: 0 20px;
+      margin-bottom: 12px;
+    }
+
+    .sidebar-cat {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 10px 20px;
+      cursor: pointer;
+      font-size: 14px;
+      font-weight: 500;
+      color: var(--text-mid);
+      transition: all 0.15s;
+      border-left: 3px solid transparent;
+    }
+
+    .sidebar-cat:hover { background: var(--cream-dark); color: var(--charcoal); }
+    .sidebar-cat.active { color: var(--olive); background: var(--moss-light); border-left-color: var(--olive); }
+
+    .sidebar-cat-icon { font-size: 18px; }
+
+    .sidebar-veg-toggle {
+      margin: 20px;
+      padding: 12px 16px;
+      background: white;
+      border-radius: var(--radius-md);
+      border: 1px solid var(--cream-dark);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .toggle-label { font-size: 13px; font-weight: 500; color: var(--charcoal); }
+
+    .toggle-switch {
+      width: 40px;
+      height: 22px;
+      background: var(--cream-dark);
+      border-radius: 11px;
+      position: relative;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+
+    .toggle-switch.on { background: var(--moss); }
+
+    .toggle-knob {
+      position: absolute;
+      width: 16px;
+      height: 16px;
+      border-radius: 50%;
+      background: white;
+      top: 3px;
+      left: 3px;
+      transition: transform 0.2s;
+    }
+
+    .toggle-switch.on .toggle-knob { transform: translateX(18px); }
+
+    .menu-main { padding: 32px 40px; }
+
+    .menu-main-header { margin-bottom: 32px; }
+    .menu-main-header h1 { font-size: 36px; margin-bottom: 4px; }
+    .menu-main-header p { font-size: 14px; color: var(--text-mid); }
+
+    .category-section { margin-bottom: 48px; scroll-margin-top: 80px; }
+
+    .category-header {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 20px;
+      padding-bottom: 12px;
+      border-bottom: 1.5px solid var(--cream-dark);
+    }
+
+    .category-header-icon {
+      width: 40px;
+      height: 40px;
+      background: var(--moss-light);
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 20px;
+    }
+
+    .category-header h2 {
+      font-size: 22px;
+      font-family: var(--font-display);
+    }
+
+    .category-count {
+      font-size: 13px;
+      color: var(--text-light);
+      background: var(--cream);
+      padding: 3px 10px;
+      border-radius: var(--radius-full);
+    }
+
+    .items-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 16px;
+    }
+
+    .item-card {
+      background: white;
+      border: 1px solid var(--cream-dark);
+      border-radius: var(--radius-lg);
+      padding: 18px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      transition: box-shadow 0.2s, transform 0.15s;
+    }
+
+    .item-card:hover {
+      box-shadow: 0 4px 20px rgba(59,74,39,0.08);
+      transform: translateY(-2px);
+    }
+
+    .item-card.hidden { display: none; }
+
+    .item-top {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 12px;
+    }
+
+    .item-info { flex: 1; }
+
+    .item-veg-row {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      margin-bottom: 4px;
+    }
+
+    .item-name {
+      font-family: var(--font-display);
+      font-size: 16px;
+      font-weight: 600;
+      color: var(--charcoal);
+      margin-bottom: 4px;
+    }
+
+    .item-desc {
+      font-size: 12px;
+      color: var(--text-light);
+      line-height: 1.5;
+    }
+
+    .item-bottom {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-top: 4px;
+    }
+
+    .item-price {
+      font-family: var(--font-display);
+      font-size: 18px;
+      font-weight: 700;
+      color: var(--terracotta);
+    }
+
+    .item-beans {
+      font-size: 11px;
+      color: var(--moss);
+      background: var(--moss-light);
+      padding: 3px 8px;
+      border-radius: var(--radius-full);
+    }
+
+    .item-qty {
+      display: flex;
+      align-items: center;
+      gap: 0;
+      background: var(--cream);
+      border-radius: var(--radius-full);
+      overflow: hidden;
+      border: 1px solid var(--cream-dark);
+    }
+
+    .qty-btn {
+      width: 32px;
+      height: 32px;
+      background: none;
+      border: none;
+      font-size: 18px;
+      font-weight: 500;
+      color: var(--olive);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: background 0.15s;
+    }
+
+    .qty-btn:hover { background: var(--cream-dark); }
+
+    .qty-num {
+      min-width: 28px;
+      text-align: center;
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--charcoal);
+    }
+
+    .add-btn {
+      background: var(--olive);
+      color: white;
+      border: none;
+      border-radius: var(--radius-full);
+      padding: 7px 18px;
+      font-size: 13px;
+      font-weight: 600;
+      cursor: pointer;
+      font-family: var(--font-body);
+      transition: background 0.15s;
+    }
+
+    .add-btn:hover { background: var(--olive-dark); }
+
+    /* ── CART ── */
+    .cart-panel {
+      position: fixed;
+      bottom: 24px;
+      right: 24px;
+      z-index: 200;
+    }
+
+    .cart-fab {
+      background: var(--olive);
+      color: white;
+      border: none;
+      border-radius: var(--radius-full);
+      padding: 14px 24px;
+      font-size: 15px;
+      font-weight: 600;
+      font-family: var(--font-body);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      box-shadow: 0 8px 24px rgba(59,74,39,0.35);
+      transition: transform 0.15s, background 0.15s;
+    }
+
+    .cart-fab:hover { transform: scale(1.04); background: var(--olive-dark); }
+    .cart-fab.hidden { display: none; }
+
+    .cart-count {
+      background: var(--terracotta);
+      color: white;
+      font-size: 12px;
+      font-weight: 700;
+      width: 22px;
+      height: 22px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    /* ── CHECKOUT MODAL ── */
+    .modal-backdrop {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.5);
+      z-index: 300;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+
+    .modal-backdrop.open { display: flex; }
+
+    .modal {
+      background: white;
+      border-radius: var(--radius-xl);
+      width: 100%;
+      max-width: 480px;
+      max-height: 90vh;
+      overflow-y: auto;
+      padding: 28px;
+    }
+
+    .modal-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 24px;
+    }
+
+    .modal-header h3 { font-size: 22px; font-family: var(--font-display); }
+
+    .modal-close {
+      background: var(--cream);
+      border: none;
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      font-size: 18px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--text-mid);
+    }
+
+    .cart-items { margin-bottom: 20px; }
+
+    .cart-item-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 10px 0;
+      border-bottom: 1px solid var(--cream-dark);
+      font-size: 14px;
+    }
+
+    .cart-item-name { font-weight: 500; }
+    .cart-item-sub { font-size: 12px; color: var(--text-light); margin-top: 2px; }
+    .cart-item-price { font-weight: 600; color: var(--charcoal); }
+
+    .order-type-toggle {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px;
+      margin-bottom: 16px;
+    }
+
+    .order-type-btn {
+      padding: 10px;
+      border-radius: var(--radius-md);
+      border: 1.5px solid var(--cream-dark);
+      background: var(--cream);
+      font-size: 14px;
+      font-weight: 500;
+      cursor: pointer;
+      font-family: var(--font-body);
+      transition: all 0.15s;
+      color: var(--text-mid);
+    }
+
+    .order-type-btn.active {
+      background: var(--olive);
+      border-color: var(--olive);
+      color: white;
+    }
+
+    .modal-input {
+      width: 100%;
+      padding: 10px 14px;
+      border: 1.5px solid var(--cream-dark);
+      border-radius: var(--radius-md);
+      font-size: 14px;
+      font-family: var(--font-body);
+      background: var(--cream);
+      color: var(--charcoal);
+      margin-bottom: 16px;
+      outline: none;
+      transition: border-color 0.15s;
+    }
+
+    .modal-input:focus { border-color: var(--olive); background: white; }
+
+    .modal-summary {
+      background: var(--cream);
+      border-radius: var(--radius-md);
+      padding: 14px;
+      margin-bottom: 20px;
+    }
+
+    .summary-row {
+      display: flex;
+      justify-content: space-between;
+      font-size: 14px;
+      padding: 4px 0;
+    }
+
+    .summary-row.total {
+      border-top: 1px solid var(--cream-dark);
+      margin-top: 6px;
+      padding-top: 10px;
+      font-weight: 700;
+      font-size: 16px;
+    }
+
+    .summary-beans { color: var(--moss); }
+
+    .place-order-btn {
+      width: 100%;
+      padding: 14px;
+      background: var(--olive);
+      color: white;
+      border: none;
+      border-radius: var(--radius-full);
+      font-size: 16px;
+      font-weight: 600;
+      font-family: var(--font-body);
+      cursor: pointer;
+      transition: background 0.15s;
+    }
+
+    .place-order-btn:hover { background: var(--olive-dark); }
+
+    .success-state {
+      text-align: center;
+      padding: 20px 0;
+      display: none;
+    }
+
+    .success-icon { font-size: 56px; margin-bottom: 16px; }
+    .success-state h3 { font-size: 24px; margin-bottom: 8px; }
+    .success-state p { font-size: 15px; color: var(--text-mid); }
+
+    @media (max-width: 768px) {
+      .menu-page { grid-template-columns: 1fr; }
+      .menu-sidebar { display: none; }
+      .menu-main { padding: 20px; }
+      .items-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav>
+    <a href="index.html" class="nav-logo">
+      <div class="nav-logo-mark">K</div>
+      <span class="nav-logo-text">Kapai</span>
+    </a>
+    <ul class="nav-links">
+      <li><a href="index.html#about">Our Story</a></li>
+      <li><a href="index.html#loyalty">Rewards</a></li>
+      <li><a href="index.html#location">Visit Us</a></li>
+    </ul>
+    <a href="#" class="btn-primary" onclick="openCart(); return false;">
+      🛒 Cart <span id="navCartCount" style="background:var(--terracotta);color:white;border-radius:50%;width:20px;height:20px;display:inline-flex;align-items:center;justify-content:center;font-size:11px;display:none;" id="navBadge">0</span>
+    </a>
+  </nav>
+
+  <div class="menu-page">
+
+    <!-- SIDEBAR -->
+    <aside class="menu-sidebar">
+      <div class="sidebar-title">Categories</div>
+      <div class="sidebar-cat active" onclick="scrollTo('beverages', this)">
+        <span class="sidebar-cat-icon">☕</span> Beverages
+      </div>
+      <div class="sidebar-cat" onclick="scrollTo('food', this)">
+        <span class="sidebar-cat-icon">🍲</span> Food
+      </div>
+      <div class="sidebar-cat" onclick="scrollTo('snacks', this)">
+        <span class="sidebar-cat-icon">🥪</span> Snacks &amp; Breads
+      </div>
+      <div class="sidebar-cat" onclick="scrollTo('desserts', this)">
+        <span class="sidebar-cat-icon">🍮</span> Desserts
+      </div>
+
+      <div class="sidebar-veg-toggle" style="margin-top:24px;">
+        <span class="toggle-label">🌿 Veg only</span>
+        <div class="toggle-switch" id="vegToggle" onclick="toggleVeg()">
+          <div class="toggle-knob"></div>
+        </div>
+      </div>
+    </aside>
+
+    <!-- MAIN -->
+    <main class="menu-main">
+      <div class="menu-main-header">
+        <h1>Our Menu</h1>
+        <p>Fresh, made daily. Add items to your cart and order for dine-in or takeaway.</p>
+      </div>
+
+      <!-- BEVERAGES -->
+      <div class="category-section" id="beverages">
+        <div class="category-header">
+          <div class="category-header-icon">☕</div>
+          <h2>Beverages</h2>
+          <span class="category-count">8 items</span>
+        </div>
+        <div class="items-grid">
+          <div class="item-card" data-veg="true" data-price="60" data-beans="5" data-name="Masala Chai">
+            <div class="item-top">
+              <div class="item-info">
+                <div class="item-veg-row"><span class="veg-dot" style="background:#22C55E;"></span><span style="font-size:11px;color:var(--text-light)">Veg</span></div>
+                <div class="item-name">Masala Chai</div>
+                <div class="item-desc">Spiced milk tea brewed the old way. Warming, aromatic, perfect any time.</div>
+              </div>
+            </div>
+            <div class="item-bottom">
+              <div>
+                <div class="item-price">₹60</div>
+                <div class="item-beans">+5 🫘</div>
+              </div>
+              <div class="item-qty" style="display:none">
+                <button class="qty-btn" onclick="changeQty(this, -1)">−</button>
+                <span class="qty-num">1</span>
+                <button class="qty-btn" onclick="changeQty(this, 1)">+</button>
+              </div>
+              <button class="add-btn" onclick="addItem(this)">Add</button>
+            </div>
+          </div>
+
+          <div class="item-card" data-veg="true" data-price="180" data-beans="15" data-name="Cold Brew">
+            <div class="item-top">
+              <div class="item-info">
+                <div class="item-veg-row"><span class="veg-dot" style="background:#22C55E;"></span><span style="font-size:11px;color:var(--text-light)">Veg</span></div>
+                <div class="item-name">Cold Brew</div>
+                <div class="item-desc">12-hour steeped single origin. Smooth, rich, zero bitterness.</div>
+              </div>
+            </div>
+            <div class="item-bottom">
+              <div>
+                <div class="item-price">₹180</div>
+                <div class="item-beans">+15 🫘</div>
+              </div>
+              <div class="item-qty" style="display:none">
+                <button class="qty-btn" onclick="changeQty(this, -1)">−</button>
+                <span class="qty-num">1</span>
+                <button class="qty-btn" onclick="changeQty(this, 1)">+</button>
+              </div>
+              <button class="add-btn" onclick="addItem(this)">Add</button>
+            </div>
+          </div>
+
+          <div class="item-card" data-veg="true" data-price="140" data-beans="12" data-name="Turmeric Latte">
+            <div class="item-top">
+              <div class="item-info">
+                <div class="item-veg-row"><span class="veg-dot" style="background:#22C55E;"></span><span style="font-size:11px;color:var(--text-light)">Veg</span></div>
+                <div class="item-name">Turmeric Latte</div>
+                <div class="item-desc">Golden milk with oat milk, cinnamon, and black pepper.</div>
+              </div>
+            </div>
+            <div class="item-bottom">
+              <div>
+                <div class="item-price">₹140</div>
+                <div class="item-beans">+12 🫘</div>
+              </div>
+              <div class="item-qty" style="display:none">
+                <button class="qty-btn" onclick="changeQty(this, -1)">−</button>
+                <span class="qty-num">1</span>
+                <button class="qty-btn" onclick="changeQty(this, 1)">+</button>
+              </div>
+              <button class="add-btn" onclick="addItem(this)">Add</button>
+            </div>
+          </div>
+
+          <div class="item-card" data-veg="true" data-price="160" data-beans="14" data-name="Filter Coffee">
+            <div class="item-top">
+              <div class="item-info">
+                <div class="item-veg-row"><span class="veg-dot" style="background:#22C55E;"></span><span style="font-size:11px;color:var(--text-light)">Veg</span></div>
+                <div class="item-name">Filter Coffee</div>
+                <div class="item-desc">South Indian style, served in a traditional davara set.</div>
+              </div>
+            </div>
+            <div class="item-bottom">
+              <div>
+                <div class="item-price">₹160</div>
+                <div class="item-beans">+14 🫘</div>
+              </div>
+              <div class="item-qty" style="display:none">
+                <button class="qty-btn" onclick="changeQty(this, -1)">−</button>
+                <span class="qty-num">1</span>
+                <button class="qty-btn" onclick="changeQty(this, 1)">+</button>
+              </div>
+              <button class="add-btn" onclick="addItem(this)">Add</button>
+            </div>
+          </div>
+
+          <div class="item-card" data-veg="true" data-price="90" data-beans="8" data-name="Fresh Lime Soda">
+            <div class="item-top">
+              <div class="item-info">
+                <div class="item-veg-row"><span class="veg-dot" style="background:#22C55E;"></span><span style="font-size:11px;color:var(--text-light)">Veg</span></div>
+                <div class="item-name">Fresh Lime Soda</div>
+                <div class="item-desc">Sweet, salted, or mixed. Squeezed fresh every time.</div>
+              </div>
+            </div>
+            <div class="item-bottom">
+              <div>
+                <div class="item-price">₹90</div>
+                <div class="item-beans">+8 🫘</div>
+              </div>
+              <div class="item-qty" style="display:none">
+                <button class="qty-btn" onclick="changeQty(this, -1)">−</button>
+                <span class="qty-num">1</span>
+                <button class="qty-btn" onclick="changeQty(this, 1)">+</button>
+              </div>
+              <button class="add-btn" onclick="addItem(this)">Add</button>
+            </div>
+          </div>
+
+          <div class="item-card" data-veg="true" data-price="120" data-beans="10" data-name="Mango Lassi">
+            <div class="item-top">
+              <div class="item-info">
+                <div class="item-veg-row"><span class="veg-dot" style="background:#22C55E;"></span><span style="font-size:11px;color:var(--text-light)">Veg</span></div>
+                <div class="item-name">Mango Lassi</div>
+                <div class="item-desc">Thick yogurt, Alphonso mango pulp, a pinch of cardamom.</div>
+              </div>
+            </div>
+            <div class="item-bottom">
+              <div>
+                <div class="item-price">₹120</div>
+                <div class="item-beans">+10 🫘</div>
+              </div>
+              <div class="item-qty" style="display:none">
+                <button class="qty-btn" onclick="changeQty(this, -1)">−</button>
+                <span class="qty-num">1</span>
+                <button class="qty-btn" onclick="changeQty(this, 1)">+</button>
+              </div>
+              <button class="add-btn" onclick="addItem(this)">Add</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- FOOD -->
+      <div class="category-section" id="food">
+        <div class="category-header">
+          <div class="category-header-icon">🍲</div>
+          <h2>Food</h2>
+          <span class="category-count">6 items</span>
+        </div>
+        <div class="items-grid">
+          <div class="item-card" data-veg="true" data-price="220" data-beans="20" data-name="Grain Bowl">
+            <div class="item-top">
+              <div class="item-info">
+                <div class="item-veg-row"><span class="veg-dot" style="background:#22C55E;"></span><span style="font-size:11px;color:var(--text-light)">Veg</span></div>
+                <div class="item-name">Grain Bowl</div>
+                <div class="item-desc">Brown rice, roasted seasonal vegetables, tahini dressing, seeds.</div>
+              </div>
+            </div>
+            <div class="item-bottom">
+              <div>
+                <div class="item-price">₹220</div>
+                <div class="item-beans">+20 🫘</div>
+              </div>
+              <div class="item-qty" style="display:none">
+                <button class="qty-btn" onclick="changeQty(this, -1)">−</button>
+                <span class="qty-num">1</span>
+                <button class="qty-btn" onclick="changeQty(this, 1)">+</button>
+              </div>
+              <button class="add-btn" onclick="addItem(this)">Add</button>
+            </div>
+          </div>
+
+          <div class="item-card" data-veg="false" data-price="260" data-beans="22" data-name="Chicken Wrap">
+            <div class="item-top">
+              <div class="item-info">
+                <div class="item-veg-row"><span class="veg-dot" style="background:#DC2626;"></span><span style="font-size:11px;color:var(--text-light)">Non-veg</span></div>
+                <div class="item-name">Chicken Wrap</div>
+                <div class="item-desc">Grilled chicken, house slaw, chipotle mayo in a wheat wrap.</div>
+              </div>
+            </div>
+            <div class="item-bottom">
+              <div>
+                <div class="item-price">₹260</div>
+                <div class="item-beans">+22 🫘</div>
+              </div>
+              <div class="item-qty" style="display:none">
+                <button class="qty-btn" onclick="changeQty(this, -1)">−</button>
+                <span class="qty-num">1</span>
+                <button class="qty-btn" onclick="changeQty(this, 1)">+</button>
+              </div>
+              <button class="add-btn" onclick="addItem(this)">Add</button>
+            </div>
+          </div>
+
+          <div class="item-card" data-veg="true" data-price="180" data-beans="16" data-name="Dal of the Day">
+            <div class="item-top">
+              <div class="item-info">
+                <div class="item-veg-row"><span class="veg-dot" style="background:#22C55E;"></span><span style="font-size:11px;color:var(--text-light)">Veg</span></div>
+                <div class="item-name">Dal of the Day</div>
+                <div class="item-desc">Slow-cooked lentils, fresh tempering, served with basmati rice.</div>
+              </div>
+            </div>
+            <div class="item-bottom">
+              <div>
+                <div class="item-price">₹180</div>
+                <div class="item-beans">+16 🫘</div>
+              </div>
+              <div class="item-qty" style="display:none">
+                <button class="qty-btn" onclick="changeQty(this, -1)">−</button>
+                <span class="qty-num">1</span>
+                <button class="qty-btn" onclick="changeQty(this, 1)">+</button>
+              </div>
+              <button class="add-btn" onclick="addItem(this)">Add</button>
+            </div>
+          </div>
+
+          <div class="item-card" data-veg="false" data-price="320" data-beans="28" data-name="Mutton Kheema Rice">
+            <div class="item-top">
+              <div class="item-info">
+                <div class="item-veg-row"><span class="veg-dot" style="background:#DC2626;"></span><span style="font-size:11px;color:var(--text-light)">Non-veg</span></div>
+                <div class="item-name">Mutton Kheema Rice</div>
+                <div class="item-desc">Minced mutton cooked with whole spices, served over jeera rice.</div>
+              </div>
+            </div>
+            <div class="item-bottom">
+              <div>
+                <div class="item-price">₹320</div>
+                <div class="item-beans">+28 🫘</div>
+              </div>
+              <div class="item-qty" style="display:none">
+                <button class="qty-btn" onclick="changeQty(this, -1)">−</button>
+                <span class="qty-num">1</span>
+                <button class="qty-btn" onclick="changeQty(this, 1)">+</button>
+              </div>
+              <button class="add-btn" onclick="addItem(this)">Add</button>
+            </div>
+          </div>
+
+          <div class="item-card" data-veg="true" data-price="200" data-beans="18" data-name="Paneer Tikka Bowl">
+            <div class="item-top">
+              <div class="item-info">
+                <div class="item-veg-row"><span class="veg-dot" style="background:#22C55E;"></span><span style="font-size:11px;color:var(--text-light)">Veg</span></div>
+                <div class="item-name">Paneer Tikka Bowl</div>
+                <div class="item-desc">Charred paneer, onion, capsicum, mint chutney over rice.</div>
+              </div>
+            </div>
+            <div class="item-bottom">
+              <div>
+                <div class="item-price">₹200</div>
+                <div class="item-beans">+18 🫘</div>
+              </div>
+              <div class="item-qty" style="display:none">
+                <button class="qty-btn" onclick="changeQty(this, -1)">−</button>
+                <span class="qty-num">1</span>
+                <button class="qty-btn" onclick="changeQty(this, 1)">+</button>
+              </div>
+              <button class="add-btn" onclick="addItem(this)">Add</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- SNACKS -->
+      <div class="category-section" id="snacks">
+        <div class="category-header">
+          <div class="category-header-icon">🥪</div>
+          <h2>Snacks &amp; Breads</h2>
+          <span class="category-count">5 items</span>
+        </div>
+        <div class="items-grid">
+          <div class="item-card" data-veg="true" data-price="120" data-beans="10" data-name="Cheese Toast">
+            <div class="item-top">
+              <div class="item-info">
+                <div class="item-veg-row"><span class="veg-dot" style="background:#22C55E;"></span><span style="font-size:11px;color:var(--text-light)">Veg</span></div>
+                <div class="item-name">Cheese Toast</div>
+                <div class="item-desc">Sourdough, aged cheddar, fresh herbs. Grilled to golden.</div>
+              </div>
+            </div>
+            <div class="item-bottom">
+              <div>
+                <div class="item-price">₹120</div>
+                <div class="item-beans">+10 🫘</div>
+              </div>
+              <div class="item-qty" style="display:none">
+                <button class="qty-btn" onclick="changeQty(this, -1)">−</button>
+                <span class="qty-num">1</span>
+                <button class="qty-btn" onclick="changeQty(this, 1)">+</button>
+              </div>
+              <button class="add-btn" onclick="addItem(this)">Add</button>
+            </div>
+          </div>
+
+          <div class="item-card" data-veg="false" data-price="150" data-beans="13" data-name="Egg Bhurji Toast">
+            <div class="item-top">
+              <div class="item-info">
+                <div class="item-veg-row"><span class="veg-dot" style="background:#DC2626;"></span><span style="font-size:11px;color:var(--text-light)">Non-veg</span></div>
+                <div class="item-name">Egg Bhurji Toast</div>
+                <div class="item-desc">Masala scrambled eggs on thick-cut toast. The Kapai classic.</div>
+              </div>
+            </div>
+            <div class="item-bottom">
+              <div>
+                <div class="item-price">₹150</div>
+                <div class="item-beans">+13 🫘</div>
+              </div>
+              <div class="item-qty" style="display:none">
+                <button class="qty-btn" onclick="changeQty(this, -1)">−</button>
+                <span class="qty-num">1</span>
+                <button class="qty-btn" onclick="changeQty(this, 1)">+</button>
+              </div>
+              <button class="add-btn" onclick="addItem(this)">Add</button>
+            </div>
+          </div>
+
+          <div class="item-card" data-veg="true" data-price="100" data-beans="9" data-name="Vada Pav">
+            <div class="item-top">
+              <div class="item-info">
+                <div class="item-veg-row"><span class="veg-dot" style="background:#22C55E;"></span><span style="font-size:11px;color:var(--text-light)">Veg</span></div>
+                <div class="item-name">Vada Pav</div>
+                <div class="item-desc">Mumbai's favourite. Spiced potato fritter, soft pav, chutneys.</div>
+              </div>
+            </div>
+            <div class="item-bottom">
+              <div>
+                <div class="item-price">₹100</div>
+                <div class="item-beans">+9 🫘</div>
+              </div>
+              <div class="item-qty" style="display:none">
+                <button class="qty-btn" onclick="changeQty(this, -1)">−</button>
+                <span class="qty-num">1</span>
+                <button class="qty-btn" onclick="changeQty(this, 1)">+</button>
+              </div>
+              <button class="add-btn" onclick="addItem(this)">Add</button>
+            </div>
+          </div>
+
+          <div class="item-card" data-veg="true" data-price="130" data-beans="11" data-name="Banana Bread">
+            <div class="item-top">
+              <div class="item-info">
+                <div class="item-veg-row"><span class="veg-dot" style="background:#22C55E;"></span><span style="font-size:11px;color:var(--text-light)">Veg</span></div>
+                <div class="item-name">Banana Bread</div>
+                <div class="item-desc">House-baked, walnuts, lightly sweet. Best with your morning chai.</div>
+              </div>
+            </div>
+            <div class="item-bottom">
+              <div>
+                <div class="item-price">₹130</div>
+                <div class="item-beans">+11 🫘</div>
+              </div>
+              <div class="item-qty" style="display:none">
+                <button class="qty-btn" onclick="changeQty(this, -1)">−</button>
+                <span class="qty-num">1</span>
+                <button class="qty-btn" onclick="changeQty(this, 1)">+</button>
+              </div>
+              <button class="add-btn" onclick="addItem(this)">Add</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- DESSERTS -->
+      <div class="category-section" id="desserts">
+        <div class="category-header">
+          <div class="category-header-icon">🍮</div>
+          <h2>Desserts</h2>
+          <span class="category-count">4 items</span>
+        </div>
+        <div class="items-grid">
+          <div class="item-card" data-veg="true" data-price="140" data-beans="12" data-name="Kulfi">
+            <div class="item-top">
+              <div class="item-info">
+                <div class="item-veg-row"><span class="veg-dot" style="background:#22C55E;"></span><span style="font-size:11px;color:var(--text-light)">Veg</span></div>
+                <div class="item-name">Kulfi</div>
+                <div class="item-desc">Pistachio or mango. Dense, slow-frozen, not in a hurry.</div>
+              </div>
+            </div>
+            <div class="item-bottom">
+              <div>
+                <div class="item-price">₹140</div>
+                <div class="item-beans">+12 🫘</div>
+              </div>
+              <div class="item-qty" style="display:none">
+                <button class="qty-btn" onclick="changeQty(this, -1)">−</button>
+                <span class="qty-num">1</span>
+                <button class="qty-btn" onclick="changeQty(this, 1)">+</button>
+              </div>
+              <button class="add-btn" onclick="addItem(this)">Add</button>
+            </div>
+          </div>
+
+          <div class="item-card" data-veg="true" data-price="160" data-beans="14" data-name="Caramel Custard">
+            <div class="item-top">
+              <div class="item-info">
+                <div class="item-veg-row"><span class="veg-dot" style="background:#22C55E;"></span><span style="font-size:11px;color:var(--text-light)">Veg</span></div>
+                <div class="item-name">Caramel Custard</div>
+                <div class="item-desc">Classic baked custard with a dark caramel top. Wobbles perfectly.</div>
+              </div>
+            </div>
+            <div class="item-bottom">
+              <div>
+                <div class="item-price">₹160</div>
+                <div class="item-beans">+14 🫘</div>
+              </div>
+              <div class="item-qty" style="display:none">
+                <button class="qty-btn" onclick="changeQty(this, -1)">−</button>
+                <span class="qty-num">1</span>
+                <button class="qty-btn" onclick="changeQty(this, 1)">+</button>
+              </div>
+              <button class="add-btn" onclick="addItem(this)">Add</button>
+            </div>
+          </div>
+
+          <div class="item-card" data-veg="true" data-price="110" data-beans="9" data-name="Coconut Ladoo">
+            <div class="item-top">
+              <div class="item-info">
+                <div class="item-veg-row"><span class="veg-dot" style="background:#22C55E;"></span><span style="font-size:11px;color:var(--text-light)">Veg</span></div>
+                <div class="item-name">Coconut Ladoo</div>
+                <div class="item-desc">Fresh coconut, condensed milk, cardamom. Three per plate.</div>
+              </div>
+            </div>
+            <div class="item-bottom">
+              <div>
+                <div class="item-price">₹110</div>
+                <div class="item-beans">+9 🫘</div>
+              </div>
+              <div class="item-qty" style="display:none">
+                <button class="qty-btn" onclick="changeQty(this, -1)">−</button>
+                <span class="qty-num">1</span>
+                <button class="qty-btn" onclick="changeQty(this, 1)">+</button>
+              </div>
+              <button class="add-btn" onclick="addItem(this)">Add</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </main>
+  </div>
+
+  <!-- CART FAB -->
+  <div class="cart-panel">
+    <button class="cart-fab hidden" id="cartFab" onclick="openCart()">
+      🛒 View Cart
+      <span class="cart-count" id="cartBadge">0</span>
+    </button>
+  </div>
+
+  <!-- CHECKOUT MODAL -->
+  <div class="modal-backdrop" id="cartModal">
+    <div class="modal">
+      <div id="cartView">
+        <div class="modal-header">
+          <h3>Your Cart</h3>
+          <button class="modal-close" onclick="closeCart()">✕</button>
+        </div>
+
+        <div class="cart-items" id="cartItemsList"></div>
+
+        <div style="margin-bottom:16px;">
+          <div style="font-size:13px;font-weight:500;color:var(--charcoal);margin-bottom:8px;">Order type</div>
+          <div class="order-type-toggle">
+            <button class="order-type-btn active" id="btnDineIn" onclick="setOrderType('dine-in')">🍽 Dine-in</button>
+            <button class="order-type-btn" id="btnTakeaway" onclick="setOrderType('takeaway')">🥡 Takeaway</button>
+          </div>
+        </div>
+
+        <div id="tableField">
+          <input type="number" class="modal-input" placeholder="Table number" id="tableInput" min="1" />
+        </div>
+        <div id="pickupField" style="display:none">
+          <input type="text" class="modal-input" placeholder="Pickup time (e.g. 1:30 PM)" id="pickupInput" />
+        </div>
+
+        <div class="modal-summary">
+          <div class="summary-row"><span>Subtotal</span><span id="summarySubtotal">₹0</span></div>
+          <div class="summary-row summary-beans"><span>Beans you'll earn</span><span id="summaryBeans">+0 🫘</span></div>
+          <div class="summary-row total"><span>Total</span><span id="summaryTotal">₹0</span></div>
+        </div>
+
+        <button class="place-order-btn" onclick="placeOrder()">Place Order →</button>
+      </div>
+
+      <div class="success-state" id="successView">
+        <div class="success-icon">✅</div>
+        <h3>Order placed!</h3>
+        <p>Your order is being prepared. Show this at the counter or wait for your number to be called.</p>
+        <div style="margin-top:24px;background:var(--moss-light);border-radius:var(--radius-md);padding:16px;font-size:14px;color:var(--olive);">
+          <strong>Note:</strong> Download the Kapai app to track your order live and earn Beans to your account.
+        </div>
+        <button class="place-order-btn" style="margin-top:24px;" onclick="closeCart()">Done</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    let cart = {};
+    let orderType = 'dine-in';
+
+    function addItem(btn) {
+      const card = btn.closest('.item-card');
+      const name = card.dataset.name;
+      const price = parseInt(card.dataset.price);
+      const beans = parseInt(card.dataset.beans);
+
+      if (!cart[name]) cart[name] = { qty: 0, price, beans };
+      cart[name].qty = 1;
+
+      btn.style.display = 'none';
+      card.querySelector('.item-qty').style.display = 'flex';
+      card.querySelector('.qty-num').textContent = '1';
+
+      updateCartUI();
+    }
+
+    function changeQty(btn, delta) {
+      const card = btn.closest('.item-card');
+      const name = card.dataset.name;
+      const qtyEl = card.querySelector('.qty-num');
+      let qty = parseInt(qtyEl.textContent) + delta;
+
+      if (qty <= 0) {
+        delete cart[name];
+        card.querySelector('.item-qty').style.display = 'none';
+        card.querySelector('.add-btn').style.display = '';
+      } else {
+        cart[name].qty = qty;
+        qtyEl.textContent = qty;
+      }
+      updateCartUI();
+    }
+
+    function updateCartUI() {
+      const total = Object.values(cart).reduce((s, i) => s + i.price * i.qty, 0);
+      const count = Object.values(cart).reduce((s, i) => s + i.qty, 0);
+      const beans = Object.values(cart).reduce((s, i) => s + i.beans * i.qty, 0);
+
+      const fab = document.getElementById('cartFab');
+      const badge = document.getElementById('cartBadge');
+
+      if (count > 0) {
+        fab.classList.remove('hidden');
+        badge.textContent = count;
+      } else {
+        fab.classList.add('hidden');
+      }
+
+      document.getElementById('summarySubtotal').textContent = '₹' + total;
+      document.getElementById('summaryTotal').textContent = '₹' + total;
+      document.getElementById('summaryBeans').textContent = '+' + beans + ' 🫘';
+
+      const list = document.getElementById('cartItemsList');
+      list.innerHTML = Object.entries(cart).map(([name, item]) => `
+        <div class="cart-item-row">
+          <div>
+            <div class="cart-item-name">${name}</div>
+            <div class="cart-item-sub">₹${item.price} × ${item.qty}</div>
+          </div>
+          <div class="cart-item-price">₹${item.price * item.qty}</div>
+        </div>
+      `).join('');
+    }
+
+    function openCart() {
+      if (Object.keys(cart).length === 0) return;
+      document.getElementById('cartModal').classList.add('open');
+    }
+
+    function closeCart() {
+      document.getElementById('cartModal').classList.remove('open');
+      document.getElementById('cartView').style.display = '';
+      document.getElementById('successView').style.display = 'none';
+    }
+
+    function setOrderType(type) {
+      orderType = type;
+      document.getElementById('btnDineIn').classList.toggle('active', type === 'dine-in');
+      document.getElementById('btnTakeaway').classList.toggle('active', type === 'takeaway');
+      document.getElementById('tableField').style.display = type === 'dine-in' ? '' : 'none';
+      document.getElementById('pickupField').style.display = type === 'takeaway' ? '' : 'none';
+    }
+
+    function placeOrder() {
+      document.getElementById('cartView').style.display = 'none';
+      document.getElementById('successView').style.display = 'block';
+      cart = {};
+      document.querySelectorAll('.item-card').forEach(card => {
+        card.querySelector('.item-qty').style.display = 'none';
+        card.querySelector('.add-btn').style.display = '';
+      });
+      document.getElementById('cartFab').classList.add('hidden');
+    }
+
+    function scrollTo(id, el) {
+      document.querySelectorAll('.sidebar-cat').forEach(c => c.classList.remove('active'));
+      el.classList.add('active');
+      document.getElementById(id).scrollIntoView({ behavior: 'smooth' });
+    }
+
+    let vegOnly = false;
+    function toggleVeg() {
+      vegOnly = !vegOnly;
+      const toggle = document.getElementById('vegToggle');
+      toggle.classList.toggle('on', vegOnly);
+      document.querySelectorAll('.item-card').forEach(card => {
+        const isVeg = card.dataset.veg === 'true';
+        card.classList.toggle('hidden', vegOnly && !isVeg);
+      });
+    }
+
+    document.getElementById('cartModal').addEventListener('click', function(e) {
+      if (e.target === this) closeCart();
+    });
+  </script>
+</body>
+</html>

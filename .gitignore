@@ -1,0 +1,25 @@
+# Flutter
+kapai_flutter/.dart_tool/
+kapai_flutter/.flutter-plugins
+kapai_flutter/.flutter-plugins-dependencies
+kapai_flutter/build/
+kapai_flutter/.packages
+kapai_flutter/pubspec.lock
+
+# Firebase — generated, contains secrets
+kapai_flutter/lib/firebase_options.dart
+
+# Vercel
+website/.vercel/
+
+# IDE
+.idea/
+.vscode/
+*.iml
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Zip
+*.zip

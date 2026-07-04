@@ -1,0 +1,137 @@
+rules_version = '2';
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // ── Helpers ─────────────────────────────────────────────────────────────
+
+    function getStaff(uid) {
+      return get(/databases/$(database)/documents/staff/$(uid)).data;
+    }
+
+    function isSuperAdmin() {
+      let s = getStaff(request.auth.uid);
+      return s != null && s.role == 'super_admin' && s.isActive == true;
+    }
+
+    function isAdmin() {
+      let s = getStaff(request.auth.uid);
+      return s != null && s.role in ['super_admin', 'admin'] && s.isActive == true;
+    }
+
+    function staffHasPermission(perm) {
+      let s = getStaff(request.auth.uid);
+      return s != null && s.isActive == true && (
+        s.role == 'super_admin' ||
+        (s.permissions != null && s.permissions[perm] == true)
+      );
+    }
+
+    function isStaffAssignedCategory(category) {
+      let s = getStaff(request.auth.uid);
+      return s != null && (
+        s.role == 'super_admin' ||
+        category in s.assignedCategories
+      );
+    }
+
+    function isAuthenticated() {
+      return request.auth != null;
+    }
+
+    function isOwner(uid) {
+      return request.auth.uid == uid;
+    }
+
+    // ── Users (customers) ────────────────────────────────────────────────────
+
+    match /users/{uid} {
+      allow read: if isOwner(uid) || isSuperAdmin();
+      allow create: if isOwner(uid);
+      allow update: if isOwner(uid) || isSuperAdmin();
+      allow delete: if isSuperAdmin();
+    }
+
+    // ── Staff ────────────────────────────────────────────────────────────────
+
+    match /staff/{uid} {
+      allow read: if isAuthenticated() && (isOwner(uid) || isAdmin());
+      allow create: if isSuperAdmin();
+      allow update: if isSuperAdmin() || isOwner(uid);
+      allow delete: if isSuperAdmin();
+    }
+
+    // ── Menu ─────────────────────────────────────────────────────────────────
+
+    match /menu/{itemId} {
+      // Anyone authenticated can read menu (customers + staff)
+      allow read: if isAuthenticated();
+      allow write: if staffHasPermission('canManageMenu');
+    }
+
+    // ── Orders ───────────────────────────────────────────────────────────────
+
+    match /orders/{orderId} {
+      allow read: if isAuthenticated() && (
+        resource.data.customerId == request.auth.uid ||
+        staffHasPermission('canManageOrders') ||
+        staffHasPermission('canManageTakeaway')
+      );
+      allow create: if isAuthenticated();
+      allow update: if staffHasPermission('canManageOrders') || staffHasPermission('canManageTakeaway');
+      allow delete: if isSuperAdmin();
+    }
+
+    // ── Inventory ────────────────────────────────────────────────────────────
+
+    match /inventory/{itemId} {
+      allow read: if isAdmin() || staffHasPermission('canManageInventory');
+      allow create: if isSuperAdmin();
+      allow update: if isSuperAdmin() || (
+        staffHasPermission('canManageInventory') &&
+        isStaffAssignedCategory(resource.data.category)
+      );
+      allow delete: if isSuperAdmin();
+    }
+
+    match /inventory_logs/{logId} {
+      allow read: if isAdmin() || staffHasPermission('canManageInventory');
+      allow create: if isAdmin() || staffHasPermission('canManageInventory');
+      allow update, delete: if isSuperAdmin();
+    }
+
+    // ── Procurement ──────────────────────────────────────────────────────────
+
+    match /procurement_requests/{reqId} {
+      allow read: if isAdmin() || staffHasPermission('canManageInventory');
+      allow create: if isAdmin() || staffHasPermission('canManageInventory');
+      allow update: if isSuperAdmin() || staffHasPermission('canApproveProcurement') || (
+        // The requester can cancel their own pending request
+        resource.data.requestedBy == request.auth.uid &&
+        resource.data.status == 'pending'
+      );
+      allow delete: if isSuperAdmin();
+    }
+
+    // ── Vendors ──────────────────────────────────────────────────────────────
+
+    match /vendors/{vendorId} {
+      allow read: if isAdmin() || staffHasPermission('canManageVendors');
+      allow write: if isSuperAdmin() || staffHasPermission('canManageVendors');
+    }
+
+    // ── Loyalty config ───────────────────────────────────────────────────────
+
+    match /loyalty_config/{docId} {
+      allow read: if isAuthenticated();
+      allow write: if isSuperAdmin();
+    }
+
+    // ── Offers ───────────────────────────────────────────────────────────────
+
+    match /offers/{offerId} {
+      allow read: if isAuthenticated();
+      allow write: if isSuperAdmin();
+    }
+  }
+}

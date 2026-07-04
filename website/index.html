@@ -1,0 +1,409 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Kapai — Your Neighbourhood Café</title>
+  <link rel="stylesheet" href="style.css" />
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='22' fill='%233B4A27'/><text y='.9em' font-size='72' x='50%' text-anchor='middle' dy='0.1em'>K</text></svg>" />
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav>
+    <a href="index.html" class="nav-logo">
+      <div class="nav-logo-mark">K</div>
+      <span class="nav-logo-text">Kapai</span>
+    </a>
+    <ul class="nav-links">
+      <li><a href="#about">Our Story</a></li>
+      <li><a href="#menu">Menu</a></li>
+      <li><a href="#loyalty">Rewards</a></li>
+      <li><a href="#location">Visit Us</a></li>
+    </ul>
+    <a href="menu.html" class="btn-primary">Order Now →</a>
+  </nav>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-bg-circles">
+      <div class="hero-circle-1"></div>
+      <div class="hero-circle-2"></div>
+    </div>
+    <div class="hero-content">
+      <div class="hero-tag">
+        <span class="hero-dot"></span>
+        Now open · Mon–Sun, 7am–10pm
+      </div>
+      <h1>Your<br/><span>neighbourhood</span><br/>café.</h1>
+      <p>Fresh food, great coffee, and a loyalty program that actually rewards you. Order ahead, earn Beans, unlock perks.</p>
+      <div class="hero-ctas">
+        <a href="menu.html" class="btn-primary" style="background:var(--cream);color:var(--olive);">Browse Menu →</a>
+        <a href="menu.html" class="btn-secondary" style="border-color:rgba(255,255,255,0.3);color:rgba(255,255,255,0.85);">Order &amp; Earn Beans</a>
+      </div>
+      <div class="hero-stats">
+        <div>
+          <div class="hero-stat-value">200+</div>
+          <div class="hero-stat-label">Menu items</div>
+        </div>
+        <div>
+          <div class="hero-stat-value">3</div>
+          <div class="hero-stat-label">Loyalty tiers</div>
+        </div>
+        <div>
+          <div class="hero-stat-value">7am</div>
+          <div class="hero-stat-label">Opens daily</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- MARQUEE -->
+  <div class="marquee-strip" aria-hidden="true">
+    <div class="marquee-inner">
+      <span class="marquee-item">Fresh Every Morning <span class="marquee-dot"></span></span>
+      <span class="marquee-item">Earn Loyalty Beans <span class="marquee-dot"></span></span>
+      <span class="marquee-item">Dine-in &amp; Takeaway <span class="marquee-dot"></span></span>
+      <span class="marquee-item">Order Ahead <span class="marquee-dot"></span></span>
+      <span class="marquee-item">Sprout → Brew → Roast <span class="marquee-dot"></span></span>
+      <span class="marquee-item">Fresh Every Morning <span class="marquee-dot"></span></span>
+      <span class="marquee-item">Earn Loyalty Beans <span class="marquee-dot"></span></span>
+      <span class="marquee-item">Dine-in &amp; Takeaway <span class="marquee-dot"></span></span>
+      <span class="marquee-item">Order Ahead <span class="marquee-dot"></span></span>
+      <span class="marquee-item">Sprout → Brew → Roast <span class="marquee-dot"></span></span>
+    </div>
+  </div>
+
+  <!-- ABOUT -->
+  <section class="about" id="about">
+    <div class="about-visual">
+      <div class="about-card-main">
+        <h3>Good food, great company.</h3>
+        <p>Kapai is a neighbourhood café rooted in fresh ingredients, honest cooking, and the belief that your regular order should always feel special. We source locally, cook daily, and remember how you take your chai.</p>
+      </div>
+      <div class="about-card-float">
+        <div class="about-float-icon">☕</div>
+        <div>
+          <div class="about-float-value">4.8★</div>
+          <div class="about-float-label">Average rating</div>
+        </div>
+      </div>
+    </div>
+    <div class="about-text">
+      <span class="section-tag">Our Story</span>
+      <h2>A café that feels like home.</h2>
+      <p>We started Kapai because we believed your neighbourhood deserved a spot where the food is made with care and the faces are familiar. Every item on our menu is made fresh, every day.</p>
+      <p>From your morning chai to your afternoon snack, we're here to make your day a little better — one order at a time.</p>
+      <div class="about-pillars">
+        <div class="about-pillar">
+          <div class="about-pillar-icon">🌿</div>
+          <h4>Fresh daily</h4>
+          <p>Everything prepped from scratch every morning.</p>
+        </div>
+        <div class="about-pillar">
+          <div class="about-pillar-icon">📍</div>
+          <h4>Local sourcing</h4>
+          <p>Vegetables and dairy from nearby farms.</p>
+        </div>
+        <div class="about-pillar">
+          <div class="about-pillar-icon">☕</div>
+          <h4>Great coffee</h4>
+          <p>Properly brewed, every single cup.</p>
+        </div>
+        <div class="about-pillar">
+          <div class="about-pillar-icon">🫘</div>
+          <h4>Loyalty perks</h4>
+          <p>Earn Beans on every order. Real rewards.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- MENU HIGHLIGHTS -->
+  <section class="menu-section" id="menu">
+    <div class="section-header">
+      <span class="section-tag">Our Menu</span>
+      <h2>Made fresh, every day.</h2>
+      <p>A few of our favourites — see the full menu to order.</p>
+    </div>
+
+    <div class="menu-categories">
+      <button class="menu-cat-btn active" onclick="filterMenu('all', this)">All</button>
+      <button class="menu-cat-btn" onclick="filterMenu('beverages', this)">Beverages ☕</button>
+      <button class="menu-cat-btn" onclick="filterMenu('food', this)">Food 🥗</button>
+      <button class="menu-cat-btn" onclick="filterMenu('snacks', this)">Snacks 🥪</button>
+    </div>
+
+    <div class="menu-grid" id="menuGrid">
+      <div class="menu-card" data-cat="beverages">
+        <div class="menu-card-icon veg">☕</div>
+        <div style="display:flex;align-items:center;gap:4px;margin-bottom:6px;">
+          <span class="veg-dot" style="background:#22C55E;"></span>
+          <span style="font-size:11px;color:var(--text-light);">Veg</span>
+        </div>
+        <h4>Masala Chai</h4>
+        <p class="menu-card-desc">Spiced milk tea brewed the old way. Warming and aromatic.</p>
+        <div class="menu-card-footer">
+          <span class="menu-card-price">₹60</span>
+          <span class="menu-card-beans">+5 🫘</span>
+        </div>
+      </div>
+      <div class="menu-card" data-cat="beverages">
+        <div class="menu-card-icon veg">🧊</div>
+        <div style="display:flex;align-items:center;gap:4px;margin-bottom:6px;">
+          <span class="veg-dot" style="background:#22C55E;"></span>
+          <span style="font-size:11px;color:var(--text-light);">Veg</span>
+        </div>
+        <h4>Cold Brew</h4>
+        <p class="menu-card-desc">12-hour steeped single origin coffee. Smooth, no bitterness.</p>
+        <div class="menu-card-footer">
+          <span class="menu-card-price">₹180</span>
+          <span class="menu-card-beans">+15 🫘</span>
+        </div>
+      </div>
+      <div class="menu-card" data-cat="beverages">
+        <div class="menu-card-icon veg">🥛</div>
+        <div style="display:flex;align-items:center;gap:4px;margin-bottom:6px;">
+          <span class="veg-dot" style="background:#22C55E;"></span>
+          <span style="font-size:11px;color:var(--text-light);">Veg</span>
+        </div>
+        <h4>Turmeric Latte</h4>
+        <p class="menu-card-desc">Golden milk with oat milk and a hint of black pepper.</p>
+        <div class="menu-card-footer">
+          <span class="menu-card-price">₹140</span>
+          <span class="menu-card-beans">+12 🫘</span>
+        </div>
+      </div>
+      <div class="menu-card" data-cat="food">
+        <div class="menu-card-icon veg">🥗</div>
+        <div style="display:flex;align-items:center;gap:4px;margin-bottom:6px;">
+          <span class="veg-dot" style="background:#22C55E;"></span>
+          <span style="font-size:11px;color:var(--text-light);">Veg</span>
+        </div>
+        <h4>Grain Bowl</h4>
+        <p class="menu-card-desc">Brown rice, roasted vegetables, tahini dressing, seeds.</p>
+        <div class="menu-card-footer">
+          <span class="menu-card-price">₹220</span>
+          <span class="menu-card-beans">+20 🫘</span>
+        </div>
+      </div>
+      <div class="menu-card" data-cat="food">
+        <div class="menu-card-icon nonveg">🍗</div>
+        <div style="display:flex;align-items:center;gap:4px;margin-bottom:6px;">
+          <span class="veg-dot" style="background:#DC2626;"></span>
+          <span style="font-size:11px;color:var(--text-light);">Non-veg</span>
+        </div>
+        <h4>Chicken Wrap</h4>
+        <p class="menu-card-desc">Grilled chicken, house slaw, chipotle mayo in a wheat wrap.</p>
+        <div class="menu-card-footer">
+          <span class="menu-card-price">₹260</span>
+          <span class="menu-card-beans">+22 🫘</span>
+        </div>
+      </div>
+      <div class="menu-card" data-cat="snacks">
+        <div class="menu-card-icon veg">🥐</div>
+        <div style="display:flex;align-items:center;gap:4px;margin-bottom:6px;">
+          <span class="veg-dot" style="background:#22C55E;"></span>
+          <span style="font-size:11px;color:var(--text-light);">Veg</span>
+        </div>
+        <h4>Cheese Toast</h4>
+        <p class="menu-card-desc">Sourdough, aged cheddar, herbs. Grilled to golden perfection.</p>
+        <div class="menu-card-footer">
+          <span class="menu-card-price">₹120</span>
+          <span class="menu-card-beans">+10 🫘</span>
+        </div>
+      </div>
+      <div class="menu-card" data-cat="snacks">
+        <div class="menu-card-icon nonveg">🥚</div>
+        <div style="display:flex;align-items:center;gap:4px;margin-bottom:6px;">
+          <span class="veg-dot" style="background:#DC2626;"></span>
+          <span style="font-size:11px;color:var(--text-light);">Non-veg</span>
+        </div>
+        <h4>Egg Bhurji Toast</h4>
+        <p class="menu-card-desc">Masala scrambled eggs on thick-cut toast. Kapai classic.</p>
+        <div class="menu-card-footer">
+          <span class="menu-card-price">₹150</span>
+          <span class="menu-card-beans">+13 🫘</span>
+        </div>
+      </div>
+      <div class="menu-card" data-cat="food">
+        <div class="menu-card-icon veg">🍲</div>
+        <div style="display:flex;align-items:center;gap:4px;margin-bottom:6px;">
+          <span class="veg-dot" style="background:#22C55E;"></span>
+          <span style="font-size:11px;color:var(--text-light);">Veg</span>
+        </div>
+        <h4>Dal of the Day</h4>
+        <p class="menu-card-desc">Slow-cooked lentils, fresh tempering, served with rice.</p>
+        <div class="menu-card-footer">
+          <span class="menu-card-price">₹180</span>
+          <span class="menu-card-beans">+16 🫘</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="menu-cta">
+      <a href="menu.html" class="btn-primary" style="font-size:15px;padding:14px 32px;">See full menu &amp; order →</a>
+    </div>
+  </section>
+
+  <!-- LOYALTY -->
+  <section class="loyalty" id="loyalty">
+    <span class="section-tag">Loyalty Program</span>
+    <h2>Earn Beans.<br/>Unlock Perks.</h2>
+    <p>Every rupee you spend earns you Beans. Climb the tiers for bigger rewards.</p>
+
+    <div class="tiers">
+      <div class="tier-card">
+        <div class="tier-icon">🌱</div>
+        <div class="tier-name">Sprout</div>
+        <div class="tier-beans">0 – 199 Beans</div>
+        <ul class="tier-perks">
+          <li><span class="tier-check">✓</span>Earn Beans on every order</li>
+          <li><span class="tier-check">✓</span>Birthday reward</li>
+          <li><span class="tier-check">✓</span>Order ahead, skip queue</li>
+        </ul>
+      </div>
+      <div class="tier-card featured">
+        <div class="tier-icon">☕</div>
+        <div class="tier-name">Brew</div>
+        <div class="tier-beans">200 – 499 Beans</div>
+        <ul class="tier-perks">
+          <li><span class="tier-check">✓</span>Everything in Sprout</li>
+          <li><span class="tier-check">✓</span>Free drink on milestone</li>
+          <li><span class="tier-check">✓</span>Priority order queue</li>
+          <li><span class="tier-check">✓</span>Monthly special offer</li>
+        </ul>
+      </div>
+      <div class="tier-card">
+        <div class="tier-icon">🔥</div>
+        <div class="tier-name">Roast</div>
+        <div class="tier-beans">500+ Beans</div>
+        <ul class="tier-perks">
+          <li><span class="tier-check">✓</span>Everything in Brew</li>
+          <li><span class="tier-check">✓</span>Exclusive Roast menu</li>
+          <li><span class="tier-check">✓</span>Early access to specials</li>
+          <li><span class="tier-check">✓</span>Complimentary upgrades</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="how-it-works">
+      <div class="how-step">
+        <div class="how-step-num">1</div>
+        <h4>Order anything</h4>
+        <p>Every item earns Beans based on its value.</p>
+      </div>
+      <div class="how-step">
+        <div class="how-step-num">2</div>
+        <h4>Beans add up</h4>
+        <p>Watch your balance grow in the app or here.</p>
+      </div>
+      <div class="how-step">
+        <div class="how-step-num">3</div>
+        <h4>Unlock rewards</h4>
+        <p>Climb tiers, redeem perks, repeat.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- LOCATION -->
+  <section class="location" id="location">
+    <div>
+      <span class="section-tag">Find Us</span>
+      <h2>Come say hello.</h2>
+
+      <div class="info-row">
+        <div class="info-icon">📍</div>
+        <div>
+          <div class="info-label">Address</div>
+          <div class="info-value">12, Linking Road, Bandra West<br/>Mumbai – 400 050</div>
+        </div>
+      </div>
+
+      <div class="info-row">
+        <div class="info-icon">📞</div>
+        <div>
+          <div class="info-label">Phone</div>
+          <div class="info-value">+91 98765 43210</div>
+        </div>
+      </div>
+
+      <div class="info-row">
+        <div class="info-icon">✉️</div>
+        <div>
+          <div class="info-label">Email</div>
+          <div class="info-value">hello@kapai.in</div>
+        </div>
+      </div>
+
+      <div class="hours-grid">
+        <div class="hours-row">
+          <span class="hours-day">Monday – Friday</span>
+          <span class="hours-time">7:00 AM – 10:00 PM</span>
+        </div>
+        <div class="hours-row today">
+          <span class="hours-day">Saturday ← Today</span>
+          <span class="hours-time">8:00 AM – 11:00 PM</span>
+        </div>
+        <div class="hours-row">
+          <span class="hours-day">Sunday</span>
+          <span class="hours-time">8:00 AM – 9:00 PM</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="map-placeholder">
+      <div class="map-pin">📍</div>
+      <h3>Bandra West, Mumbai</h3>
+      <p>12, Linking Road</p>
+      <a href="https://maps.google.com" target="_blank" class="btn-secondary" style="margin-top:16px;border-color:rgba(255,255,255,0.3);color:rgba(255,255,255,0.8);">Open in Maps →</a>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer-top">
+      <div class="footer-brand">
+        <a href="index.html" class="footer-logo">
+          <div class="footer-logo-mark">K</div>
+          <span class="footer-logo-text">Kapai</span>
+        </a>
+        <p>Your neighbourhood café. Fresh food, great coffee, and a loyalty program that actually rewards you.</p>
+      </div>
+      <div class="footer-col">
+        <h4>Menu</h4>
+        <a href="menu.html">Beverages</a>
+        <a href="menu.html">Food</a>
+        <a href="menu.html">Snacks</a>
+        <a href="menu.html">Today's Specials</a>
+      </div>
+      <div class="footer-col">
+        <h4>About</h4>
+        <a href="#about">Our Story</a>
+        <a href="#loyalty">Rewards</a>
+        <a href="#location">Visit Us</a>
+      </div>
+      <div class="footer-col">
+        <h4>Order</h4>
+        <a href="menu.html">Order Online</a>
+        <a href="menu.html">Dine-in</a>
+        <a href="menu.html">Takeaway</a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2026 Kapai. All rights reserved.</span>
+      <span>Made with care in Mumbai.</span>
+    </div>
+  </footer>
+
+  <script>
+    function filterMenu(cat, btn) {
+      document.querySelectorAll('.menu-cat-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      document.querySelectorAll('.menu-card').forEach(card => {
+        card.style.display = (cat === 'all' || card.dataset.cat === cat) ? '' : 'none';
+      });
+    }
+  </script>
+</body>
+</html>
