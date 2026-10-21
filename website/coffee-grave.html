@@ -213,16 +213,16 @@
     .tl .d{color:var(--bone-dim);font-size:14.5px;max-width:520px}
 
     /* TICKETS */
-    .tk-grid{display:grid;grid-template-columns:1fr 1fr;gap:24px}
+    .tk-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
     .ticket{position:relative;cursor:pointer;background:var(--panel);border:1px solid var(--line);border-radius:14px;overflow:hidden;transition:.22s}
     .ticket:hover{transform:translateY(-5px);border-color:var(--blood);box-shadow:0 20px 50px rgba(227,6,19,.2)}
     .ticket.sel{border-color:var(--blood);box-shadow:0 0 0 2px var(--blood),0 20px 54px rgba(227,6,19,.32)}
     .ticket .top{padding:26px 26px 20px;position:relative}
     .ticket .ribbon{position:absolute;top:18px;right:-32px;transform:rotate(45deg);background:var(--blood);color:#fff;font-family:var(--f-type);font-size:10px;letter-spacing:2px;padding:5px 42px}
     .ticket .lbl{font-family:var(--f-type);font-size:12px;letter-spacing:3px;color:var(--ash);text-transform:uppercase}
-    .ticket h3{font-family:var(--f-display);font-size:38px;letter-spacing:1px;text-transform:uppercase;margin:6px 0 2px}
+    .ticket h3{font-family:var(--f-display);font-size:34px;letter-spacing:1px;text-transform:uppercase;margin:6px 0 2px}
     .ticket .for{color:var(--bone-dim);font-size:14px;min-height:40px}
-    .ticket .price{font-family:var(--f-display);font-size:52px;color:var(--bone);margin-top:10px;line-height:1}
+    .ticket .price{font-family:var(--f-display);font-size:46px;color:var(--bone);margin-top:10px;line-height:1}
     .ticket .price .cur{color:var(--ember);font-size:30px;vertical-align:super}
     .ticket .price .per{font-family:var(--f-body);font-size:14px;color:var(--ash);letter-spacing:1px}
     .ticket .perf{position:relative;height:0;border-top:2px dashed var(--line)}
@@ -234,7 +234,7 @@
     .ticket .choose{margin:0 26px 26px;display:flex;align-items:center;justify-content:center;gap:10px;padding:13px;border-radius:7px;border:1px solid var(--line);font-family:var(--f-display);letter-spacing:2px;font-size:15px;color:var(--bone-dim);transition:.2s}
     .ticket.sel .choose{background:var(--blood);border-color:var(--blood);color:#fff}
     .ticket:not(.sel):hover .choose{border-color:var(--blood);color:var(--bone)}
-    @media(max-width:720px){.tk-grid{grid-template-columns:1fr}}
+    @media(max-width:860px){.tk-grid{grid-template-columns:1fr}}
 
     /* BOOK FORM */
     .book{margin-top:34px;background:var(--panel);border:1px solid var(--line);border-radius:16px;padding:30px;position:relative}
@@ -416,12 +416,12 @@
       </div>
 
       <div class="tk-grid">
-        <div class="ticket sel" data-type="Single Entry" data-price="499" onclick="selectTicket(this)">
+        <div class="ticket sel" data-type="Women Stag" onclick="selectTicket(this)">
           <div class="top">
             <div class="lbl">Solo Soul</div>
-            <h3>Single Entry</h3>
-            <div class="for">One wristband, full access to the haunt.</div>
-            <div class="price"><span class="cur">₹</span>499 <span class="per">/ person</span></div>
+            <h3>Women Stag</h3>
+            <div class="for">Entry for one. Come haunt solo.</div>
+            <div class="price"><span class="cur">₹</span>799 <span class="per">/ entry</span></div>
           </div>
           <div class="perf"></div>
           <ul class="inc">
@@ -430,13 +430,27 @@
           <div class="choose">✓ Selected</div>
         </div>
 
-        <div class="ticket" data-type="Couple Entry" data-price="899" onclick="selectTicket(this)">
+        <div class="ticket" data-type="Men Stag" onclick="selectTicket(this)">
+          <div class="top">
+            <div class="lbl">Solo Soul</div>
+            <h3>Men Stag</h3>
+            <div class="for">Entry for one. Come haunt solo.</div>
+            <div class="price"><span class="cur">₹</span>999 <span class="per">/ entry</span></div>
+          </div>
+          <div class="perf"></div>
+          <ul class="inc">
+            <li>Entry for one</li><li>Welcome graveyard brew</li><li>Full access to the DJ set</li><li>Entry to the best-costume ritual</li>
+          </ul>
+          <div class="choose">Select</div>
+        </div>
+
+        <div class="ticket" data-type="Couple" onclick="selectTicket(this)">
           <div class="ribbon">BEST VALUE</div>
           <div class="top">
             <div class="lbl">Two Souls, One Grave</div>
-            <h3>Couple Entry</h3>
+            <h3>Couple</h3>
             <div class="for">Entry for two who haunt together.</div>
-            <div class="price"><span class="cur">₹</span>899 <span class="per">/ couple</span></div>
+            <div class="price"><span class="cur">₹</span>1499 <span class="per">/ couple</span></div>
           </div>
           <div class="perf"></div>
           <ul class="inc">
@@ -465,9 +479,9 @@
         </div>
 
         <div class="order">
-          <div class="ln"><span id="orderLine">1 × Single Entry</span><span id="orderSub">₹499</span></div>
+          <div class="ln"><span id="orderLine">1 × Women Stag</span><span id="orderSub">₹799</span></div>
           <div class="ln"><span>Heads at the party</span><span id="heads">1 guest</span></div>
-          <div class="grand"><span class="k">Total due</span><span class="v"><span class="cur">₹</span><span id="totalNum">499</span></span></div>
+          <div class="grand"><span class="k">Total due</span><span class="v"><span class="cur">₹</span><span id="totalNum">799</span></span></div>
         </div>
 
         <button class="reserve" onclick="reserve()">Reserve My Grave →</button>
@@ -518,12 +532,12 @@
        GO-LIVE SETTINGS — edit these three lines
        =========================================================== */
     const WHATSAPP_NUMBER = "919999999999";
-    const PRICES = { "Single Entry": 499, "Couple Entry": 899 };
+    const PRICES = { "Women Stag": 799, "Men Stag": 999, "Couple": 1499 };
     const EVENT_DATE = new Date("2026-10-31T20:00:00+05:30");
     /* =========================================================== */
 
     const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
-    let state = { type:"Single Entry", qty:1 };
+    let state = { type:"Women Stag", qty:1 };
 
     /* ---------- COUNTDOWN ---------- */
     function tick(){
@@ -539,15 +553,15 @@
 
     /* ---------- TICKETS / FORM ---------- */
     function selectTicket(el){
-      document.querySelectorAll('.ticket').forEach(t=>{t.classList.remove('sel');t.querySelector('.choose').textContent=t.dataset.type==='Couple Entry'?'Select this plot':'Select';});
+      document.querySelectorAll('.ticket').forEach(t=>{t.classList.remove('sel');t.querySelector('.choose').textContent=t.dataset.type==='Couple'?'Select this plot':'Select';});
       el.classList.add('sel');el.querySelector('.choose').textContent='✓ Selected';
       state.type=el.dataset.type;
-      document.getElementById('unitLabel').textContent=state.type==='Couple Entry'?'couples':'entries';
+      document.getElementById('unitLabel').textContent=state.type==='Couple'?'couples':'entries';
       render();
     }
     function bump(d){state.qty=Math.min(20,Math.max(1,state.qty+d));document.getElementById('qty').value=state.qty;render();}
     function render(){
-      const price=PRICES[state.type],total=price*state.qty,heads=state.type==='Couple Entry'?state.qty*2:state.qty;
+      const price=PRICES[state.type],total=price*state.qty,heads=state.type==='Couple'?state.qty*2:state.qty;
       document.getElementById('orderLine').textContent=`${state.qty} × ${state.type}`;
       document.getElementById('orderSub').textContent='₹'+(price*state.qty).toLocaleString('en-IN');
       document.getElementById('heads').textContent=heads+(heads>1?' guests':' guest');
@@ -558,7 +572,7 @@
       const name=document.getElementById('name').value.trim(),phone=document.getElementById('phone').value.trim(),email=document.getElementById('email').value.trim();
       if(!name){showToast('⚠ Tell us your name first.');document.getElementById('name').focus();return;}
       if(phone.replace(/\D/g,'').length<10){showToast('⚠ Add a valid phone number.');document.getElementById('phone').focus();return;}
-      const price=PRICES[state.type],total=price*state.qty,heads=state.type==='Couple Entry'?state.qty*2:state.qty;
+      const price=PRICES[state.type],total=price*state.qty,heads=state.type==='Couple'?state.qty*2:state.qty;
       const msg=`⚰ COFFEE GRAVE — Booking Request ⚰\n──────────────────────\nName: ${name}\nPhone: ${phone}${email?`\nEmail: ${email}`:''}\nTicket: ${state.type}\nQuantity: ${state.qty}  (≈ ${heads} guest${heads>1?'s':''})\nTotal: ₹${total.toLocaleString('en-IN')}\nEvent: 31.10.2026 · Saturday · 8 PM\n──────────────────────\nPlease confirm my spot! 🖤`;
       window.open(`https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(msg)}`,'_blank');
       showToast('Opening WhatsApp to confirm your booking…');
