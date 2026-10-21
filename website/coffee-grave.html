@@ -1,0 +1,451 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>COFFEE GRAVE — An Invite-Only Halloween Party by Kapai</title>
+  <meta name="description" content="Kapai presents COFFEE GRAVE — an invite-only Halloween party. 31.10.2026, Saturday. AM for coffee, PM for ??? Reserve your spot: single or couple entry." />
+
+  <!-- Social share -->
+  <meta property="og:title" content="COFFEE GRAVE — Kapai's Invite-Only Halloween Party" />
+  <meta property="og:description" content="31.10.2026 · Saturday · Possessed by a special DJ set. AM for coffee, PM for ??? *iykyk*" />
+  <meta property="og:image" content="assets/coffee-grave-poster.jpg" />
+  <meta property="og:type" content="website" />
+
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='22' fill='%23e00000'/><text y='.9em' font-size='64' x='50%' text-anchor='middle' dy='0.08em'>⚰</text></svg>" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Creepster&family=Nosifer&family=Rock+Salt&family=Oswald:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+
+  <style>
+    :root{
+      --blood:#e00000;
+      --blood-deep:#9b0000;
+      --blood-dark:#5a0000;
+      --ink:#0a0607;
+      --ink-soft:#140b0c;
+      --bone:#f3e9d6;
+      --ash:#9a9a9a;
+      --grave:#1a1012;
+      --shadow:rgba(0,0,0,.6);
+      --font-horror:'Creepster', system-ui, cursive;
+      --font-drip:'Nosifer', system-ui, cursive;
+      --font-hand:'Rock Salt', cursive;
+      --font-body:'Oswald', system-ui, sans-serif;
+    }
+
+    *{box-sizing:border-box;margin:0;padding:0}
+    html{scroll-behavior:smooth}
+    body{
+      font-family:var(--font-body);
+      background:var(--ink);
+      color:var(--bone);
+      overflow-x:hidden;
+      line-height:1.5;
+      -webkit-font-smoothing:antialiased;
+    }
+
+    /* ---------- ANIMATED BACKGROUND ---------- */
+    .bg-wrap{position:fixed;inset:0;z-index:-2;overflow:hidden;background:var(--ink)}
+    .bg-wrap video{
+      position:absolute;inset:0;width:100%;height:100%;object-fit:cover;
+      opacity:.55;filter:contrast(1.15) saturate(1.2);
+    }
+    .bg-vignette{
+      position:fixed;inset:0;z-index:-1;pointer-events:none;
+      background:
+        radial-gradient(ellipse at 50% 0%, rgba(224,0,0,.18), transparent 55%),
+        radial-gradient(ellipse at 50% 120%, rgba(0,0,0,.9), transparent 60%),
+        linear-gradient(180deg, rgba(10,6,7,.72), rgba(10,6,7,.55) 40%, rgba(10,6,7,.82));
+    }
+    /* film grain */
+    .grain{
+      position:fixed;inset:-50%;z-index:-1;pointer-events:none;opacity:.08;
+      background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+      animation:grain 1.2s steps(3) infinite;
+    }
+    @keyframes grain{0%{transform:translate(0,0)}33%{transform:translate(-6%,4%)}66%{transform:translate(4%,-5%)}100%{transform:translate(0,0)}}
+
+    /* ---------- NAV ---------- */
+    nav{
+      position:sticky;top:0;z-index:50;display:flex;align-items:center;justify-content:space-between;
+      padding:16px 24px;backdrop-filter:blur(6px);
+      background:linear-gradient(180deg, rgba(10,6,7,.85), rgba(10,6,7,0));
+    }
+    .brand{display:flex;align-items:center;gap:10px;text-decoration:none;color:var(--bone)}
+    .brand-mark{
+      width:38px;height:38px;border-radius:9px;display:grid;place-items:center;
+      background:var(--blood);color:#fff;font-weight:700;font-size:20px;
+      box-shadow:0 0 18px rgba(224,0,0,.6);border:1px solid rgba(255,255,255,.15);
+    }
+    .brand small{display:block;font-size:10px;letter-spacing:3px;color:var(--ash);text-transform:uppercase}
+    .brand b{font-size:17px;letter-spacing:1px}
+    .nav-cta{
+      font-family:var(--font-horror);letter-spacing:2px;font-size:18px;
+      color:var(--blood);text-decoration:none;border:1.5px solid var(--blood-deep);
+      padding:8px 18px;border-radius:4px;transition:.2s;text-shadow:0 0 10px rgba(224,0,0,.5);
+    }
+    .nav-cta:hover{background:var(--blood);color:#fff;box-shadow:0 0 22px rgba(224,0,0,.7)}
+
+    /* ---------- HERO / COFFIN ---------- */
+    .hero{position:relative;padding:40px 20px 60px;display:flex;flex-direction:column;align-items:center}
+    .coffin{
+      position:relative;width:min(540px,92vw);padding:52px 34px 60px;text-align:center;
+      background:
+        repeating-linear-gradient(0deg, rgba(0,0,0,.04) 0 2px, transparent 2px 4px),
+        radial-gradient(ellipse at 50% 30%, #ff1a1a, var(--blood) 45%, var(--blood-deep) 100%);
+      clip-path:polygon(50% 0%, 82% 9%, 100% 26%, 92% 100%, 8% 100%, 0% 26%, 18% 9%);
+      box-shadow:0 0 0 4px #000, 0 0 60px rgba(224,0,0,.45), inset 0 0 80px rgba(90,0,0,.6);
+      animation:breathe 5s ease-in-out infinite;
+    }
+    @keyframes breathe{0%,100%{box-shadow:0 0 0 4px #000,0 0 50px rgba(224,0,0,.35),inset 0 0 80px rgba(90,0,0,.6)}50%{box-shadow:0 0 0 4px #000,0 0 80px rgba(224,0,0,.7),inset 0 0 90px rgba(120,0,0,.7)}}
+    .coffin::before{
+      content:"⚰";position:absolute;inset:0;display:grid;place-items:center;
+      font-size:420px;color:rgba(0,0,0,.08);pointer-events:none;
+    }
+    .presents{position:relative;font-size:12px;letter-spacing:4px;color:#2a0000;text-transform:uppercase;margin-bottom:4px}
+    .presents b{font-size:15px;color:#000}
+    .invite{position:relative;font-weight:600;letter-spacing:3px;font-size:13px;color:#1a0000;text-transform:uppercase;margin-bottom:10px}
+    .title{
+      position:relative;font-family:var(--font-horror);color:#0a0000;
+      font-size:clamp(58px,15vw,104px);line-height:.82;letter-spacing:2px;
+      text-shadow:3px 3px 0 rgba(255,255,255,.08), -1px -1px 0 rgba(0,0,0,.4);
+    }
+    .title span{display:block}
+    .amdm{position:relative;font-family:var(--font-hand);color:var(--bone);margin:22px 0 6px;font-size:clamp(16px,4.6vw,22px);line-height:2.1;text-shadow:0 2px 6px #000}
+    .amdm .q{color:#200;font-family:var(--font-horror);letter-spacing:2px}
+    .amdm small{font-family:var(--font-body);font-size:11px;letter-spacing:2px;color:#300;vertical-align:super}
+    .when{position:relative;margin-top:16px}
+    .when .date{font-family:var(--font-horror);font-size:clamp(30px,8vw,46px);letter-spacing:3px;color:var(--bone);text-shadow:0 0 16px rgba(0,0,0,.8),2px 2px 0 #300}
+    .when .day{font-weight:700;letter-spacing:6px;color:#1a0000;font-size:15px}
+    .possessed{position:relative;margin-top:22px;font-family:var(--font-horror);font-size:20px;letter-spacing:2px;color:#0a0000}
+    .possessed b{display:block;font-size:26px;color:#000}
+
+    .scroll-cue{margin-top:34px;font-family:var(--font-hand);font-size:13px;color:var(--ash);animation:bob 2s ease-in-out infinite}
+    @keyframes bob{0%,100%{transform:translateY(0)}50%{transform:translateY(8px)}}
+    .bats{position:absolute;font-size:26px;opacity:.85;filter:drop-shadow(0 0 6px #000);animation:fly 6s ease-in-out infinite}
+    .bat1{top:90px;left:8%}.bat2{top:150px;right:10%;animation-delay:1.5s;font-size:20px}.bat3{top:330px;left:14%;animation-delay:.8s;font-size:18px}
+    @keyframes fly{0%,100%{transform:translate(0,0) rotate(-4deg)}50%{transform:translate(14px,-12px) rotate(6deg)}}
+
+    /* ---------- SECTION SHELL ---------- */
+    section.block{position:relative;max-width:980px;margin:0 auto;padding:40px 22px}
+    .eyebrow{font-family:var(--font-hand);color:var(--blood);font-size:15px;margin-bottom:8px;text-shadow:0 0 12px rgba(224,0,0,.4)}
+    .sec-title{font-family:var(--font-horror);font-size:clamp(34px,8vw,56px);letter-spacing:2px;line-height:1;margin-bottom:10px}
+
+    /* ---------- DETAILS STRIP ---------- */
+    .details{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-top:8px}
+    .detail{
+      background:rgba(20,11,12,.72);border:1px solid rgba(224,0,0,.25);border-radius:10px;
+      padding:18px 14px;text-align:center;backdrop-filter:blur(3px);
+    }
+    .detail .ic{font-size:26px;filter:drop-shadow(0 0 8px rgba(224,0,0,.5))}
+    .detail .k{font-size:10px;letter-spacing:2px;color:var(--ash);text-transform:uppercase;margin:8px 0 3px}
+    .detail .v{font-weight:600;font-size:15px;letter-spacing:.5px}
+
+    /* ---------- TICKETS ---------- */
+    .tickets{display:grid;grid-template-columns:1fr 1fr;gap:20px;margin-top:18px}
+    .ticket{
+      position:relative;cursor:pointer;border-radius:16px;padding:28px 24px 26px;
+      background:linear-gradient(160deg, rgba(40,10,12,.9), rgba(12,7,8,.95));
+      border:2px solid rgba(224,0,0,.35);transition:.22s;overflow:hidden;
+    }
+    .ticket:hover{transform:translateY(-4px);border-color:var(--blood);box-shadow:0 14px 40px rgba(224,0,0,.25)}
+    .ticket.sel{border-color:var(--blood);background:linear-gradient(160deg, rgba(80,0,0,.95), rgba(20,7,8,.98));box-shadow:0 0 0 2px var(--blood),0 14px 44px rgba(224,0,0,.4)}
+    .ticket .tag{position:absolute;top:14px;right:-34px;transform:rotate(45deg);background:var(--blood);color:#fff;font-size:10px;letter-spacing:2px;padding:4px 40px;font-weight:600}
+    .ticket .ic{font-size:40px;filter:drop-shadow(0 0 10px rgba(224,0,0,.6))}
+    .ticket h3{font-family:var(--font-horror);font-size:30px;letter-spacing:2px;margin:10px 0 2px;color:var(--bone)}
+    .ticket .sub{font-size:12px;color:var(--ash);letter-spacing:1px;min-height:32px}
+    .ticket .price{font-family:var(--font-horror);font-size:40px;color:var(--blood);margin-top:12px;text-shadow:0 0 16px rgba(224,0,0,.5)}
+    .ticket .price small{font-family:var(--font-body);font-size:13px;color:var(--ash)}
+    .ticket .pick{margin-top:14px;display:flex;align-items:center;gap:8px;font-size:12px;letter-spacing:2px;color:var(--ash);text-transform:uppercase}
+    .ticket .dot{width:16px;height:16px;border-radius:50%;border:2px solid var(--blood);display:inline-grid;place-items:center}
+    .ticket.sel .dot{background:var(--blood)}
+    .ticket.sel .dot::after{content:"";width:6px;height:6px;border-radius:50%;background:#fff}
+    .ticket.sel .pick{color:var(--bone)}
+
+    /* ---------- FORM ---------- */
+    .booking{
+      margin-top:22px;background:rgba(14,8,9,.82);border:1px solid rgba(224,0,0,.25);
+      border-radius:18px;padding:26px 24px;backdrop-filter:blur(4px);
+    }
+    .row{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+    .field{margin-top:16px}
+    .field label{display:block;font-size:11px;letter-spacing:2px;text-transform:uppercase;color:var(--ash);margin-bottom:6px}
+    .field input, .field select{
+      width:100%;padding:13px 14px;border-radius:9px;border:1px solid rgba(224,0,0,.3);
+      background:rgba(0,0,0,.45);color:var(--bone);font-family:var(--font-body);font-size:15px;transition:.18s;
+    }
+    .field input:focus, .field select:focus{outline:none;border-color:var(--blood);box-shadow:0 0 0 3px rgba(224,0,0,.18)}
+    .field input::placeholder{color:#5a4a4a}
+
+    .qty{display:flex;align-items:center;gap:0;width:fit-content;border:1px solid rgba(224,0,0,.3);border-radius:9px;overflow:hidden}
+    .qty button{width:46px;height:46px;background:rgba(0,0,0,.4);border:none;color:var(--blood);font-size:22px;cursor:pointer;font-family:var(--font-horror)}
+    .qty button:hover{background:var(--blood);color:#fff}
+    .qty input{width:56px;text-align:center;border:none;border-left:1px solid rgba(224,0,0,.2);border-right:1px solid rgba(224,0,0,.2);border-radius:0}
+    .qty input:focus{box-shadow:none}
+
+    .summary{
+      margin-top:22px;padding:18px 20px;border-radius:12px;
+      background:linear-gradient(135deg, rgba(90,0,0,.4), rgba(0,0,0,.4));
+      border:1px dashed rgba(224,0,0,.5);display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;
+    }
+    .summary .lbl{font-size:12px;letter-spacing:2px;color:var(--ash);text-transform:uppercase}
+    .summary .tot{font-family:var(--font-horror);font-size:40px;color:var(--bone);text-shadow:0 0 14px rgba(224,0,0,.5)}
+    .summary .tot small{font-size:14px;color:var(--ash);font-family:var(--font-body)}
+
+    .reserve{
+      width:100%;margin-top:20px;padding:18px;border:none;border-radius:12px;cursor:pointer;
+      background:linear-gradient(135deg, #ff1414, var(--blood-deep));color:#fff;
+      font-family:var(--font-horror);font-size:26px;letter-spacing:3px;
+      box-shadow:0 10px 36px rgba(224,0,0,.45);transition:.2s;text-shadow:0 2px 6px rgba(0,0,0,.5);
+    }
+    .reserve:hover{transform:translateY(-2px);box-shadow:0 14px 48px rgba(224,0,0,.65);filter:brightness(1.08)}
+    .reserve:active{transform:translateY(0)}
+    .note{text-align:center;margin-top:14px;font-size:12px;color:var(--ash);letter-spacing:.5px}
+    .note b{color:var(--blood)}
+
+    /* ---------- WHAT TO EXPECT ---------- */
+    .expect{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:16px}
+    .exp{background:rgba(20,11,12,.6);border:1px solid rgba(224,0,0,.2);border-radius:12px;padding:22px 18px}
+    .exp .ic{font-size:30px}
+    .exp h4{font-family:var(--font-horror);letter-spacing:2px;font-size:22px;margin:10px 0 6px;color:var(--bone)}
+    .exp p{font-size:13.5px;color:#c8bcae}
+
+    /* ---------- FOOTER ---------- */
+    footer{position:relative;text-align:center;padding:50px 20px 40px;border-top:1px solid rgba(224,0,0,.2);margin-top:30px}
+    footer .big{font-family:var(--font-horror);font-size:clamp(40px,12vw,90px);color:var(--blood-deep);letter-spacing:4px;line-height:.9;opacity:.9}
+    footer .sub{color:var(--ash);font-size:13px;letter-spacing:2px;margin-top:10px}
+    footer a{color:var(--blood);text-decoration:none}
+
+    /* toast */
+    .toast{
+      position:fixed;left:50%;bottom:28px;transform:translateX(-50%) translateY(120px);
+      background:#111;border:1px solid var(--blood);color:var(--bone);padding:14px 22px;border-radius:10px;
+      font-size:14px;z-index:99;transition:.35s;box-shadow:0 10px 40px rgba(0,0,0,.6);max-width:90vw}
+    .toast.show{transform:translateX(-50%) translateY(0)}
+
+    @media (max-width:720px){
+      .details{grid-template-columns:1fr 1fr}
+      .tickets{grid-template-columns:1fr}
+      .row{grid-template-columns:1fr}
+      .expect{grid-template-columns:1fr}
+      .nav-cta{font-size:15px;padding:6px 12px}
+    }
+  </style>
+</head>
+<body>
+
+  <!-- animated grunge background -->
+  <div class="bg-wrap">
+    <video autoplay muted loop playsinline poster="assets/coffee-grave-poster.jpg">
+      <source src="assets/grave-loop.mp4" type="video/mp4" />
+    </video>
+  </div>
+  <div class="bg-vignette"></div>
+  <div class="grain"></div>
+
+  <!-- NAV -->
+  <nav>
+    <a href="index.html" class="brand">
+      <div class="brand-mark">⚰</div>
+      <div><small>Kapai presents</small><b>COFFEE&nbsp;GRAVE</b></div>
+    </a>
+    <a href="#book" class="nav-cta">Reserve →</a>
+  </nav>
+
+  <!-- HERO -->
+  <header class="hero">
+    <span class="bats bat1">🦇</span>
+    <span class="bats bat2">🦇</span>
+    <span class="bats bat3">🦇</span>
+
+    <div class="coffin">
+      <div class="presents">Kapai Coffee House &amp; Bistro<br/><b>presents</b></div>
+      <div class="invite">✦ An Invite-Only Halloween Party ✦</div>
+      <h1 class="title"><span>COFFEE</span><span>GRAVE</span></h1>
+      <div class="amdm">
+        AM <span class="q">for coffee</span><br/>
+        PM <span class="q">for ???</span> <small>*iykyk*</small>
+      </div>
+      <div class="when">
+        <div class="date">31 · 10 · 2026</div>
+        <div class="day">S&nbsp;A&nbsp;T&nbsp;U&nbsp;R&nbsp;D&nbsp;A&nbsp;Y</div>
+      </div>
+      <div class="possessed">Possessed by<b>★ SPECIAL DJ SET ★</b></div>
+    </div>
+
+    <div class="scroll-cue">↓ dig your spot below ↓</div>
+  </header>
+
+  <!-- DETAILS -->
+  <section class="block">
+    <div class="details">
+      <div class="detail"><div class="ic">🗓️</div><div class="k">When</div><div class="v">31 Oct 2026</div></div>
+      <div class="detail"><div class="ic">🌙</div><div class="k">Doors</div><div class="v">8 PM till late</div></div>
+      <div class="detail"><div class="ic">📍</div><div class="k">Where</div><div class="v">Kapai Café</div></div>
+      <div class="detail"><div class="ic">💀</div><div class="k">Dress code</div><div class="v">Costume / All black</div></div>
+    </div>
+  </section>
+
+  <!-- BOOKING -->
+  <section class="block" id="book">
+    <div class="eyebrow">reserve before the crypt fills up</div>
+    <h2 class="sec-title">Claim Your Grave</h2>
+    <p style="color:#c8bcae;max-width:560px">Pick your entry below. Spots are limited — once the coffins are full, they're buried for good.</p>
+
+    <!-- ticket options -->
+    <div class="tickets">
+      <div class="ticket sel" data-type="Single Entry" data-price="499" data-cap="1" onclick="selectTicket(this)">
+        <div class="ic">🥀</div>
+        <h3>Single Entry</h3>
+        <div class="sub">One soul. One wristband. Full access to the haunt &amp; the DJ set.</div>
+        <div class="price">₹499 <small>/ person</small></div>
+        <div class="pick"><span class="dot"></span> Selected</div>
+      </div>
+
+      <div class="ticket" data-type="Couple Entry" data-price="899" data-cap="2" onclick="selectTicket(this)">
+        <div class="tag">BEST VALUE</div>
+        <div class="ic">🖤</div>
+        <h3>Couple Entry</h3>
+        <div class="sub">Two souls, one grave. Entry for two + a welcome shot each.</div>
+        <div class="price">₹899 <small>/ couple</small></div>
+        <div class="pick"><span class="dot"></span> Select</div>
+      </div>
+    </div>
+
+    <!-- form -->
+    <div class="booking">
+      <div class="row">
+        <div class="field">
+          <label>Your Name</label>
+          <input type="text" id="name" placeholder="Who dares enter?" />
+        </div>
+        <div class="field">
+          <label>Phone / WhatsApp</label>
+          <input type="tel" id="phone" placeholder="10-digit number" />
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="field">
+          <label>Email <span style="color:#5a4a4a">(optional)</span></label>
+          <input type="email" id="email" placeholder="you@haunted.com" />
+        </div>
+        <div class="field">
+          <label>How many <span id="unitLabel">entries</span>?</label>
+          <div class="qty">
+            <button type="button" onclick="bump(-1)">−</button>
+            <input type="number" id="qty" value="1" min="1" max="20" readonly />
+            <button type="button" onclick="bump(1)">+</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="summary">
+        <div>
+          <div class="lbl" id="sumLine">1 × Single Entry</div>
+          <div style="font-size:12px;color:#8a7c7c;margin-top:4px">Pay at the door / confirm over WhatsApp</div>
+        </div>
+        <div class="tot" id="total">₹499</div>
+      </div>
+
+      <button class="reserve" onclick="reserve()">⚰ Reserve My Grave ⚰</button>
+      <div class="note">You'll be sent to <b>WhatsApp</b> to confirm with Kapai. No payment taken on this page.</div>
+    </div>
+  </section>
+
+  <!-- WHAT TO EXPECT -->
+  <section class="block">
+    <div class="eyebrow">if you make it in…</div>
+    <h2 class="sec-title">What Awaits</h2>
+    <div class="expect">
+      <div class="exp"><div class="ic">🎧</div><h4>Cursed Beats</h4><p>A special DJ set spinning till the dead hours. AM for coffee, PM for ???</p></div>
+      <div class="exp"><div class="ic">☕</div><h4>Graveyard Brews</h4><p>Signature spooky specials from the Kapai bar — spiked and un-spiked.</p></div>
+      <div class="exp"><div class="ic">👻</div><h4>Best Costume</h4><p>Come dressed to kill. Prizes for the most hauntingly good fits of the night.</p></div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="big">COFFEE GRAVE</div>
+    <div class="sub">31.10.2026 · An invite-only Halloween party by <a href="index.html">Kapai</a></div>
+    <div class="sub" style="margin-top:6px">AM for coffee, PM for ??? *iykyk*</div>
+  </footer>
+
+  <div class="toast" id="toast"></div>
+
+  <script>
+    /* ============================================================
+       SETTINGS — change these two lines to go live
+       ============================================================ */
+    const WHATSAPP_NUMBER = "919999999999"; // ← café WhatsApp, country code + number, no +, no spaces
+    const PRICES = { "Single Entry": 499, "Couple Entry": 899 }; // ← edit ticket prices here
+    /* ============================================================ */
+
+    let state = { type: "Single Entry", price: 499, qty: 1 };
+
+    function selectTicket(el){
+      document.querySelectorAll('.ticket').forEach(t=>{
+        t.classList.remove('sel');
+        t.querySelector('.pick').innerHTML = '<span class="dot"></span> Select';
+      });
+      el.classList.add('sel');
+      el.querySelector('.pick').innerHTML = '<span class="dot"></span> Selected';
+      state.type = el.dataset.type;
+      state.price = PRICES[state.type] ?? Number(el.dataset.price);
+      document.getElementById('unitLabel').textContent =
+        state.type === 'Couple Entry' ? 'couples' : 'entries';
+      render();
+    }
+
+    function bump(d){
+      state.qty = Math.min(20, Math.max(1, state.qty + d));
+      document.getElementById('qty').value = state.qty;
+      render();
+    }
+
+    function render(){
+      const total = state.price * state.qty;
+      const unit = state.type === 'Couple Entry' ? 'Couple Entry' : 'Single Entry';
+      document.getElementById('sumLine').textContent = `${state.qty} × ${unit}`;
+      document.getElementById('total').textContent = '₹' + total.toLocaleString('en-IN');
+    }
+
+    function showToast(msg){
+      const t = document.getElementById('toast');
+      t.textContent = msg; t.classList.add('show');
+      setTimeout(()=>t.classList.remove('show'), 3800);
+    }
+
+    function reserve(){
+      const name  = document.getElementById('name').value.trim();
+      const phone = document.getElementById('phone').value.trim();
+      const email = document.getElementById('email').value.trim();
+
+      if(!name){ showToast('⚠ Tell us your name first.'); document.getElementById('name').focus(); return; }
+      if(phone.replace(/\D/g,'').length < 10){ showToast('⚠ Add a valid phone number.'); document.getElementById('phone').focus(); return; }
+
+      const total = state.price * state.qty;
+      const guests = state.type === 'Couple Entry' ? state.qty * 2 : state.qty;
+
+      const msg =
+`⚰ COFFEE GRAVE — Booking Request ⚰
+────────────────────────
+Name: ${name}
+Phone: ${phone}${email ? `\nEmail: ${email}` : ''}
+Ticket: ${state.type}
+Quantity: ${state.qty}  (≈ ${guests} guest${guests>1?'s':''})
+Total: ₹${total.toLocaleString('en-IN')}
+Event: 31.10.2026 · Saturday
+────────────────────────
+Please confirm my spot! 🖤`;
+
+      const url = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(msg)}`;
+      window.open(url, '_blank');
+      showToast('Opening WhatsApp to confirm your booking…');
+    }
+
+    render();
+  </script>
+</body>
+</html>
