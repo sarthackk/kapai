@@ -3,447 +3,538 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>COFFEE GRAVE — An Invite-Only Halloween Party by Kapai</title>
-  <meta name="description" content="Kapai presents COFFEE GRAVE — an invite-only Halloween party. 31.10.2026, Saturday. AM for coffee, PM for ??? Reserve your spot: single or couple entry." />
+  <title>COFFEE GRAVE · Kapai — Invite-Only Halloween Party</title>
+  <meta name="description" content="Kapai presents COFFEE GRAVE — an invite-only Halloween party. 31.10.2026, Saturday. AM for coffee, PM for ??? Reserve single or couple entry." />
 
-  <!-- Social share -->
   <meta property="og:title" content="COFFEE GRAVE — Kapai's Invite-Only Halloween Party" />
   <meta property="og:description" content="31.10.2026 · Saturday · Possessed by a special DJ set. AM for coffee, PM for ??? *iykyk*" />
   <meta property="og:image" content="assets/coffee-grave-poster.jpg" />
   <meta property="og:type" content="website" />
 
-  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='22' fill='%23e00000'/><text y='.9em' font-size='64' x='50%' text-anchor='middle' dy='0.08em'>⚰</text></svg>" />
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='22' fill='%23e00000'/><text y='.9em' font-size='60' x='50%' text-anchor='middle' dy='0.08em'>⚰</text></svg>" />
 
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Creepster&family=Nosifer&family=Rock+Salt&family=Oswald:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Anton&family=Oswald:wght@300;400;500;600;700&family=Pirata+One&family=Special+Elite&display=swap" rel="stylesheet" />
 
   <style>
     :root{
-      --blood:#e00000;
-      --blood-deep:#9b0000;
-      --blood-dark:#5a0000;
-      --ink:#0a0607;
-      --ink-soft:#140b0c;
-      --bone:#f3e9d6;
-      --ash:#9a9a9a;
-      --grave:#1a1012;
-      --shadow:rgba(0,0,0,.6);
-      --font-horror:'Creepster', system-ui, cursive;
-      --font-drip:'Nosifer', system-ui, cursive;
-      --font-hand:'Rock Salt', cursive;
-      --font-body:'Oswald', system-ui, sans-serif;
+      --blood:#e30613;
+      --blood-deep:#9a0008;
+      --ember:#ff2a1a;
+      --ink:#0a0708;
+      --ink-2:#120c0d;
+      --panel:#17100f;
+      --bone:#efe6d6;
+      --bone-dim:#b7ab9a;
+      --ash:#7d7066;
+      --line:rgba(227,6,19,.22);
+      --line-soft:rgba(239,230,214,.12);
+      --f-display:'Anton', Impact, sans-serif;
+      --f-goth:'Pirata One', cursive;
+      --f-body:'Oswald', system-ui, sans-serif;
+      --f-type:'Special Elite', 'Courier New', monospace;
     }
-
-    *{box-sizing:border-box;margin:0;padding:0}
+    *{margin:0;padding:0;box-sizing:border-box}
     html{scroll-behavior:smooth}
-    body{
-      font-family:var(--font-body);
-      background:var(--ink);
-      color:var(--bone);
-      overflow-x:hidden;
-      line-height:1.5;
-      -webkit-font-smoothing:antialiased;
-    }
+    body{background:var(--ink);color:var(--bone);font-family:var(--f-body);line-height:1.55;overflow-x:hidden;-webkit-font-smoothing:antialiased}
+    a{color:inherit;text-decoration:none}
+    ::selection{background:var(--blood);color:#fff}
 
-    /* ---------- ANIMATED BACKGROUND ---------- */
-    .bg-wrap{position:fixed;inset:0;z-index:-2;overflow:hidden;background:var(--ink)}
-    .bg-wrap video{
-      position:absolute;inset:0;width:100%;height:100%;object-fit:cover;
-      opacity:.55;filter:contrast(1.15) saturate(1.2);
-    }
-    .bg-vignette{
-      position:fixed;inset:0;z-index:-1;pointer-events:none;
+    /* ---------- BACKGROUND ---------- */
+    .bg{position:fixed;inset:0;z-index:-3;background:var(--ink);overflow:hidden}
+    .bg video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:.3;filter:contrast(1.2) saturate(1.1) brightness(.8)}
+    .bg-tint{position:fixed;inset:0;z-index:-2;pointer-events:none;
       background:
-        radial-gradient(ellipse at 50% 0%, rgba(224,0,0,.18), transparent 55%),
-        radial-gradient(ellipse at 50% 120%, rgba(0,0,0,.9), transparent 60%),
-        linear-gradient(180deg, rgba(10,6,7,.72), rgba(10,6,7,.55) 40%, rgba(10,6,7,.82));
-    }
-    /* film grain */
-    .grain{
-      position:fixed;inset:-50%;z-index:-1;pointer-events:none;opacity:.08;
-      background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
-      animation:grain 1.2s steps(3) infinite;
-    }
-    @keyframes grain{0%{transform:translate(0,0)}33%{transform:translate(-6%,4%)}66%{transform:translate(4%,-5%)}100%{transform:translate(0,0)}}
+        radial-gradient(1200px 600px at 80% -10%, rgba(227,6,19,.16), transparent 60%),
+        radial-gradient(900px 700px at 0% 110%, rgba(227,6,19,.1), transparent 55%),
+        linear-gradient(180deg, rgba(10,7,8,.82), rgba(10,7,8,.92));}
+    .grain{position:fixed;inset:-50%;z-index:-1;pointer-events:none;opacity:.06;
+      background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='2'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+      animation:grain 1s steps(3) infinite}
+    @keyframes grain{0%{transform:translate(0,0)}33%{transform:translate(-5%,3%)}66%{transform:translate(4%,-4%)}100%{transform:translate(0,0)}}
+
+    .wrap{max-width:1160px;margin:0 auto;padding:0 24px}
 
     /* ---------- NAV ---------- */
-    nav{
-      position:sticky;top:0;z-index:50;display:flex;align-items:center;justify-content:space-between;
-      padding:16px 24px;backdrop-filter:blur(6px);
-      background:linear-gradient(180deg, rgba(10,6,7,.85), rgba(10,6,7,0));
-    }
-    .brand{display:flex;align-items:center;gap:10px;text-decoration:none;color:var(--bone)}
-    .brand-mark{
-      width:38px;height:38px;border-radius:9px;display:grid;place-items:center;
-      background:var(--blood);color:#fff;font-weight:700;font-size:20px;
-      box-shadow:0 0 18px rgba(224,0,0,.6);border:1px solid rgba(255,255,255,.15);
-    }
-    .brand small{display:block;font-size:10px;letter-spacing:3px;color:var(--ash);text-transform:uppercase}
-    .brand b{font-size:17px;letter-spacing:1px}
-    .nav-cta{
-      font-family:var(--font-horror);letter-spacing:2px;font-size:18px;
-      color:var(--blood);text-decoration:none;border:1.5px solid var(--blood-deep);
-      padding:8px 18px;border-radius:4px;transition:.2s;text-shadow:0 0 10px rgba(224,0,0,.5);
-    }
-    .nav-cta:hover{background:var(--blood);color:#fff;box-shadow:0 0 22px rgba(224,0,0,.7)}
+    nav{position:sticky;top:0;z-index:60;border-bottom:1px solid var(--line);
+      background:linear-gradient(180deg, rgba(10,7,8,.92), rgba(10,7,8,.55));backdrop-filter:blur(10px)}
+    .nav-in{max-width:1160px;margin:0 auto;padding:12px 24px;display:flex;align-items:center;justify-content:space-between;gap:16px}
+    .brand{display:flex;align-items:center;gap:11px}
+    .brand .mk{width:34px;height:34px;border-radius:8px;background:var(--blood);display:grid;place-items:center;color:#fff;font-size:18px;box-shadow:0 0 16px rgba(227,6,19,.55)}
+    .brand .tx small{display:block;font-size:9px;letter-spacing:3px;color:var(--ash);text-transform:uppercase}
+    .brand .tx b{font-family:var(--f-display);font-size:16px;letter-spacing:1.5px}
+    .nav-right{display:flex;align-items:center;gap:18px}
+    .nav-count{font-family:var(--f-type);font-size:12px;color:var(--bone-dim);letter-spacing:1px}
+    .nav-count b{color:var(--ember)}
+    .nav-cta{font-family:var(--f-display);letter-spacing:2px;font-size:14px;padding:9px 20px;border-radius:3px;
+      background:var(--blood);color:#fff;transition:.2s;box-shadow:0 0 18px rgba(227,6,19,.4)}
+    .nav-cta:hover{filter:brightness(1.12);box-shadow:0 0 26px rgba(227,6,19,.65)}
+    @media(max-width:620px){.nav-count{display:none}}
 
-    /* ---------- HERO / COFFIN ---------- */
-    .hero{position:relative;padding:40px 20px 60px;display:flex;flex-direction:column;align-items:center}
-    .coffin{
-      position:relative;width:min(540px,92vw);padding:52px 34px 60px;text-align:center;
-      background:
-        repeating-linear-gradient(0deg, rgba(0,0,0,.04) 0 2px, transparent 2px 4px),
-        radial-gradient(ellipse at 50% 30%, #ff1a1a, var(--blood) 45%, var(--blood-deep) 100%);
-      clip-path:polygon(50% 0%, 82% 9%, 100% 26%, 92% 100%, 8% 100%, 0% 26%, 18% 9%);
-      box-shadow:0 0 0 4px #000, 0 0 60px rgba(224,0,0,.45), inset 0 0 80px rgba(90,0,0,.6);
-      animation:breathe 5s ease-in-out infinite;
-    }
-    @keyframes breathe{0%,100%{box-shadow:0 0 0 4px #000,0 0 50px rgba(224,0,0,.35),inset 0 0 80px rgba(90,0,0,.6)}50%{box-shadow:0 0 0 4px #000,0 0 80px rgba(224,0,0,.7),inset 0 0 90px rgba(120,0,0,.7)}}
-    .coffin::before{
-      content:"⚰";position:absolute;inset:0;display:grid;place-items:center;
-      font-size:420px;color:rgba(0,0,0,.08);pointer-events:none;
-    }
-    .presents{position:relative;font-size:12px;letter-spacing:4px;color:#2a0000;text-transform:uppercase;margin-bottom:4px}
-    .presents b{font-size:15px;color:#000}
-    .invite{position:relative;font-weight:600;letter-spacing:3px;font-size:13px;color:#1a0000;text-transform:uppercase;margin-bottom:10px}
-    .title{
-      position:relative;font-family:var(--font-horror);color:#0a0000;
-      font-size:clamp(58px,15vw,104px);line-height:.82;letter-spacing:2px;
-      text-shadow:3px 3px 0 rgba(255,255,255,.08), -1px -1px 0 rgba(0,0,0,.4);
-    }
-    .title span{display:block}
-    .amdm{position:relative;font-family:var(--font-hand);color:var(--bone);margin:22px 0 6px;font-size:clamp(16px,4.6vw,22px);line-height:2.1;text-shadow:0 2px 6px #000}
-    .amdm .q{color:#200;font-family:var(--font-horror);letter-spacing:2px}
-    .amdm small{font-family:var(--font-body);font-size:11px;letter-spacing:2px;color:#300;vertical-align:super}
-    .when{position:relative;margin-top:16px}
-    .when .date{font-family:var(--font-horror);font-size:clamp(30px,8vw,46px);letter-spacing:3px;color:var(--bone);text-shadow:0 0 16px rgba(0,0,0,.8),2px 2px 0 #300}
-    .when .day{font-weight:700;letter-spacing:6px;color:#1a0000;font-size:15px}
-    .possessed{position:relative;margin-top:22px;font-family:var(--font-horror);font-size:20px;letter-spacing:2px;color:#0a0000}
-    .possessed b{display:block;font-size:26px;color:#000}
+    /* ---------- HERO ---------- */
+    .hero{padding:48px 0 30px;position:relative}
+    .hero-grid{display:grid;grid-template-columns:minmax(300px,0.9fr) 1.1fr;gap:54px;align-items:center}
 
-    .scroll-cue{margin-top:34px;font-family:var(--font-hand);font-size:13px;color:var(--ash);animation:bob 2s ease-in-out infinite}
-    @keyframes bob{0%,100%{transform:translateY(0)}50%{transform:translateY(8px)}}
-    .bats{position:absolute;font-size:26px;opacity:.85;filter:drop-shadow(0 0 6px #000);animation:fly 6s ease-in-out infinite}
-    .bat1{top:90px;left:8%}.bat2{top:150px;right:10%;animation-delay:1.5s;font-size:20px}.bat3{top:330px;left:14%;animation-delay:.8s;font-size:18px}
-    @keyframes fly{0%,100%{transform:translate(0,0) rotate(-4deg)}50%{transform:translate(14px,-12px) rotate(6deg)}}
+    /* framed poster */
+    .flyer{position:relative;justify-self:center;width:100%;max-width:360px;transform:rotate(-1.6deg);transition:.4s}
+    .flyer:hover{transform:rotate(0deg) scale(1.015)}
+    .flyer .frame{position:relative;border:10px solid #0c0809;border-radius:4px;overflow:hidden;
+      box-shadow:0 30px 70px rgba(0,0,0,.7), 0 0 0 1px rgba(227,6,19,.3), 0 0 60px rgba(227,6,19,.18)}
+    .flyer video{display:block;width:100%;aspect-ratio:9/16;object-fit:cover;background:#111}
+    .flyer .tape{position:absolute;width:104px;height:30px;background:rgba(239,230,214,.14);
+      backdrop-filter:blur(1px);border:1px dashed rgba(239,230,214,.28);transform:rotate(-7deg);z-index:3}
+    .flyer .tape.tl{top:-14px;left:-18px}
+    .flyer .tape.br{bottom:-14px;right:-18px;transform:rotate(-7deg)}
+    .flyer .stamp{position:absolute;bottom:14px;right:-14px;z-index:4;font-family:var(--f-display);
+      background:var(--blood);color:#fff;font-size:13px;letter-spacing:2px;padding:7px 14px;border-radius:3px;
+      transform:rotate(-6deg);box-shadow:0 8px 24px rgba(0,0,0,.5)}
 
-    /* ---------- SECTION SHELL ---------- */
-    section.block{position:relative;max-width:980px;margin:0 auto;padding:40px 22px}
-    .eyebrow{font-family:var(--font-hand);color:var(--blood);font-size:15px;margin-bottom:8px;text-shadow:0 0 12px rgba(224,0,0,.4)}
-    .sec-title{font-family:var(--font-horror);font-size:clamp(34px,8vw,56px);letter-spacing:2px;line-height:1;margin-bottom:10px}
+    /* editorial column */
+    .kick{font-family:var(--f-type);font-size:12px;letter-spacing:4px;color:var(--ember);text-transform:uppercase;
+      display:flex;align-items:center;gap:12px;margin-bottom:18px}
+    .kick::before{content:"";width:40px;height:1px;background:var(--blood)}
+    .hero h1{font-family:var(--f-display);line-height:.86;letter-spacing:1px;margin-bottom:8px;
+      font-size:clamp(66px,12vw,138px);text-transform:uppercase}
+    .hero h1 .l2{color:transparent;-webkit-text-stroke:2px var(--blood);text-stroke:2px var(--blood);
+      filter:drop-shadow(0 0 22px rgba(227,6,19,.45))}
+    .lede{font-family:var(--f-goth);font-size:clamp(20px,3.4vw,30px);color:var(--bone);margin:14px 0 6px;letter-spacing:.5px}
+    .lede .q{color:var(--ember)}
+    .lede small{font-family:var(--f-type);font-size:12px;color:var(--ash);letter-spacing:1px;margin-left:6px}
+    .meta{display:flex;flex-wrap:wrap;gap:10px 26px;margin:22px 0 26px;font-family:var(--f-type);font-size:13px;color:var(--bone-dim)}
+    .meta span{display:flex;align-items:center;gap:8px}
+    .meta i{font-style:normal;color:var(--ember)}
 
-    /* ---------- DETAILS STRIP ---------- */
-    .details{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-top:8px}
-    .detail{
-      background:rgba(20,11,12,.72);border:1px solid rgba(224,0,0,.25);border-radius:10px;
-      padding:18px 14px;text-align:center;backdrop-filter:blur(3px);
+    .hero-ctas{display:flex;flex-wrap:wrap;gap:14px;align-items:center}
+    .btn{font-family:var(--f-display);letter-spacing:2px;font-size:17px;padding:15px 30px;border-radius:4px;cursor:pointer;transition:.2s;border:none}
+    .btn-blood{background:var(--blood);color:#fff;box-shadow:0 12px 34px rgba(227,6,19,.4)}
+    .btn-blood:hover{filter:brightness(1.1);transform:translateY(-2px);box-shadow:0 16px 44px rgba(227,6,19,.6)}
+    .btn-ghost{background:transparent;color:var(--bone);border:1.5px solid var(--line);padding:13.5px 26px}
+    .btn-ghost:hover{border-color:var(--blood);color:#fff}
+
+    /* ---------- COUNTDOWN ---------- */
+    .count{display:flex;gap:10px;margin-top:30px}
+    .count .cell{background:rgba(18,12,13,.7);border:1px solid var(--line);border-radius:8px;padding:12px 6px;text-align:center;min-width:72px;flex:1;max-width:92px}
+    .count .n{font-family:var(--f-display);font-size:34px;line-height:1;color:var(--bone)}
+    .count .k{font-family:var(--f-type);font-size:10px;letter-spacing:2px;color:var(--ash);text-transform:uppercase;margin-top:6px}
+
+    @media(max-width:860px){
+      .hero-grid{grid-template-columns:1fr;gap:38px}
+      .flyer{order:-1;max-width:300px}
+      .hero h1{font-size:clamp(64px,19vw,110px)}
     }
-    .detail .ic{font-size:26px;filter:drop-shadow(0 0 8px rgba(224,0,0,.5))}
-    .detail .k{font-size:10px;letter-spacing:2px;color:var(--ash);text-transform:uppercase;margin:8px 0 3px}
-    .detail .v{font-weight:600;font-size:15px;letter-spacing:.5px}
+
+    /* ---------- MARQUEE ---------- */
+    .marq{border-top:1px solid var(--line);border-bottom:1px solid var(--line);
+      background:rgba(227,6,19,.06);overflow:hidden;white-space:nowrap;padding:14px 0;margin-top:14px}
+    .marq-row{display:inline-flex;gap:40px;animation:scroll 26s linear infinite;font-family:var(--f-display);
+      font-size:18px;letter-spacing:3px;color:var(--bone-dim);text-transform:uppercase}
+    .marq-row span{display:flex;align-items:center;gap:40px}
+    .marq-row i{color:var(--blood);font-style:normal}
+    @keyframes scroll{to{transform:translateX(-50%)}}
+
+    /* ---------- SECTIONS ---------- */
+    section{padding:72px 0;position:relative}
+    .sec-head{margin-bottom:38px}
+    .sec-eye{font-family:var(--f-type);font-size:12px;letter-spacing:4px;color:var(--ember);text-transform:uppercase;display:flex;align-items:center;gap:12px}
+    .sec-eye::before{content:"⚰";filter:grayscale(1) brightness(1.5)}
+    .sec-title{font-family:var(--f-display);font-size:clamp(38px,7vw,74px);line-height:.92;letter-spacing:1px;text-transform:uppercase;margin-top:12px}
+    .sec-sub{color:var(--bone-dim);max-width:560px;margin-top:14px;font-size:16px}
+
+    /* ---------- RUN OF SHOW ---------- */
+    .timeline{position:relative;margin-top:10px;border-left:2px solid var(--line);padding-left:0}
+    .tl{position:relative;padding:0 0 34px 42px}
+    .tl::before{content:"";position:absolute;left:-9px;top:4px;width:16px;height:16px;border-radius:50%;
+      background:var(--ink);border:2px solid var(--blood);box-shadow:0 0 12px rgba(227,6,19,.6)}
+    .tl:last-child{padding-bottom:0}
+    .tl .time{font-family:var(--f-display);font-size:22px;color:var(--ember);letter-spacing:1px}
+    .tl .ev{font-family:var(--f-display);font-size:24px;letter-spacing:1px;text-transform:uppercase;margin:2px 0 4px}
+    .tl .d{color:var(--bone-dim);font-size:14.5px;max-width:520px}
 
     /* ---------- TICKETS ---------- */
-    .tickets{display:grid;grid-template-columns:1fr 1fr;gap:20px;margin-top:18px}
-    .ticket{
-      position:relative;cursor:pointer;border-radius:16px;padding:28px 24px 26px;
-      background:linear-gradient(160deg, rgba(40,10,12,.9), rgba(12,7,8,.95));
-      border:2px solid rgba(224,0,0,.35);transition:.22s;overflow:hidden;
-    }
-    .ticket:hover{transform:translateY(-4px);border-color:var(--blood);box-shadow:0 14px 40px rgba(224,0,0,.25)}
-    .ticket.sel{border-color:var(--blood);background:linear-gradient(160deg, rgba(80,0,0,.95), rgba(20,7,8,.98));box-shadow:0 0 0 2px var(--blood),0 14px 44px rgba(224,0,0,.4)}
-    .ticket .tag{position:absolute;top:14px;right:-34px;transform:rotate(45deg);background:var(--blood);color:#fff;font-size:10px;letter-spacing:2px;padding:4px 40px;font-weight:600}
-    .ticket .ic{font-size:40px;filter:drop-shadow(0 0 10px rgba(224,0,0,.6))}
-    .ticket h3{font-family:var(--font-horror);font-size:30px;letter-spacing:2px;margin:10px 0 2px;color:var(--bone)}
-    .ticket .sub{font-size:12px;color:var(--ash);letter-spacing:1px;min-height:32px}
-    .ticket .price{font-family:var(--font-horror);font-size:40px;color:var(--blood);margin-top:12px;text-shadow:0 0 16px rgba(224,0,0,.5)}
-    .ticket .price small{font-family:var(--font-body);font-size:13px;color:var(--ash)}
-    .ticket .pick{margin-top:14px;display:flex;align-items:center;gap:8px;font-size:12px;letter-spacing:2px;color:var(--ash);text-transform:uppercase}
-    .ticket .dot{width:16px;height:16px;border-radius:50%;border:2px solid var(--blood);display:inline-grid;place-items:center}
-    .ticket.sel .dot{background:var(--blood)}
-    .ticket.sel .dot::after{content:"";width:6px;height:6px;border-radius:50%;background:#fff}
-    .ticket.sel .pick{color:var(--bone)}
+    .tk-grid{display:grid;grid-template-columns:1fr 1fr;gap:24px}
+    .ticket{position:relative;cursor:pointer;background:var(--panel);border:1px solid var(--line);border-radius:14px;
+      overflow:hidden;transition:.22s}
+    .ticket:hover{transform:translateY(-5px);border-color:var(--blood);box-shadow:0 20px 50px rgba(227,6,19,.2)}
+    .ticket.sel{border-color:var(--blood);box-shadow:0 0 0 2px var(--blood),0 20px 54px rgba(227,6,19,.32)}
+    .ticket .top{padding:26px 26px 20px;position:relative}
+    .ticket .ribbon{position:absolute;top:18px;right:-32px;transform:rotate(45deg);background:var(--blood);color:#fff;
+      font-family:var(--f-type);font-size:10px;letter-spacing:2px;padding:5px 42px}
+    .ticket .lbl{font-family:var(--f-type);font-size:12px;letter-spacing:3px;color:var(--ash);text-transform:uppercase}
+    .ticket h3{font-family:var(--f-display);font-size:38px;letter-spacing:1px;text-transform:uppercase;margin:6px 0 2px}
+    .ticket .for{color:var(--bone-dim);font-size:14px;min-height:40px}
+    .ticket .price{font-family:var(--f-display);font-size:52px;color:var(--bone);margin-top:10px;line-height:1}
+    .ticket .price .cur{color:var(--ember);font-size:30px;vertical-align:super}
+    .ticket .price .per{font-family:var(--f-body);font-size:14px;color:var(--ash);letter-spacing:1px}
+    /* perforation */
+    .ticket .perf{position:relative;height:0;border-top:2px dashed var(--line)}
+    .ticket .perf::before,.ticket .perf::after{content:"";position:absolute;top:-14px;width:26px;height:26px;border-radius:50%;background:var(--ink)}
+    .ticket .perf::before{left:-13px}.ticket .perf::after{right:-13px}
+    .ticket .inc{padding:22px 26px 24px;list-style:none;display:grid;gap:11px}
+    .ticket .inc li{display:flex;gap:11px;font-size:14.5px;color:var(--bone)}
+    .ticket .inc li::before{content:"✚";color:var(--blood);font-weight:700}
+    .ticket .choose{margin:0 26px 26px;display:flex;align-items:center;justify-content:center;gap:10px;
+      padding:13px;border-radius:7px;border:1px solid var(--line);font-family:var(--f-display);letter-spacing:2px;
+      font-size:15px;color:var(--bone-dim);transition:.2s}
+    .ticket.sel .choose{background:var(--blood);border-color:var(--blood);color:#fff}
+    .ticket:not(.sel):hover .choose{border-color:var(--blood);color:var(--bone)}
 
-    /* ---------- FORM ---------- */
-    .booking{
-      margin-top:22px;background:rgba(14,8,9,.82);border:1px solid rgba(224,0,0,.25);
-      border-radius:18px;padding:26px 24px;backdrop-filter:blur(4px);
-    }
-    .row{display:grid;grid-template-columns:1fr 1fr;gap:16px}
-    .field{margin-top:16px}
-    .field label{display:block;font-size:11px;letter-spacing:2px;text-transform:uppercase;color:var(--ash);margin-bottom:6px}
-    .field input, .field select{
-      width:100%;padding:13px 14px;border-radius:9px;border:1px solid rgba(224,0,0,.3);
-      background:rgba(0,0,0,.45);color:var(--bone);font-family:var(--font-body);font-size:15px;transition:.18s;
-    }
-    .field input:focus, .field select:focus{outline:none;border-color:var(--blood);box-shadow:0 0 0 3px rgba(224,0,0,.18)}
-    .field input::placeholder{color:#5a4a4a}
+    @media(max-width:720px){.tk-grid{grid-template-columns:1fr}}
 
-    .qty{display:flex;align-items:center;gap:0;width:fit-content;border:1px solid rgba(224,0,0,.3);border-radius:9px;overflow:hidden}
-    .qty button{width:46px;height:46px;background:rgba(0,0,0,.4);border:none;color:var(--blood);font-size:22px;cursor:pointer;font-family:var(--font-horror)}
+    /* ---------- BOOK FORM ---------- */
+    .book{margin-top:34px;background:var(--panel);border:1px solid var(--line);border-radius:16px;padding:30px;position:relative}
+    .book .tag{font-family:var(--f-type);font-size:12px;letter-spacing:3px;color:var(--ember);text-transform:uppercase}
+    .book h3{font-family:var(--f-display);font-size:30px;letter-spacing:1px;margin:6px 0 20px;text-transform:uppercase}
+    .row{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+    .fld{margin-bottom:0}
+    .fld+.fld{margin-top:18px}
+    .fld label{display:block;font-family:var(--f-type);font-size:11px;letter-spacing:2px;color:var(--ash);text-transform:uppercase;margin-bottom:7px}
+    .fld input{width:100%;padding:14px;border-radius:9px;border:1px solid var(--line-soft);background:rgba(0,0,0,.4);
+      color:var(--bone);font-family:var(--f-body);font-size:15.5px;transition:.18s}
+    .fld input::placeholder{color:#5c5048}
+    .fld input:focus{outline:none;border-color:var(--blood);box-shadow:0 0 0 3px rgba(227,6,19,.16)}
+    .qty{display:inline-flex;border:1px solid var(--line-soft);border-radius:9px;overflow:hidden}
+    .qty button{width:48px;height:50px;background:rgba(0,0,0,.4);border:none;color:var(--blood);font-size:24px;font-family:var(--f-display);cursor:pointer}
     .qty button:hover{background:var(--blood);color:#fff}
-    .qty input{width:56px;text-align:center;border:none;border-left:1px solid rgba(224,0,0,.2);border-right:1px solid rgba(224,0,0,.2);border-radius:0}
+    .qty input{width:62px;text-align:center;border:none;border-inline:1px solid var(--line-soft);border-radius:0}
     .qty input:focus{box-shadow:none}
 
-    .summary{
-      margin-top:22px;padding:18px 20px;border-radius:12px;
-      background:linear-gradient(135deg, rgba(90,0,0,.4), rgba(0,0,0,.4));
-      border:1px dashed rgba(224,0,0,.5);display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;
-    }
-    .summary .lbl{font-size:12px;letter-spacing:2px;color:var(--ash);text-transform:uppercase}
-    .summary .tot{font-family:var(--font-horror);font-size:40px;color:var(--bone);text-shadow:0 0 14px rgba(224,0,0,.5)}
-    .summary .tot small{font-size:14px;color:var(--ash);font-family:var(--font-body)}
+    .order{margin-top:24px;border:1px dashed var(--line);border-radius:12px;padding:20px 22px;
+      background:linear-gradient(135deg, rgba(154,0,8,.16), rgba(0,0,0,.25))}
+    .order .ln{display:flex;justify-content:space-between;align-items:center;font-size:14.5px;color:var(--bone-dim);margin-bottom:8px}
+    .order .ln:last-of-type{margin-bottom:0}
+    .order .grand{display:flex;justify-content:space-between;align-items:baseline;margin-top:14px;padding-top:14px;border-top:1px solid var(--line)}
+    .order .grand .k{font-family:var(--f-type);font-size:12px;letter-spacing:2px;color:var(--ash);text-transform:uppercase}
+    .order .grand .v{font-family:var(--f-display);font-size:44px;color:var(--bone)}
+    .order .grand .v .cur{color:var(--ember);font-size:26px;vertical-align:super}
+    .reserve{width:100%;margin-top:20px;padding:18px;border:none;border-radius:11px;cursor:pointer;
+      background:linear-gradient(135deg, var(--ember), var(--blood-deep));color:#fff;
+      font-family:var(--f-display);font-size:24px;letter-spacing:3px;box-shadow:0 12px 40px rgba(227,6,19,.4);transition:.2s}
+    .reserve:hover{transform:translateY(-2px);filter:brightness(1.08);box-shadow:0 16px 50px rgba(227,6,19,.6)}
+    .fineprint{text-align:center;margin-top:14px;font-family:var(--f-type);font-size:12px;color:var(--ash)}
+    .fineprint b{color:var(--ember)}
+    @media(max-width:620px){.row{grid-template-columns:1fr}}
 
-    .reserve{
-      width:100%;margin-top:20px;padding:18px;border:none;border-radius:12px;cursor:pointer;
-      background:linear-gradient(135deg, #ff1414, var(--blood-deep));color:#fff;
-      font-family:var(--font-horror);font-size:26px;letter-spacing:3px;
-      box-shadow:0 10px 36px rgba(224,0,0,.45);transition:.2s;text-shadow:0 2px 6px rgba(0,0,0,.5);
-    }
-    .reserve:hover{transform:translateY(-2px);box-shadow:0 14px 48px rgba(224,0,0,.65);filter:brightness(1.08)}
-    .reserve:active{transform:translateY(0)}
-    .note{text-align:center;margin-top:14px;font-size:12px;color:var(--ash);letter-spacing:.5px}
-    .note b{color:var(--blood)}
+    /* ---------- DETAILS GRID ---------- */
+    .info-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px}
+    .info{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:22px 18px}
+    .info .k{font-family:var(--f-type);font-size:11px;letter-spacing:2px;color:var(--ash);text-transform:uppercase}
+    .info .v{font-family:var(--f-display);font-size:22px;letter-spacing:.5px;margin-top:8px;text-transform:uppercase}
+    .info .x{color:var(--bone-dim);font-size:13px;margin-top:4px}
+    @media(max-width:720px){.info-grid{grid-template-columns:1fr 1fr}}
 
-    /* ---------- WHAT TO EXPECT ---------- */
-    .expect{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:16px}
-    .exp{background:rgba(20,11,12,.6);border:1px solid rgba(224,0,0,.2);border-radius:12px;padding:22px 18px}
-    .exp .ic{font-size:30px}
-    .exp h4{font-family:var(--font-horror);letter-spacing:2px;font-size:22px;margin:10px 0 6px;color:var(--bone)}
-    .exp p{font-size:13.5px;color:#c8bcae}
+    /* ---------- FAQ ---------- */
+    .faq{border-top:1px solid var(--line)}
+    .q{border-bottom:1px solid var(--line);padding:22px 0;cursor:pointer}
+    .q .qh{display:flex;justify-content:space-between;align-items:center;gap:20px}
+    .q .qt{font-family:var(--f-display);font-size:21px;letter-spacing:.5px;text-transform:uppercase}
+    .q .ic{color:var(--blood);font-size:26px;font-family:var(--f-display);transition:.25s;flex-shrink:0}
+    .q.open .ic{transform:rotate(45deg)}
+    .q .a{max-height:0;overflow:hidden;transition:max-height .3s ease;color:var(--bone-dim);font-size:15px}
+    .q.open .a{max-height:240px;margin-top:12px}
 
     /* ---------- FOOTER ---------- */
-    footer{position:relative;text-align:center;padding:50px 20px 40px;border-top:1px solid rgba(224,0,0,.2);margin-top:30px}
-    footer .big{font-family:var(--font-horror);font-size:clamp(40px,12vw,90px);color:var(--blood-deep);letter-spacing:4px;line-height:.9;opacity:.9}
-    footer .sub{color:var(--ash);font-size:13px;letter-spacing:2px;margin-top:10px}
-    footer a{color:var(--blood);text-decoration:none}
+    footer{border-top:1px solid var(--line);padding:60px 0 44px;text-align:center;position:relative;overflow:hidden}
+    footer .big{font-family:var(--f-display);font-size:clamp(54px,17vw,150px);line-height:.85;letter-spacing:2px;
+      color:transparent;-webkit-text-stroke:1.5px var(--blood-deep);text-stroke:1.5px var(--blood-deep);text-transform:uppercase}
+    footer .sub{font-family:var(--f-type);color:var(--bone-dim);font-size:13px;letter-spacing:1px;margin-top:18px}
+    footer .sub a{color:var(--ember)}
 
     /* toast */
-    .toast{
-      position:fixed;left:50%;bottom:28px;transform:translateX(-50%) translateY(120px);
-      background:#111;border:1px solid var(--blood);color:var(--bone);padding:14px 22px;border-radius:10px;
-      font-size:14px;z-index:99;transition:.35s;box-shadow:0 10px 40px rgba(0,0,0,.6);max-width:90vw}
+    .toast{position:fixed;left:50%;bottom:28px;transform:translateX(-50%) translateY(140px);z-index:99;
+      background:#120c0d;border:1px solid var(--blood);color:var(--bone);padding:14px 22px;border-radius:10px;
+      font-family:var(--f-type);font-size:13px;letter-spacing:.5px;transition:.35s;box-shadow:0 14px 44px rgba(0,0,0,.6);max-width:90vw}
     .toast.show{transform:translateX(-50%) translateY(0)}
 
-    @media (max-width:720px){
-      .details{grid-template-columns:1fr 1fr}
-      .tickets{grid-template-columns:1fr}
-      .row{grid-template-columns:1fr}
-      .expect{grid-template-columns:1fr}
-      .nav-cta{font-size:15px;padding:6px 12px}
-    }
+    /* reveal on scroll */
+    .reveal{opacity:0;transform:translateY(26px);transition:.7s cubic-bezier(.2,.7,.2,1)}
+    .reveal.in{opacity:1;transform:none}
   </style>
 </head>
 <body>
 
-  <!-- animated grunge background -->
-  <div class="bg-wrap">
+  <div class="bg">
     <video autoplay muted loop playsinline poster="assets/coffee-grave-poster.jpg">
       <source src="assets/grave-loop.mp4" type="video/mp4" />
     </video>
   </div>
-  <div class="bg-vignette"></div>
+  <div class="bg-tint"></div>
   <div class="grain"></div>
 
   <!-- NAV -->
   <nav>
-    <a href="index.html" class="brand">
-      <div class="brand-mark">⚰</div>
-      <div><small>Kapai presents</small><b>COFFEE&nbsp;GRAVE</b></div>
-    </a>
-    <a href="#book" class="nav-cta">Reserve →</a>
+    <div class="nav-in">
+      <a href="index.html" class="brand">
+        <div class="mk">⚰</div>
+        <div class="tx"><small>Kapai presents</small><b>COFFEE GRAVE</b></div>
+      </a>
+      <div class="nav-right">
+        <div class="nav-count">BURIED IN <b id="navCount">—</b></div>
+        <a href="#book" class="nav-cta">Reserve</a>
+      </div>
+    </div>
   </nav>
 
   <!-- HERO -->
   <header class="hero">
-    <span class="bats bat1">🦇</span>
-    <span class="bats bat2">🦇</span>
-    <span class="bats bat3">🦇</span>
+    <div class="wrap hero-grid">
+      <div class="flyer">
+        <span class="tape tl"></span>
+        <span class="tape br"></span>
+        <div class="frame">
+          <video autoplay muted loop playsinline poster="assets/coffee-grave-poster.jpg">
+            <source src="assets/coffee-grave-poster.mp4" type="video/mp4" />
+          </video>
+        </div>
+        <span class="stamp">INVITE ONLY</span>
+      </div>
 
-    <div class="coffin">
-      <div class="presents">Kapai Coffee House &amp; Bistro<br/><b>presents</b></div>
-      <div class="invite">✦ An Invite-Only Halloween Party ✦</div>
-      <h1 class="title"><span>COFFEE</span><span>GRAVE</span></h1>
-      <div class="amdm">
-        AM <span class="q">for coffee</span><br/>
-        PM <span class="q">for ???</span> <small>*iykyk*</small>
+      <div class="hero-copy">
+        <div class="kick">Kapai Coffee House &amp; Bistro · Presents</div>
+        <h1>COFFEE<br/><span class="l2">GRAVE</span></h1>
+        <div class="lede">AM <span class="q">for coffee</span>, PM <span class="q">for ???</span><small>*iykyk*</small></div>
+        <div class="meta">
+          <span><i>◆</i> Sat · 31 Oct 2026</span>
+          <span><i>◆</i> 8 PM till late</span>
+          <span><i>◆</i> Kapai Café</span>
+          <span><i>◆</i> Costume mandatory</span>
+        </div>
+
+        <div class="hero-ctas">
+          <a href="#book" class="btn btn-blood">Reserve your spot</a>
+          <a href="#show" class="btn btn-ghost">The night →</a>
+        </div>
+
+        <div class="count" id="count">
+          <div class="cell"><div class="n" id="d">00</div><div class="k">Days</div></div>
+          <div class="cell"><div class="n" id="h">00</div><div class="k">Hrs</div></div>
+          <div class="cell"><div class="n" id="m">00</div><div class="k">Min</div></div>
+          <div class="cell"><div class="n" id="s">00</div><div class="k">Sec</div></div>
+        </div>
       </div>
-      <div class="when">
-        <div class="date">31 · 10 · 2026</div>
-        <div class="day">S&nbsp;A&nbsp;T&nbsp;U&nbsp;R&nbsp;D&nbsp;A&nbsp;Y</div>
-      </div>
-      <div class="possessed">Possessed by<b>★ SPECIAL DJ SET ★</b></div>
     </div>
-
-    <div class="scroll-cue">↓ dig your spot below ↓</div>
   </header>
 
-  <!-- DETAILS -->
-  <section class="block">
-    <div class="details">
-      <div class="detail"><div class="ic">🗓️</div><div class="k">When</div><div class="v">31 Oct 2026</div></div>
-      <div class="detail"><div class="ic">🌙</div><div class="k">Doors</div><div class="v">8 PM till late</div></div>
-      <div class="detail"><div class="ic">📍</div><div class="k">Where</div><div class="v">Kapai Café</div></div>
-      <div class="detail"><div class="ic">💀</div><div class="k">Dress code</div><div class="v">Costume / All black</div></div>
+  <!-- MARQUEE -->
+  <div class="marq">
+    <div class="marq-row">
+      <span><i>✦</i> Invite Only <i>✦</i> 31.10.26 <i>✦</i> Special DJ Set <i>✦</i> Costumes Mandatory <i>✦</i> Graveyard Brews <i>✦</i> AM for coffee, PM for ??? <i>✦</i></span>
+      <span><i>✦</i> Invite Only <i>✦</i> 31.10.26 <i>✦</i> Special DJ Set <i>✦</i> Costumes Mandatory <i>✦</i> Graveyard Brews <i>✦</i> AM for coffee, PM for ??? <i>✦</i></span>
+    </div>
+  </div>
+
+  <!-- RUN OF SHOW -->
+  <section id="show">
+    <div class="wrap">
+      <div class="sec-head reveal">
+        <div class="sec-eye">The order of the night</div>
+        <h2 class="sec-title">Run of the<br/>Dead</h2>
+        <p class="sec-sub">One night only. The café dies at sundown and wakes up as something else. Here's how it unfolds.</p>
+      </div>
+      <div class="timeline">
+        <div class="tl reveal"><div class="time">8:00 PM</div><div class="ev">Doors Creak Open</div><div class="d">Entry begins. Grab your wristband, your welcome brew, and your first look at the crypt.</div></div>
+        <div class="tl reveal"><div class="time">9:30 PM</div><div class="ev">Graveyard Specials</div><div class="d">The spooky menu goes live — signature blood-red brews, spiked and un-spiked, poured till late.</div></div>
+        <div class="tl reveal"><div class="time">10:30 PM</div><div class="ev">Possessed — The DJ Set</div><div class="d">A special guest set takes over. This is the "PM for ???" part. *iykyk*</div></div>
+        <div class="tl reveal"><div class="time">12:00 AM</div><div class="ev">Best Costume Ritual</div><div class="d">The crowd crowns the most hauntingly good fit. Prizes for the dead who dressed to kill.</div></div>
+        <div class="tl reveal"><div class="time">Late</div><div class="ev">Last Rites</div><div class="d">We keep going till the last soul leaves. No curfew for the cursed.</div></div>
+      </div>
     </div>
   </section>
 
-  <!-- BOOKING -->
-  <section class="block" id="book">
-    <div class="eyebrow">reserve before the crypt fills up</div>
-    <h2 class="sec-title">Claim Your Grave</h2>
-    <p style="color:#c8bcae;max-width:560px">Pick your entry below. Spots are limited — once the coffins are full, they're buried for good.</p>
-
-    <!-- ticket options -->
-    <div class="tickets">
-      <div class="ticket sel" data-type="Single Entry" data-price="499" data-cap="1" onclick="selectTicket(this)">
-        <div class="ic">🥀</div>
-        <h3>Single Entry</h3>
-        <div class="sub">One soul. One wristband. Full access to the haunt &amp; the DJ set.</div>
-        <div class="price">₹499 <small>/ person</small></div>
-        <div class="pick"><span class="dot"></span> Selected</div>
+  <!-- TICKETS / BOOKING -->
+  <section id="book">
+    <div class="wrap">
+      <div class="sec-head reveal">
+        <div class="sec-eye">Reserve before the crypt fills</div>
+        <h2 class="sec-title">Claim a Grave</h2>
+        <p class="sec-sub">Entry is invite-only and capped. Pick your plot below — once the coffins are full, they stay shut.</p>
       </div>
 
-      <div class="ticket" data-type="Couple Entry" data-price="899" data-cap="2" onclick="selectTicket(this)">
-        <div class="tag">BEST VALUE</div>
-        <div class="ic">🖤</div>
-        <h3>Couple Entry</h3>
-        <div class="sub">Two souls, one grave. Entry for two + a welcome shot each.</div>
-        <div class="price">₹899 <small>/ couple</small></div>
-        <div class="pick"><span class="dot"></span> Select</div>
-      </div>
-    </div>
+      <div class="tk-grid">
+        <div class="ticket sel" data-type="Single Entry" data-price="499" onclick="selectTicket(this)">
+          <div class="top">
+            <div class="lbl">Solo Soul</div>
+            <h3>Single Entry</h3>
+            <div class="for">One wristband, full access to the haunt.</div>
+            <div class="price"><span class="cur">₹</span>499 <span class="per">/ person</span></div>
+          </div>
+          <div class="perf"></div>
+          <ul class="inc">
+            <li>Entry for one</li>
+            <li>Welcome graveyard brew</li>
+            <li>Full access to the DJ set</li>
+            <li>Entry to the best-costume ritual</li>
+          </ul>
+          <div class="choose">✓ Selected</div>
+        </div>
 
-    <!-- form -->
-    <div class="booking">
-      <div class="row">
-        <div class="field">
-          <label>Your Name</label>
-          <input type="text" id="name" placeholder="Who dares enter?" />
-        </div>
-        <div class="field">
-          <label>Phone / WhatsApp</label>
-          <input type="tel" id="phone" placeholder="10-digit number" />
+        <div class="ticket" data-type="Couple Entry" data-price="899" onclick="selectTicket(this)">
+          <div class="ribbon">BEST VALUE</div>
+          <div class="top">
+            <div class="lbl">Two Souls, One Grave</div>
+            <h3>Couple Entry</h3>
+            <div class="for">Entry for two who haunt together.</div>
+            <div class="price"><span class="cur">₹</span>899 <span class="per">/ couple</span></div>
+          </div>
+          <div class="perf"></div>
+          <ul class="inc">
+            <li>Entry for two</li>
+            <li>Two welcome graveyard brews</li>
+            <li>A shared welcome shot</li>
+            <li>Priority entry — skip the queue</li>
+          </ul>
+          <div class="choose">Select this plot</div>
         </div>
       </div>
 
-      <div class="row">
-        <div class="field">
-          <label>Email <span style="color:#5a4a4a">(optional)</span></label>
-          <input type="email" id="email" placeholder="you@haunted.com" />
+      <!-- FORM -->
+      <div class="book">
+        <div class="tag">Booking Request</div>
+        <h3>Who's being buried?</h3>
+        <div class="row">
+          <div class="fld"><label>Full Name</label><input id="name" type="text" placeholder="Who dares enter?" /></div>
+          <div class="fld"><label>Phone / WhatsApp</label><input id="phone" type="tel" placeholder="10-digit number" /></div>
         </div>
-        <div class="field">
-          <label>How many <span id="unitLabel">entries</span>?</label>
-          <div class="qty">
-            <button type="button" onclick="bump(-1)">−</button>
-            <input type="number" id="qty" value="1" min="1" max="20" readonly />
-            <button type="button" onclick="bump(1)">+</button>
+        <div class="row" style="margin-top:18px">
+          <div class="fld"><label>Email <span style="color:#5c5048">(optional)</span></label><input id="email" type="email" placeholder="you@haunted.com" /></div>
+          <div class="fld"><label>How many <span id="unitLabel">entries</span>?</label>
+            <div class="qty">
+              <button type="button" onclick="bump(-1)">−</button>
+              <input id="qty" type="number" value="1" min="1" max="20" readonly />
+              <button type="button" onclick="bump(1)">+</button>
+            </div>
           </div>
         </div>
-      </div>
 
-      <div class="summary">
-        <div>
-          <div class="lbl" id="sumLine">1 × Single Entry</div>
-          <div style="font-size:12px;color:#8a7c7c;margin-top:4px">Pay at the door / confirm over WhatsApp</div>
+        <div class="order">
+          <div class="ln"><span id="orderLine">1 × Single Entry</span><span id="orderSub">₹499</span></div>
+          <div class="ln"><span>Heads at the party</span><span id="heads">1 guest</span></div>
+          <div class="grand">
+            <span class="k">Total due</span>
+            <span class="v"><span class="cur">₹</span><span id="totalNum">499</span></span>
+          </div>
         </div>
-        <div class="tot" id="total">₹499</div>
-      </div>
 
-      <button class="reserve" onclick="reserve()">⚰ Reserve My Grave ⚰</button>
-      <div class="note">You'll be sent to <b>WhatsApp</b> to confirm with Kapai. No payment taken on this page.</div>
+        <button class="reserve" onclick="reserve()">Reserve My Grave →</button>
+        <div class="fineprint">You'll be sent to <b>WhatsApp</b> to confirm with Kapai · No payment is taken on this page</div>
+      </div>
     </div>
   </section>
 
-  <!-- WHAT TO EXPECT -->
-  <section class="block">
-    <div class="eyebrow">if you make it in…</div>
-    <h2 class="sec-title">What Awaits</h2>
-    <div class="expect">
-      <div class="exp"><div class="ic">🎧</div><h4>Cursed Beats</h4><p>A special DJ set spinning till the dead hours. AM for coffee, PM for ???</p></div>
-      <div class="exp"><div class="ic">☕</div><h4>Graveyard Brews</h4><p>Signature spooky specials from the Kapai bar — spiked and un-spiked.</p></div>
-      <div class="exp"><div class="ic">👻</div><h4>Best Costume</h4><p>Come dressed to kill. Prizes for the most hauntingly good fits of the night.</p></div>
+  <!-- DETAILS -->
+  <section style="padding-top:20px">
+    <div class="wrap">
+      <div class="sec-head reveal"><div class="sec-eye">Before you rise</div><h2 class="sec-title" style="font-size:clamp(32px,6vw,54px)">Know the Rules</h2></div>
+      <div class="info-grid">
+        <div class="info reveal"><div class="k">Date</div><div class="v">31 Oct '26</div><div class="x">Saturday night</div></div>
+        <div class="info reveal"><div class="k">Doors</div><div class="v">8 PM</div><div class="x">Till the last soul leaves</div></div>
+        <div class="info reveal"><div class="k">Dress Code</div><div class="v">Costume</div><div class="x">Or all-black. No basics.</div></div>
+        <div class="info reveal"><div class="k">Entry</div><div class="v">Invite Only</div><div class="x">Reserve to get on the list</div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section style="padding-top:20px">
+    <div class="wrap">
+      <div class="sec-head reveal"><div class="sec-eye">Whispers from the crypt</div><h2 class="sec-title" style="font-size:clamp(32px,6vw,54px)">Questions</h2></div>
+      <div class="faq">
+        <div class="q" onclick="this.classList.toggle('open')"><div class="qh"><div class="qt">Is this really invite-only?</div><div class="ic">+</div></div><div class="a">Yes. Capacity is limited. Reserving here puts in your request — Kapai confirms your spot over WhatsApp and adds you to the guest list.</div></div>
+        <div class="q" onclick="this.classList.toggle('open')"><div class="qh"><div class="qt">How do I pay?</div><div class="ic">+</div></div><div class="a">No payment on this page. Once you reserve, we confirm on WhatsApp and share payment details, or you settle at the door — your choice.</div></div>
+        <div class="q" onclick="this.classList.toggle('open')"><div class="qh"><div class="qt">What does "AM for coffee, PM for ???" mean?</div><div class="ic">+</div></div><div class="a">Kapai is your coffee house by day. For one night, after dark, it becomes something else entirely. *iykyk*</div></div>
+        <div class="q" onclick="this.classList.toggle('open')"><div class="qh"><div class="qt">Is there an age limit?</div><div class="ic">+</div></div><div class="a">It's a late-night party. Entry rules are confirmed when Kapai messages you back on WhatsApp.</div></div>
+        <div class="q" onclick="this.classList.toggle('open')"><div class="qh"><div class="qt">Can I come alone?</div><div class="ic">+</div></div><div class="a">Absolutely — grab a Single Entry. Plenty of souls to meet in the crypt.</div></div>
+      </div>
     </div>
   </section>
 
   <footer>
-    <div class="big">COFFEE GRAVE</div>
-    <div class="sub">31.10.2026 · An invite-only Halloween party by <a href="index.html">Kapai</a></div>
-    <div class="sub" style="margin-top:6px">AM for coffee, PM for ??? *iykyk*</div>
+    <div class="wrap">
+      <div class="big">COFFEE GRAVE</div>
+      <div class="sub">31.10.2026 · Saturday · An invite-only Halloween party by <a href="index.html">Kapai Coffee House &amp; Bistro</a></div>
+      <div class="sub" style="margin-top:6px">AM for coffee, PM for ??? *iykyk*</div>
+    </div>
   </footer>
 
   <div class="toast" id="toast"></div>
 
   <script>
-    /* ============================================================
-       SETTINGS — change these two lines to go live
-       ============================================================ */
-    const WHATSAPP_NUMBER = "919999999999"; // ← café WhatsApp, country code + number, no +, no spaces
-    const PRICES = { "Single Entry": 499, "Couple Entry": 899 }; // ← edit ticket prices here
-    /* ============================================================ */
+    /* ===========================================================
+       GO-LIVE SETTINGS — edit these three lines
+       =========================================================== */
+    const WHATSAPP_NUMBER = "919999999999";                 // café WhatsApp: countrycode+number, no + or spaces
+    const PRICES = { "Single Entry": 499, "Couple Entry": 899 };
+    const EVENT_DATE = new Date("2026-10-31T20:00:00+05:30"); // 8 PM IST
+    /* =========================================================== */
 
-    let state = { type: "Single Entry", price: 499, qty: 1 };
+    let state = { type:"Single Entry", qty:1 };
 
+    /* ----- countdown ----- */
+    function tick(){
+      const diff = EVENT_DATE - new Date();
+      if(diff <= 0){ document.getElementById('navCount').textContent="TONIGHT"; return; }
+      const d=Math.floor(diff/864e5), h=Math.floor(diff/36e5)%24, m=Math.floor(diff/6e4)%60, s=Math.floor(diff/1e3)%60;
+      const p=n=>String(n).padStart(2,'0');
+      document.getElementById('d').textContent=p(d);
+      document.getElementById('h').textContent=p(h);
+      document.getElementById('m').textContent=p(m);
+      document.getElementById('s').textContent=p(s);
+      document.getElementById('navCount').textContent=d+"D "+p(h)+"H";
+    }
+    setInterval(tick,1000); tick();
+
+    /* ----- tickets ----- */
     function selectTicket(el){
       document.querySelectorAll('.ticket').forEach(t=>{
         t.classList.remove('sel');
-        t.querySelector('.pick').innerHTML = '<span class="dot"></span> Select';
+        t.querySelector('.choose').textContent = t.dataset.type==='Couple Entry' ? 'Select this plot' : 'Select';
       });
       el.classList.add('sel');
-      el.querySelector('.pick').innerHTML = '<span class="dot"></span> Selected';
+      el.querySelector('.choose').textContent='✓ Selected';
       state.type = el.dataset.type;
-      state.price = PRICES[state.type] ?? Number(el.dataset.price);
-      document.getElementById('unitLabel').textContent =
-        state.type === 'Couple Entry' ? 'couples' : 'entries';
+      document.getElementById('unitLabel').textContent = state.type==='Couple Entry'?'couples':'entries';
       render();
     }
-
-    function bump(d){
-      state.qty = Math.min(20, Math.max(1, state.qty + d));
-      document.getElementById('qty').value = state.qty;
-      render();
-    }
+    function bump(d){ state.qty=Math.min(20,Math.max(1,state.qty+d)); document.getElementById('qty').value=state.qty; render(); }
 
     function render(){
-      const total = state.price * state.qty;
-      const unit = state.type === 'Couple Entry' ? 'Couple Entry' : 'Single Entry';
-      document.getElementById('sumLine').textContent = `${state.qty} × ${unit}`;
-      document.getElementById('total').textContent = '₹' + total.toLocaleString('en-IN');
+      const price = PRICES[state.type];
+      const total = price*state.qty;
+      const heads = state.type==='Couple Entry' ? state.qty*2 : state.qty;
+      document.getElementById('orderLine').textContent = `${state.qty} × ${state.type}`;
+      document.getElementById('orderSub').textContent = '₹'+(price*state.qty).toLocaleString('en-IN');
+      document.getElementById('heads').textContent = heads+(heads>1?' guests':' guest');
+      document.getElementById('totalNum').textContent = total.toLocaleString('en-IN');
     }
 
-    function showToast(msg){
-      const t = document.getElementById('toast');
-      t.textContent = msg; t.classList.add('show');
-      setTimeout(()=>t.classList.remove('show'), 3800);
-    }
+    function showToast(msg){ const t=document.getElementById('toast'); t.textContent=msg; t.classList.add('show'); setTimeout(()=>t.classList.remove('show'),3800); }
 
     function reserve(){
-      const name  = document.getElementById('name').value.trim();
-      const phone = document.getElementById('phone').value.trim();
-      const email = document.getElementById('email').value.trim();
-
+      const name=document.getElementById('name').value.trim();
+      const phone=document.getElementById('phone').value.trim();
+      const email=document.getElementById('email').value.trim();
       if(!name){ showToast('⚠ Tell us your name first.'); document.getElementById('name').focus(); return; }
-      if(phone.replace(/\D/g,'').length < 10){ showToast('⚠ Add a valid phone number.'); document.getElementById('phone').focus(); return; }
-
-      const total = state.price * state.qty;
-      const guests = state.type === 'Couple Entry' ? state.qty * 2 : state.qty;
-
-      const msg =
+      if(phone.replace(/\D/g,'').length<10){ showToast('⚠ Add a valid phone number.'); document.getElementById('phone').focus(); return; }
+      const price=PRICES[state.type], total=price*state.qty;
+      const heads=state.type==='Couple Entry'?state.qty*2:state.qty;
+      const msg=
 `⚰ COFFEE GRAVE — Booking Request ⚰
-────────────────────────
+──────────────────────
 Name: ${name}
-Phone: ${phone}${email ? `\nEmail: ${email}` : ''}
+Phone: ${phone}${email?`\nEmail: ${email}`:''}
 Ticket: ${state.type}
-Quantity: ${state.qty}  (≈ ${guests} guest${guests>1?'s':''})
+Quantity: ${state.qty}  (≈ ${heads} guest${heads>1?'s':''})
 Total: ₹${total.toLocaleString('en-IN')}
-Event: 31.10.2026 · Saturday
-────────────────────────
+Event: 31.10.2026 · Saturday · 8 PM
+──────────────────────
 Please confirm my spot! 🖤`;
-
-      const url = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(msg)}`;
-      window.open(url, '_blank');
+      window.open(`https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(msg)}`,'_blank');
       showToast('Opening WhatsApp to confirm your booking…');
     }
+
+    /* ----- scroll reveal ----- */
+    const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target)}}),{threshold:.14});
+    document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
 
     render();
   </script>
