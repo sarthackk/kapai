@@ -3,11 +3,11 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
-<title>Coffee Grave. Kapai's invite-only Halloween night, 31 Oct 2026</title>
-<meta name="description" content="AM for coffee, PM for ???. Kapai's café dies at sundown and becomes Coffee Grave, an invite-only Halloween night. Saturday 31 October 2026. Reserve your plot." />
+<title>Coffee Grave — Kapai's invite-only Halloween night, 31 Oct 2026</title>
+<meta name="description" content="AM for coffee, PM for ???. Kapai's café dies at sundown and becomes Coffee Grave, an invite-only Halloween night. Sat 31 Oct 2026. Reserve a pass." />
 <meta name="theme-color" content="#0b0708" />
-<meta property="og:title" content="Coffee Grave: an invite-only Halloween night by Kapai" />
-<meta property="og:description" content="AM for coffee, PM for ???. Sat 31 Oct 2026. Possessed by a special DJ set. Reserve your plot." />
+<meta property="og:title" content="Coffee Grave — an invite-only Halloween night by Kapai" />
+<meta property="og:description" content="AM for coffee, PM for ???. Sat 31 Oct 2026. Possessed by a special DJ set. Reserve a pass." />
 <meta property="og:image" content="assets/coffee-grave-poster.jpg" />
 <meta property="og:type" content="website" />
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' fill='%23e30613'/><text y='.9em' font-size='62' x='50%' text-anchor='middle' dy='0.06em'>&#9880;</text></svg>" />
@@ -18,334 +18,308 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
 <style>
   :root{
-    /* palette: subject colours (blood-red / black / bone), dealt proportions kept */
     --bg:#0b0708; --ink:#f2e9d8; --muted:#9a8f82;
     --blood:#e30613; --blood-ink:#0b0708;
     --bone:#efe6d6; --bone-ink:#0b0708;
-    --deep:#7d0007; --deep-ink:#efe6d6;
-    --black:#0b0708; --black-ink:#f2e9d8;
-
-    --gutter:clamp(20px,5vw,64px);
+    --deep:#7d0007;
+    --gutter:clamp(18px,5vw,64px);
     --maxw:1360px;
-
-    --step-small:clamp(0.875rem, 0.82rem + 0.2vw, 0.95rem);
-    --step-body:clamp(1.0625rem, 1rem + 0.28vw, 1.2rem);
-    --step-lead:clamp(1.3rem, 1.1rem + 0.9vw, 1.9rem);
-    --step-head:clamp(2.2rem, 1.2rem + 4.2vw, 4.4rem);
-    --step-display:clamp(3.4rem, 0.6rem + 11.6vw, 11rem);
-
-    --f: "TikTok Sans", system-ui, sans-serif;
+    --small:clamp(0.875rem, 0.82rem + 0.2vw, 0.95rem);
+    --body:clamp(1.0625rem, 1rem + 0.28vw, 1.2rem);
+    --lead:clamp(1.3rem, 1.1rem + 0.9vw, 1.9rem);
+    --head:clamp(2.2rem, 1.2rem + 4.2vw, 4.4rem);
+    --f:"TikTok Sans", system-ui, sans-serif;
   }
   *{margin:0;padding:0;box-sizing:border-box}
   html{scroll-behavior:smooth}
-  body{background:var(--bg);color:var(--ink);font-family:var(--f);font-size:var(--step-body);line-height:1.45;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+  body{background:var(--bg);color:var(--ink);font-family:var(--f);font-size:var(--body);line-height:1.45;-webkit-font-smoothing:antialiased;overflow-x:hidden}
   a{color:inherit;text-decoration:none}
   img,video{display:block;max-width:100%}
   ::selection{background:var(--blood);color:#fff}
-
-  .display{font-weight:800;font-variation-settings:"wdth" 150;text-transform:uppercase;line-height:0.9;letter-spacing:-0.01em}
+  .display{font-weight:800;font-variation-settings:"wdth" 135;text-transform:uppercase;line-height:0.88;letter-spacing:-0.02em}
   .wrap{max-width:var(--maxw);margin:0 auto;padding-inline:var(--gutter)}
+  .rise{opacity:0;transform:translateY(24px)}
+  .maskline{display:block;overflow:hidden}
+  .maskline > span{display:block;transform:translateY(110%)}
+  .btn{display:inline-block;background:var(--blood);color:#fff;font-weight:800;font-variation-settings:"wdth" 120;text-transform:uppercase;font-size:var(--lead);letter-spacing:.01em;padding:16px 28px;border:none;cursor:pointer;transition:transform .2s cubic-bezier(.16,1,.3,1), background .25s ease}
+  .btn:hover{background:var(--bone);color:var(--bone-ink);transform:translateY(-3px)}
+  .btn:active{transform:translateY(0)}
 
-  /* ---------------- HERO ---------------- */
-  .hero{position:relative;min-height:100svh;background:var(--black);color:var(--black-ink);display:flex;flex-direction:column;overflow:hidden}
-  .topbar{display:flex;align-items:center;justify-content:space-between;padding:20px var(--gutter);position:relative;z-index:5}
-  .mark{font-weight:800;font-variation-settings:"wdth" 120;font-size:var(--step-small);letter-spacing:0.02em;text-transform:uppercase}
-  .mark b{color:var(--blood)}
-  .nav{display:flex;gap:22px}
-  .nav a{font-size:var(--step-small);text-transform:uppercase;font-weight:500;color:var(--muted)}
-  .nav a:hover{color:var(--ink)}
+  /* ---------------- NAV ---------------- */
+  nav{position:fixed;top:0;left:0;right:0;z-index:50;display:flex;align-items:center;justify-content:space-between;padding:16px var(--gutter);transition:color .3s ease, background .3s ease;mix-blend-mode:difference;color:#fff}
+  .mark{font-weight:800;font-variation-settings:"wdth" 120;font-size:var(--small);letter-spacing:.03em;text-transform:uppercase}
+  nav .links{display:flex;gap:20px}
+  nav .links a{font-size:var(--small);text-transform:uppercase;font-weight:600}
+  @media(max-width:620px){nav .links{display:none}}
 
-  .hero-body{flex:1;display:flex;align-items:center;padding:0 var(--gutter)}
-  .hero h1{width:100%;font-variation-settings:"wdth" 135;font-size:clamp(2.3rem, 9vw, 7.6rem);line-height:0.9;letter-spacing:-0.03em}
-  .hero h1 .ln{display:block;white-space:nowrap}
-  .hero h1 .l2{text-align:right}
-  .hero h1 .q{color:var(--blood)}
-  .flag{display:inline-block;background:var(--blood);color:var(--blood-ink);font-weight:800;font-variation-settings:"wdth" 120;text-transform:uppercase;font-size:var(--step-small);letter-spacing:.04em;padding:10px 16px}
-  .hero-foot{display:flex;flex-wrap:nowrap;align-items:flex-end;justify-content:space-between;gap:28px;padding:0 var(--gutter) clamp(24px,5vh,44px);position:relative;z-index:4}
-  .hero-foot .btn{flex:none}
-  .hero-foot .say{max-width:40ch;font-size:var(--step-lead);color:var(--ink);line-height:1.25}
-  .hero-foot .say b{color:var(--bone)}
-  .btn{display:inline-block;background:var(--blood);color:var(--blood-ink);font-weight:800;font-variation-settings:"wdth" 120;text-transform:uppercase;font-size:var(--step-lead);letter-spacing:.01em;padding:18px 30px;border:none;cursor:pointer;transition:transform .12s ease, background .12s ease}
-  .btn:hover{background:var(--bone);color:var(--bone-ink)}
-  .btn:active{transform:translateY(2px)}
+  /* ---------------- HERO (DAY) ---------------- */
+  .hero{position:relative;min-height:100svh;background:var(--bone);color:var(--bone-ink);display:flex;flex-direction:column;justify-content:center;padding:84px var(--gutter) 40px;overflow:hidden}
+  .hero h1{font-variation-settings:"wdth" 135;font-size:clamp(2.6rem, 11vw, 9rem);line-height:0.9;letter-spacing:-0.03em;text-transform:uppercase;font-weight:800}
+  .hero h1 .l2{color:var(--deep)}
+  .hero h1 .l2 .m{color:var(--blood)}
+  .hero-meta{margin-top:clamp(20px,4vh,40px);display:flex;flex-wrap:wrap;align-items:center;gap:16px 26px}
+  .hero-meta .when{font-weight:800;font-variation-settings:"wdth" 120;text-transform:uppercase;font-size:var(--lead);letter-spacing:.02em}
+  .hero-meta .when b{color:var(--blood)}
+  .scrollcue{position:absolute;bottom:22px;left:50%;transform:translateX(-50%);font-size:var(--small);text-transform:uppercase;letter-spacing:.2em;color:var(--bone-ink);opacity:.6;display:flex;flex-direction:column;align-items:center;gap:6px}
+  .scrollcue .a{animation:bob 1.6s infinite}
+  @keyframes bob{0%,100%{transform:translateY(0)}50%{transform:translateY(6px)}}
 
-  @media(max-width:860px){
-    .hero-body{grid-template-columns:1fr;align-content:center;gap:28px;padding-top:4vh}
-    .hero-poster{max-width:280px;justify-self:start;order:2}
-    .hero-foot{flex-direction:column;align-items:stretch}
-    .hero-foot .btn{text-align:center}
-  }
+  /* ---------------- TURN (day -> night) ---------------- */
+  .turn{position:relative;height:200vh;background:var(--bone)}
+  .turn-stage{position:sticky;top:0;height:100svh;overflow:hidden;display:grid;place-items:center;background:var(--bone)}
+  .turn-wipe{position:absolute;left:0;right:0;bottom:0;height:0;background:var(--bg);border-top:6px solid var(--blood);will-change:height;z-index:1}
+  .turn-t{position:relative;z-index:2;text-align:center;padding:0 var(--gutter)}
+  .turn-am{font-weight:800;font-variation-settings:"wdth" 120;text-transform:uppercase;font-size:clamp(2rem,7vw,4.5rem);color:var(--bone-ink);line-height:1}
+  .turn-pm{position:absolute;inset:0;display:grid;place-items:center;opacity:0;color:var(--ink)}
+  .turn-pm .big{font-weight:800;font-variation-settings:"wdth" 140;text-transform:uppercase;font-size:clamp(2.6rem,12vw,9rem);line-height:0.86;letter-spacing:-0.02em}
+  .turn-pm .big .red{color:var(--blood)}
 
-  /* ---------------- NIGHT (pinned title, pictures pass) ---------------- */
-  .night{position:relative;background:var(--bg);color:var(--ink)}
-  .night-pin{position:sticky;top:0;height:100svh;display:flex;align-items:center;justify-content:center;pointer-events:none;z-index:3}
-  .night-pin h2{font-size:clamp(3rem,13vw,12rem);line-height:0.82;text-align:center;color:var(--bone);mix-blend-mode:normal}
-  .night-flow{position:relative;z-index:2;max-width:var(--maxw);margin:0 auto;padding:12svh var(--gutter)}
-  .frame{position:relative;width:min(78vw,520px);margin:0 0 42svh}
-  .frame:nth-child(even){margin-left:auto}
-  .frame figure{margin:0;position:relative}
-  .frame img{width:100%;aspect-ratio:4/5;object-fit:cover;filter:grayscale(1) contrast(1.15) brightness(.92)}
-  .poster-frame{width:min(70vw,360px)}
-  .poster-frame video{width:100%;aspect-ratio:9/16;max-height:88svh;object-fit:cover;border:12px solid var(--bg)}
-  .poster-frame .flag{position:absolute;top:-12px;left:-12px;z-index:3}
-  .frame figcaption{margin-top:14px;max-width:34ch}
-  .frame .cap-k{display:block;font-weight:800;font-variation-settings:"wdth" 120;text-transform:uppercase;font-size:var(--step-lead);color:var(--blood);line-height:1}
-  .frame .cap-t{display:block;margin-top:6px;color:var(--ink);font-size:var(--step-body)}
-  @media(max-width:860px){.night-pin h2{font-size:17vw}.frame{width:82%;margin-bottom:26svh}}
+  /* ---------------- NIGHT sections ---------------- */
+  .night{background:var(--bg);color:var(--ink);position:relative}
+  /* reveal */
+  .reveal{min-height:100svh;display:grid;grid-template-columns:1fr 0.8fr;align-items:center;gap:clamp(20px,5vw,60px);padding:clamp(70px,10vh,120px) var(--gutter)}
+  .reveal .copy h2{font-weight:800;font-variation-settings:"wdth" 135;text-transform:uppercase;font-size:clamp(2.4rem,7vw,5.5rem);line-height:0.92;letter-spacing:-0.02em}
+  .reveal .copy h2 .red{color:var(--blood)}
+  .reveal .copy p{margin-top:18px;font-size:var(--lead);color:var(--muted);max-width:28ch}
+  .reveal .posterwrap{position:relative;justify-self:end;width:min(100%,360px);transform:rotate(3deg)}
+  .reveal .posterwrap video{width:100%;aspect-ratio:9/16;max-height:78svh;object-fit:cover;border:12px solid var(--bg);outline:2px solid #241a17}
+  .reveal .flag{position:absolute;top:-12px;left:-12px;z-index:2;background:var(--blood);color:#fff;font-weight:800;font-variation-settings:"wdth" 120;text-transform:uppercase;font-size:var(--small);letter-spacing:.04em;padding:9px 14px}
+  @media(max-width:820px){.reveal{grid-template-columns:1fr;text-align:left}.reveal .posterwrap{order:-1;justify-self:start;max-width:280px}}
 
-  /* ---------------- RUN OF SHOW (poster list) ---------------- */
-  .run{background:var(--bone);color:var(--bone-ink);padding:clamp(60px,9vw,120px) 0}
-  .run h2{font-size:var(--step-head);margin:0 0 clamp(26px,4vw,48px)}
-  .run ul{list-style:none}
-  .run li{display:flex;align-items:baseline;justify-content:space-between;gap:16px;padding:clamp(4px,1vw,10px) 0}
-  .run li .ev{font-size:clamp(2.2rem,8.4vw,7rem);line-height:0.96;transition:color .12s ease}
-  .run li .ev:hover{color:var(--blood)}
-  .run li .tm{font-weight:800;font-variation-settings:"wdth" 120;font-size:var(--step-lead);white-space:nowrap;font-variant-numeric:tabular-nums}
-  @media(max-width:860px){
-    .run li{flex-direction:column;align-items:flex-start;gap:2px;padding:10px 0}
-    .run li .tm{font-size:var(--step-body);color:var(--deep)}
-  }
+  /* run of show */
+  .run{padding:clamp(50px,8vw,110px) 0}
+  .run h2{font-weight:800;font-variation-settings:"wdth" 135;text-transform:uppercase;font-size:var(--head);letter-spacing:-0.01em;margin-bottom:clamp(20px,3vw,40px)}
+  .run ul{list-style:none;border-top:2px solid #241a17}
+  .run li{display:flex;align-items:center;justify-content:space-between;gap:14px;padding:clamp(10px,1.6vw,20px) 0;border-bottom:2px solid #241a17;transition:padding-left .3s cubic-bezier(.16,1,.3,1)}
+  .run li:hover{padding-left:14px}
+  .run li .ev{font-weight:800;font-variation-settings:"wdth" 130;text-transform:uppercase;font-size:clamp(1.8rem,6vw,4.5rem);line-height:1;transition:color .2s ease}
+  .run li:hover .ev{color:var(--blood)}
+  .run li .tm{font-weight:800;font-variation-settings:"wdth" 110;font-size:var(--lead);white-space:nowrap;font-variant-numeric:tabular-nums;color:var(--muted)}
+  .run li:hover .tm{color:var(--ink)}
+  @media(max-width:620px){.run li{flex-direction:column;align-items:flex-start;gap:0}.run li .tm{font-size:var(--small)}}
 
-  /* ---------------- TICKETS ---------------- */
-  .tix{background:var(--deep);color:var(--deep-ink);padding:clamp(60px,9vw,120px) 0}
-  .tix h2{font-size:var(--step-head);margin:0 0 10px}
-  .tix .intro{max-width:52ch;color:var(--bone);font-size:var(--step-lead);margin-bottom:clamp(26px,4vw,44px)}
-  .count{display:flex;gap:10px;margin-bottom:clamp(30px,5vw,48px);flex-wrap:wrap}
-  .count .c{background:var(--black);color:var(--black-ink);padding:14px 10px;min-width:86px;text-align:center;flex:1;max-width:120px}
-  .count .n{font-weight:800;font-variation-settings:"wdth" 130;font-size:clamp(2rem,6vw,3rem);line-height:1}
-  .count .k{text-transform:uppercase;font-size:var(--step-small);color:var(--muted);margin-top:4px;letter-spacing:.06em}
-  .tk{display:grid;grid-template-columns:repeat(3,1fr);gap:clamp(12px,1.6vw,20px)}
-  .ticket{background:var(--bone);color:var(--bone-ink);position:relative;cursor:pointer;display:flex;flex-direction:column;border:3px solid transparent;transition:border-color .12s ease}
-  .ticket:hover{border-color:var(--black)}
-  .ticket.sel{border-color:var(--blood)}
-  .ticket .main{padding:22px 22px 18px;flex:1}
-  .ticket .tier{font-size:clamp(1.6rem,3.4vw,2.2rem);line-height:1}
-  .ticket .who{color:var(--deep);font-weight:600;font-size:var(--step-body);margin-top:6px}
-  .ticket ul{list-style:none;margin-top:16px;display:grid;gap:7px}
-  .ticket ul li{font-size:var(--step-body);padding-left:18px;position:relative}
-  .ticket ul li::before{content:"+";position:absolute;left:0;color:var(--blood);font-weight:800}
-  .ticket .stub{border-top:3px dashed var(--deep);padding:16px 22px;display:flex;align-items:center;justify-content:space-between;gap:12px}
-  .ticket .price{font-weight:800;font-variation-settings:"wdth" 130;font-size:clamp(2.2rem,5vw,3rem);line-height:1}
+  /* ---------------- TICKETS (destination) ---------------- */
+  .tix{background:var(--deep);color:#fff;padding:clamp(54px,8vw,110px) 0}
+  .tix h2{font-weight:800;font-variation-settings:"wdth" 135;text-transform:uppercase;font-size:var(--head);letter-spacing:-0.01em}
+  .tix .sub{margin-top:8px;color:var(--bone);font-size:var(--lead);max-width:40ch}
+  .count{display:flex;gap:8px;margin:clamp(22px,3vw,34px) 0}
+  .count .c{background:var(--bg);padding:12px 8px;min-width:76px;text-align:center;flex:1;max-width:110px}
+  .count .n{font-weight:800;font-variation-settings:"wdth" 130;font-size:clamp(1.8rem,6vw,2.8rem);line-height:1}
+  .count .k{text-transform:uppercase;font-size:var(--small);color:var(--muted);margin-top:3px;letter-spacing:.06em}
+  .tk{display:grid;grid-template-columns:repeat(3,1fr);gap:clamp(10px,1.4vw,18px)}
+  .ticket{background:var(--bone);color:var(--bone-ink);position:relative;cursor:pointer;display:flex;flex-direction:column;border:3px solid transparent;transition:transform .25s cubic-bezier(.16,1,.3,1), border-color .2s ease}
+  .ticket:hover{transform:translateY(-6px);border-color:#000}
+  .ticket.sel{border-color:var(--blood);transform:translateY(-6px)}
+  .ticket .main{padding:20px 20px 14px;flex:1}
+  .ticket .tier{font-weight:800;font-variation-settings:"wdth" 130;text-transform:uppercase;font-size:clamp(1.5rem,3.4vw,2.1rem);line-height:1}
+  .ticket .who{color:var(--deep);font-weight:600;margin-top:4px}
+  .ticket .price{font-weight:800;font-variation-settings:"wdth" 130;font-size:clamp(2.2rem,5vw,3rem);line-height:1;margin-top:14px}
   .ticket .price .cur{color:var(--blood);font-size:.55em;vertical-align:super}
-  .ticket .pick{text-transform:uppercase;font-weight:800;font-variation-settings:"wdth" 120;font-size:var(--step-small);letter-spacing:.05em;color:var(--deep)}
+  .ticket .stub{border-top:3px dashed var(--deep);padding:14px 20px;display:flex;align-items:center;justify-content:space-between;gap:10px}
+  .ticket .pick{text-transform:uppercase;font-weight:800;font-variation-settings:"wdth" 120;font-size:var(--small);letter-spacing:.05em;color:var(--deep)}
   .ticket.sel .pick{color:var(--blood)}
-  .ticket.best::after{content:"Best value";position:absolute;top:0;right:0;background:var(--blood);color:var(--blood-ink);font-weight:800;font-variation-settings:"wdth" 120;text-transform:uppercase;font-size:var(--step-small);padding:6px 12px;letter-spacing:.04em}
+  .ticket .dot{width:16px;height:16px;border-radius:50%;border:2px solid var(--blood);flex-shrink:0;display:inline-grid;place-items:center}
+  .ticket.sel .dot{background:var(--blood)}.ticket.sel .dot::after{content:"";width:6px;height:6px;border-radius:50%;background:#fff}
+  .ticket.best::after{content:"Best value";position:absolute;top:0;right:0;background:var(--blood);color:#fff;font-weight:800;font-variation-settings:"wdth" 120;text-transform:uppercase;font-size:var(--small);padding:5px 11px;letter-spacing:.04em}
 
-  .book{margin-top:clamp(26px,4vw,40px);background:var(--black);color:var(--black-ink);padding:clamp(22px,3vw,34px)}
-  .book h3{font-size:var(--step-lead);text-transform:uppercase;font-weight:800;font-variation-settings:"wdth" 120;margin-bottom:18px}
-  .grid2{display:grid;grid-template-columns:1fr 1fr;gap:16px}
-  .fld{display:flex;flex-direction:column;gap:7px}
-  .fld label{text-transform:uppercase;font-size:var(--step-small);color:var(--muted);letter-spacing:.05em;font-weight:600}
-  .fld input{background:var(--bg);color:var(--ink);border:2px solid #2a1f1c;padding:14px;font-family:var(--f);font-size:var(--step-body)}
+  .book{margin-top:clamp(22px,3vw,36px);background:var(--bg);padding:clamp(20px,3vw,32px)}
+  .book h3{font-weight:800;font-variation-settings:"wdth" 120;text-transform:uppercase;font-size:var(--lead);margin-bottom:16px}
+  .grid2{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+  .fld{display:flex;flex-direction:column;gap:6px}
+  .fld label{text-transform:uppercase;font-size:var(--small);color:var(--muted);letter-spacing:.05em;font-weight:600}
+  .fld input{background:#140d0b;color:var(--ink);border:2px solid #2a1f1c;padding:14px;font-family:var(--f);font-size:var(--body)}
   .fld input:focus{outline:none;border-color:var(--blood)}
   .fld input::placeholder{color:#6b5f57}
   .qty{display:inline-flex;border:2px solid #2a1f1c;width:fit-content}
-  .qty button{width:52px;height:52px;background:var(--bg);color:var(--blood);border:none;font-size:1.6rem;font-weight:800;cursor:pointer;font-family:var(--f)}
-  .qty button:hover{background:var(--blood);color:var(--blood-ink)}
-  .qty input{width:62px;text-align:center;background:var(--bg);color:var(--ink);border:none;border-inline:2px solid #2a1f1c;font-size:var(--step-body)}
-  .total{margin-top:20px;display:flex;align-items:baseline;justify-content:space-between;gap:12px;border-top:3px solid #2a1f1c;padding-top:18px}
-  .total .k{text-transform:uppercase;font-size:var(--step-small);color:var(--muted);letter-spacing:.06em}
-  .total .v{font-weight:800;font-variation-settings:"wdth" 130;font-size:clamp(2.2rem,6vw,3.4rem);line-height:1}
+  .qty button{width:50px;height:50px;background:#140d0b;color:var(--blood);border:none;font-size:1.5rem;font-weight:800;cursor:pointer;font-family:var(--f)}
+  .qty button:hover{background:var(--blood);color:#fff}
+  .qty input{width:58px;text-align:center;background:#140d0b;color:var(--ink);border:none;border-inline:2px solid #2a1f1c;font-size:var(--body)}
+  .total{margin-top:18px;display:flex;align-items:baseline;justify-content:space-between;gap:12px;border-top:3px solid #2a1f1c;padding-top:16px}
+  .total .k{text-transform:uppercase;font-size:var(--small);color:var(--muted);letter-spacing:.06em}
+  .total .v{font-weight:800;font-variation-settings:"wdth" 130;font-size:clamp(2rem,6vw,3rem);line-height:1}
   .total .v .cur{color:var(--blood);font-size:.5em;vertical-align:super}
-  .book .btn{width:100%;margin-top:18px;text-align:center}
-  .note{margin-top:12px;text-align:center;font-size:var(--step-small);color:var(--muted)}
-  .note b{color:var(--blood)}
-  @media(max-width:860px){.tk{grid-template-columns:1fr}.grid2{grid-template-columns:1fr}}
+  .book .btn{width:100%;margin-top:16px;text-align:center}
+  .note{margin-top:10px;text-align:center;font-size:var(--small);color:var(--muted)}.note b{color:var(--blood)}
+  @media(max-width:820px){.tk{grid-template-columns:1fr}.grid2{grid-template-columns:1fr}}
 
-  /* ---------------- FAQ (band per question) ---------------- */
-  .faq-head{background:var(--blood);color:var(--blood-ink);min-height:40svh;display:flex;align-items:flex-end}
-  .faq-head h2{font-size:clamp(3rem,13vw,10rem);line-height:0.82;padding:0 var(--gutter) clamp(28px,4vw,52px)}
-  .band{padding:clamp(34px,4vw,56px) 0}
-  .band:nth-child(odd){background:var(--bg);color:var(--ink)}
-  .band:nth-child(even){background:var(--bone);color:var(--bone-ink)}
-  .band .row{display:grid;grid-template-columns:5fr 1fr 6fr;align-items:start}
-  .band .q{font-size:clamp(1.4rem,3vw,2rem);font-weight:800;font-variation-settings:"wdth" 110;line-height:1.05}
-  .band .a{grid-column:3;font-size:var(--step-body);line-height:1.5}
-  @media(max-width:860px){.band .row{grid-template-columns:1fr}.band .a{grid-column:1;margin-top:12px}}
+  /* FAQ accordion */
+  .faq{padding:clamp(50px,8vw,100px) 0}
+  .faq h2{font-weight:800;font-variation-settings:"wdth" 135;text-transform:uppercase;font-size:var(--head);margin-bottom:clamp(16px,2vw,28px)}
+  .q{border-top:2px solid #241a17;cursor:pointer}
+  .q:last-child{border-bottom:2px solid #241a17}
+  .q .qh{display:flex;align-items:center;justify-content:space-between;gap:16px;padding:clamp(16px,2vw,24px) 0}
+  .q .qt{font-weight:800;font-variation-settings:"wdth" 115;text-transform:uppercase;font-size:clamp(1.15rem,2.6vw,1.7rem)}
+  .q .ic{color:var(--blood);font-weight:800;font-size:1.6rem;transition:transform .3s cubic-bezier(.16,1,.3,1);flex-shrink:0}
+  .q.open .ic{transform:rotate(45deg)}
+  .q .a{max-height:0;overflow:hidden;transition:max-height .35s cubic-bezier(.16,1,.3,1);color:var(--muted);font-size:var(--body)}
+  .q.open .a{max-height:200px}
+  .q .a p{padding-bottom:clamp(16px,2vw,24px);max-width:60ch}
 
-  /* ---------------- FOOTER (contact as headline) ---------------- */
-  .foot{background:var(--blood);color:var(--blood-ink);min-height:92svh;display:flex;flex-direction:column;justify-content:space-between;padding:clamp(34px,5vw,56px) 0}
-  .foot-top{display:flex;flex-wrap:wrap;justify-content:space-between;gap:16px}
-  .foot-top .notes{display:grid;gap:4px;font-size:var(--step-body)}
-  .foot-top a.totop{font-weight:800;font-variation-settings:"wdth" 120;text-transform:uppercase;font-size:var(--step-small);letter-spacing:.05em}
-  .foot .big{font-size:clamp(3rem,13vw,11rem);line-height:0.82;margin-top:auto}
-  .foot .big a{display:inline-block}
-  .foot-meta{margin-top:clamp(28px,4vw,48px);display:flex;flex-wrap:wrap;justify-content:space-between;gap:12px;font-size:var(--step-small)}
-  .credits{max-width:92ch;color:var(--blood-ink);font-size:var(--step-small);line-height:1.5;opacity:.82}
+  /* FOOTER */
+  .foot{background:var(--blood);color:#fff;min-height:84svh;display:flex;flex-direction:column;justify-content:space-between;padding:clamp(30px,5vw,54px) 0}
+  .foot .top{display:flex;flex-wrap:wrap;justify-content:space-between;gap:14px;font-size:var(--body)}
+  .foot .top .notes{display:grid;gap:3px}
+  .foot .big{font-weight:800;font-variation-settings:"wdth" 135;text-transform:uppercase;font-size:clamp(3rem,13vw,11rem);line-height:0.82;margin-top:auto;cursor:pointer}
+  .foot .meta{margin-top:clamp(24px,4vw,44px);display:flex;flex-wrap:wrap;justify-content:space-between;gap:10px;font-size:var(--small)}
+  .credits{max-width:92ch;font-size:var(--small);line-height:1.5;opacity:.78}
   .credits a{text-decoration:underline}
 
-  .sound{position:fixed;left:16px;bottom:16px;z-index:40;background:var(--black);color:var(--muted);border:2px solid var(--blood);cursor:pointer;font-family:var(--f);font-weight:800;font-variation-settings:"wdth" 120;text-transform:uppercase;font-size:var(--step-small);letter-spacing:.05em;padding:12px 16px}
-  .sound.on{color:var(--blood)}
-  .toast{position:fixed;left:50%;bottom:80px;transform:translateX(-50%) translateY(140px);z-index:50;background:var(--black);color:var(--ink);border:2px solid var(--blood);padding:14px 20px;font-size:var(--step-small);transition:transform .3s ease;max-width:90vw;text-align:center}
+  /* sticky reserve bar */
+  .bar{position:fixed;left:0;right:0;bottom:0;z-index:45;background:var(--bg);border-top:3px solid var(--blood);display:flex;align-items:center;justify-content:space-between;gap:12px;padding:12px var(--gutter);transform:translateY(110%);transition:transform .4s cubic-bezier(.16,1,.3,1)}
+  .bar.show{transform:none}
+  .bar .info{display:flex;flex-direction:column;line-height:1.1}
+  .bar .info b{font-weight:800;font-variation-settings:"wdth" 120;text-transform:uppercase;font-size:var(--small);letter-spacing:.03em}
+  .bar .info span{font-size:var(--small);color:var(--muted)}
+  .bar .info span em{color:var(--blood);font-style:normal;font-weight:700}
+  .bar .btn{font-size:var(--body);padding:13px 22px}
+
+  .toast{position:fixed;left:50%;bottom:84px;transform:translateX(-50%) translateY(160px);z-index:60;background:#140d0b;color:var(--ink);border:2px solid var(--blood);padding:13px 20px;font-size:var(--small);transition:transform .35s cubic-bezier(.16,1,.3,1);max-width:90vw;text-align:center}
   .toast.show{transform:translateX(-50%) translateY(0)}
 
-  /* motion helpers */
-  .rise{opacity:0;transform:translateY(26px)}
-  .maskline{display:block;overflow:hidden}
-  .maskline > span{display:block;transform:translateY(110%)}
   @media (prefers-reduced-motion: reduce){
+    html{scroll-behavior:auto}
     .rise{opacity:1;transform:none}
     .maskline > span{transform:none}
-    .night-pin{position:relative;height:auto;padding:8svh 0}
-    html{scroll-behavior:auto}
+    .turn{height:auto}.turn-stage{position:relative;height:auto;padding:60px 0}
+    .turn-wipe{display:none}.turn-pm{position:relative;opacity:1}.turn-am{display:none}
+    .scrollcue,.bob{animation:none}
   }
 </style>
 </head>
-<body>
+<body id="top">
 
-<!-- ===================== HERO ===================== -->
+<nav>
+  <a href="#top" class="mark">KAPAI &#9880; COFFEE GRAVE</a>
+  <div class="links"><a href="#tickets">Passes</a><a href="#run">The night</a><a href="#faq">FAQ</a></div>
+</nav>
+
+<!-- ===== HERO (DAY) ===== -->
 <header class="hero">
-  <div class="topbar">
-    <div class="mark">KAPAI <b>&#9880; COFFEE GRAVE</b></div>
-    <nav class="nav"><a href="#night">The night</a><a href="#tickets">Tickets</a><a href="#faq">FAQ</a></nav>
+  <h1 class="display">
+    <span class="maskline"><span>AM for coffee.</span></span>
+    <span class="maskline l2"><span>PM for <span class="m" id="mystery">???</span></span></span>
+  </h1>
+  <div class="hero-meta">
+    <span class="when rise">Sat <b>31 Oct 2026</b> &middot; 8PM &middot; Invite only</span>
+    <a href="#tickets" class="btn rise">Reserve a pass</a>
   </div>
-
-  <div class="hero-body">
-    <h1 class="display">
-      <span class="ln maskline"><span>AM for coffee.</span></span>
-      <span class="ln maskline l2"><span>PM for <span class="q">???</span></span></span>
-    </h1>
-  </div>
-
-  <div class="hero-foot">
-    <p class="say rise">Kapai's café dies at sundown and wakes up as <b>Coffee Grave</b>, an invite-only Halloween night. <b>Saturday 31 October 2026</b>, 8 PM till late. Possessed by a special DJ set.</p>
-    <a href="#tickets" class="btn rise">Reserve your plot</a>
-  </div>
+  <div class="scrollcue">Scroll into the night<span class="a">&darr;</span></div>
 </header>
 
-<!-- ===================== THE NIGHT ===================== -->
-<section class="night" id="night">
-  <div class="night-pin"><h2 class="display">After<br/>dark</h2></div>
-  <div class="night-flow">
-    <div class="frame poster-frame">
-      <figure>
-        <span class="flag">Invite only</span>
-        <video autoplay muted loop playsinline poster="assets/coffee-grave-poster.jpg"><source src="assets/coffee-grave-poster.mp4" type="video/mp4" /></video>
-        <figcaption><span class="cap-k">The invitation</span><span class="cap-t">One night only. If the coffin poster found you, you're on the list.</span></figcaption>
-      </figure>
-    </div>
-    <div class="frame">
-      <figure>
-        <img src="assets/goodnight-my-children.jpg" width="1024" height="683" alt="A cemetery statue and stone obelisk in silhouette against a dim sky" loading="lazy" decoding="async" />
-        <figcaption><span class="cap-k">The café dies</span><span class="cap-t">At 8 PM the shutters come down and the lights go red. What was a coffee house is a crypt.</span></figcaption>
-      </figure>
-    </div>
-    <div class="frame">
-      <figure>
-        <img src="assets/silhouette-branches-at-dusk.jpg" width="1024" height="744" alt="A bare dead tree in silhouette against a heavy clouded sky" loading="lazy" decoding="async" />
-        <figcaption><span class="cap-k">The doors creak</span><span class="cap-t">Costumes on, wristbands out, graveyard brews poured, spiked and un-spiked.</span></figcaption>
-      </figure>
-    </div>
-    <div class="frame">
-      <figure>
-        <img src="assets/saturnine.jpg" width="1024" height="715" alt="Bare branches over a dark city skyline with pale light arcs in the sky" loading="lazy" decoding="async" />
-        <figcaption><span class="cap-k">Possessed</span><span class="cap-t">A special DJ set takes the room past midnight. This is the "PM for ???" part.</span></figcaption>
-      </figure>
+<!-- ===== THE TURN (day -> night) ===== -->
+<section class="turn" id="turn">
+  <div class="turn-stage">
+    <div class="turn-wipe" id="wipe"></div>
+    <div class="turn-t">
+      <div class="turn-am" id="turnAm">The café closes at 8.</div>
+      <div class="turn-pm" id="turnPm"><div class="big display">It doesn't<br/>go <span class="red">quiet.</span></div></div>
     </div>
   </div>
 </section>
 
-<!-- ===================== RUN OF SHOW ===================== -->
-<section class="run" id="show">
-  <div class="wrap">
-    <h2 class="display rise">Run of the dead</h2>
-    <ul>
-      <li class="rise"><span class="ev display">Doors creak open</span><span class="tm">8:00 PM</span></li>
-      <li class="rise"><span class="ev display">Graveyard specials</span><span class="tm">9:30 PM</span></li>
-      <li class="rise"><span class="ev display">Possessed. DJ set</span><span class="tm">10:30 PM</span></li>
-      <li class="rise"><span class="ev display">Best costume ritual</span><span class="tm">12:00 AM</span></li>
-      <li class="rise"><span class="ev display">Last rites</span><span class="tm">Till late</span></li>
-    </ul>
-  </div>
-</section>
+<!-- ===== NIGHT ===== -->
+<div class="night">
 
-<!-- ===================== TICKETS ===================== -->
-<section class="tix" id="tickets">
-  <div class="wrap">
-    <h2 class="display rise">Claim a grave</h2>
-    <p class="intro rise">Invite-only and capped. Pick your plot. Once the coffins are full, they stay shut.</p>
-
-    <div class="count rise">
-      <div class="c"><div class="n" id="cd-d">00</div><div class="k">Days</div></div>
-      <div class="c"><div class="n" id="cd-h">00</div><div class="k">Hrs</div></div>
-      <div class="c"><div class="n" id="cd-m">00</div><div class="k">Min</div></div>
-      <div class="c"><div class="n" id="cd-s">00</div><div class="k">Sec</div></div>
+  <!-- reveal -->
+  <section class="reveal" id="reveal">
+    <div class="copy">
+      <h2 class="rise display">This is <span class="red">Coffee Grave.</span></h2>
+      <p class="rise">One night, the coffee house becomes a crypt. Possessed by a special DJ set, till late.</p>
     </div>
-
-    <div class="tk">
-      <div class="ticket sel rise" data-type="Women Stag" onclick="selectTicket(this)">
-        <div class="main">
-          <div class="tier display">Women Stag</div>
-          <div class="who">Entry for one</div>
-          <ul><li>One wristband</li><li>Welcome graveyard brew</li><li>Full DJ-set access</li></ul>
-        </div>
-        <div class="stub"><span class="price"><span class="cur">&#8377;</span>799</span><span class="pick">Selected</span></div>
-      </div>
-      <div class="ticket rise" data-type="Men Stag" onclick="selectTicket(this)">
-        <div class="main">
-          <div class="tier display">Men Stag</div>
-          <div class="who">Entry for one</div>
-          <ul><li>One wristband</li><li>Welcome graveyard brew</li><li>Full DJ-set access</li></ul>
-        </div>
-        <div class="stub"><span class="price"><span class="cur">&#8377;</span>999</span><span class="pick">Select</span></div>
-      </div>
-      <div class="ticket best rise" data-type="Couple" onclick="selectTicket(this)">
-        <div class="main">
-          <div class="tier display">Couple</div>
-          <div class="who">Entry for two</div>
-          <ul><li>Two wristbands</li><li>Two brews + a shared shot</li><li>Priority entry</li></ul>
-        </div>
-        <div class="stub"><span class="price"><span class="cur">&#8377;</span>1499</span><span class="pick">Select</span></div>
-      </div>
+    <div class="posterwrap rise">
+      <span class="flag">Invite only</span>
+      <video autoplay muted loop playsinline poster="assets/coffee-grave-poster.jpg"><source src="assets/coffee-grave-poster.mp4" type="video/mp4" /></video>
     </div>
+  </section>
 
-    <div class="book rise">
-      <h3>Who's being buried?</h3>
-      <div class="grid2">
-        <div class="fld"><label for="name">Full name</label><input id="name" type="text" placeholder="Who dares enter?" /></div>
-        <div class="fld"><label for="phone">Phone / WhatsApp</label><input id="phone" type="tel" placeholder="10-digit number" /></div>
+  <!-- run of show -->
+  <section class="run" id="run">
+    <div class="wrap">
+      <h2 class="rise display">Run of the dead</h2>
+      <ul>
+        <li class="rise"><span class="ev display">Doors creak open</span><span class="tm">8:00 PM</span></li>
+        <li class="rise"><span class="ev display">Graveyard specials</span><span class="tm">9:30 PM</span></li>
+        <li class="rise"><span class="ev display">Possessed. DJ set</span><span class="tm">10:30 PM</span></li>
+        <li class="rise"><span class="ev display">Best costume ritual</span><span class="tm">12:00 AM</span></li>
+        <li class="rise"><span class="ev display">Last rites</span><span class="tm">Till late</span></li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- tickets -->
+  <section class="tix" id="tickets">
+    <div class="wrap">
+      <h2 class="rise display">Claim a grave</h2>
+      <p class="sub rise">Capped and invite-only. Once the coffins are full, they stay shut.</p>
+      <div class="count rise">
+        <div class="c"><div class="n" id="cd-d">00</div><div class="k">Days</div></div>
+        <div class="c"><div class="n" id="cd-h">00</div><div class="k">Hrs</div></div>
+        <div class="c"><div class="n" id="cd-m">00</div><div class="k">Min</div></div>
+        <div class="c"><div class="n" id="cd-s">00</div><div class="k">Sec</div></div>
       </div>
-      <div class="grid2" style="margin-top:16px">
-        <div class="fld"><label for="email">Email (optional)</label><input id="email" type="email" placeholder="you@haunted.com" /></div>
-        <div class="fld"><label for="qty">How many <span id="unitLabel">entries</span>?</label>
-          <div class="qty"><button type="button" onclick="bump(-1)" aria-label="Fewer">&#8722;</button><input id="qty" type="number" value="1" min="1" max="20" readonly /><button type="button" onclick="bump(1)" aria-label="More">+</button></div>
+      <div class="tk">
+        <div class="ticket sel rise" data-type="Women Stag" onclick="selectTicket(this)">
+          <div class="main"><div class="tier">Women Stag</div><div class="who">Entry for one</div><div class="price"><span class="cur">&#8377;</span>799</div></div>
+          <div class="stub"><span class="dot"></span><span class="pick">Selected</span></div>
+        </div>
+        <div class="ticket rise" data-type="Men Stag" onclick="selectTicket(this)">
+          <div class="main"><div class="tier">Men Stag</div><div class="who">Entry for one</div><div class="price"><span class="cur">&#8377;</span>999</div></div>
+          <div class="stub"><span class="dot"></span><span class="pick">Select</span></div>
+        </div>
+        <div class="ticket best rise" data-type="Couple" onclick="selectTicket(this)">
+          <div class="main"><div class="tier">Couple</div><div class="who">Entry for two</div><div class="price"><span class="cur">&#8377;</span>1499</div></div>
+          <div class="stub"><span class="dot"></span><span class="pick">Select</span></div>
         </div>
       </div>
-      <div class="total"><span class="k" id="orderLine">1 × Women Stag · 1 guest</span><span class="v"><span class="cur">&#8377;</span><span id="totalNum">799</span></span></div>
-      <button class="btn" onclick="reserve()">Reserve my grave</button>
-      <p class="note">Sends you to <b>WhatsApp</b> to confirm with Kapai · no payment on this page</p>
+      <div class="book rise">
+        <h3>Who's being buried?</h3>
+        <div class="grid2">
+          <div class="fld"><label for="name">Name</label><input id="name" type="text" placeholder="Who dares enter?" /></div>
+          <div class="fld"><label for="phone">Phone / WhatsApp</label><input id="phone" type="tel" placeholder="10-digit number" /></div>
+        </div>
+        <div class="grid2" style="margin-top:14px">
+          <div class="fld"><label for="email">Email (optional)</label><input id="email" type="email" placeholder="you@haunted.com" /></div>
+          <div class="fld"><label for="qty">How many <span id="unitLabel">entries</span>?</label>
+            <div class="qty"><button type="button" onclick="bump(-1)" aria-label="Fewer">&#8722;</button><input id="qty" type="number" value="1" min="1" max="20" readonly /><button type="button" onclick="bump(1)" aria-label="More">+</button></div>
+          </div>
+        </div>
+        <div class="total"><span class="k" id="orderLine">1 &times; Women Stag &middot; 1 guest</span><span class="v"><span class="cur">&#8377;</span><span id="totalNum">799</span></span></div>
+        <button class="btn" onclick="reserve()">Reserve on WhatsApp</button>
+        <p class="note">No payment here. We confirm on <b>WhatsApp</b>.</p>
+      </div>
     </div>
-  </div>
-</section>
+  </section>
 
-<!-- ===================== FAQ ===================== -->
-<section id="faq">
-  <div class="faq-head"><h2 class="display">Whispers<br/>from the crypt</h2></div>
-  <div class="band"><div class="wrap"><div class="row"><div class="q">Is it really invite-only?</div><div class="a">Yes. Capacity is limited. Reserving here puts in your request. Kapai confirms your spot over WhatsApp and adds you to the guest list.</div></div></div></div>
-  <div class="band"><div class="wrap"><div class="row"><div class="q">How do I pay?</div><div class="a">No payment on this page. Once you reserve, we confirm on WhatsApp and share payment details, or you settle at the door, your choice.</div></div></div></div>
-  <div class="band"><div class="wrap"><div class="row"><div class="q">What's "AM for coffee, PM for ???"</div><div class="a">Kapai is your coffee house by day. For one night, after dark, it becomes something else entirely. If you know, you know.</div></div></div></div>
-  <div class="band"><div class="wrap"><div class="row"><div class="q">What's the dress code?</div><div class="a">Costume, or all black. No basics. The best fit of the night wins the costume ritual at midnight.</div></div></div></div>
-  <div class="band"><div class="wrap"><div class="row"><div class="q">Can I come alone?</div><div class="a">Absolutely. Grab a stag entry. Plenty of souls to meet in the crypt.</div></div></div></div>
-</section>
-
-<!-- ===================== FOOTER ===================== -->
-<footer class="foot">
-  <div class="wrap foot-top">
-    <div class="notes">
-      <span>Kapai Coffee House &amp; Bistro</span>
-      <span>Saturday 31 October 2026 · 8 PM till late</span>
-      <span>Invite-only · costume mandatory</span>
+  <!-- FAQ -->
+  <section class="faq" id="faq">
+    <div class="wrap">
+      <h2 class="rise display">Questions</h2>
+      <div class="q" onclick="this.classList.toggle('open')"><div class="qh"><span class="qt">Is it really invite-only?</span><span class="ic">+</span></div><div class="a"><p>Yes, and capped. Reserving puts in your request; Kapai confirms on WhatsApp and adds you to the list.</p></div></div>
+      <div class="q" onclick="this.classList.toggle('open')"><div class="qh"><span class="qt">How do I pay?</span><span class="ic">+</span></div><div class="a"><p>Not here. We confirm on WhatsApp and share details, or settle at the door.</p></div></div>
+      <div class="q" onclick="this.classList.toggle('open')"><div class="qh"><span class="qt">Dress code?</span><span class="ic">+</span></div><div class="a"><p>Costume, or all black. Best fit wins the ritual at midnight.</p></div></div>
+      <div class="q" onclick="this.classList.toggle('open')"><div class="qh"><span class="qt">Can I come alone?</span><span class="ic">+</span></div><div class="a"><p>Yes. Grab a stag pass. Plenty of souls in the crypt.</p></div></div>
     </div>
-    <a href="#top" class="totop">Back to top &#8599;</a>
-  </div>
-  <div class="wrap big"><a href="#tickets" class="display">Reserve<br/>your plot</a></div>
-  <div class="wrap">
-    <p class="credits">Pictures: <a href="https://www.flickr.com/photos/97224989@N00/4621214025">&ldquo;Goodnight, my children&rdquo;</a> by fallingwater123, <a href="https://creativecommons.org/licenses/by/2.0/">CC BY 2.0</a>; <a href="https://www.flickr.com/photos/90692748@N04/8382963216">&ldquo;Silhouette branches at dusk&rdquo;</a> by docoverachiever, <a href="https://creativecommons.org/licenses/by/2.0/">CC BY 2.0</a>; <a href="https://www.flickr.com/photos/91256982@N00/2756664204">&ldquo;saturnine&rdquo;</a> by mugley, <a href="https://creativecommons.org/licenses/by-sa/2.0/">CC BY-SA 2.0</a>, via Flickr.</p>
-    <div class="foot-meta"><span>Kapai</span><span>Coffee Grave</span><span>2026</span></div>
-  </div>
-</footer>
+  </section>
 
-<button class="sound" id="sound" aria-label="Toggle ambient sound">Sound off</button>
+  <!-- FOOTER -->
+  <footer class="foot">
+    <div class="wrap top">
+      <div class="notes"><span>Kapai Coffee House &amp; Bistro</span><span>Sat 31 Oct 2026 &middot; 8PM till late</span></div>
+      <a href="#top">Back to top &uarr;</a>
+    </div>
+    <div class="wrap"><div class="big" onclick="document.getElementById('tickets').scrollIntoView()">Reserve<br/>a pass</div></div>
+    <div class="wrap">
+      <p class="credits">Pictures: <a href="https://www.flickr.com/photos/97224989@N00/4621214025">&ldquo;Goodnight, my children&rdquo;</a> by fallingwater123, <a href="https://creativecommons.org/licenses/by/2.0/">CC BY 2.0</a>; <a href="https://www.flickr.com/photos/90692748@N04/8382963216">&ldquo;Silhouette branches at dusk&rdquo;</a> by docoverachiever, <a href="https://creativecommons.org/licenses/by/2.0/">CC BY 2.0</a>, via Flickr.</p>
+      <div class="meta"><span>Kapai</span><span>Coffee Grave</span><span>2026</span></div>
+    </div>
+  </footer>
+</div>
+
+<!-- sticky reserve bar -->
+<div class="bar" id="bar">
+  <div class="info"><b>Coffee Grave &middot; 31 Oct</b><span>from &#8377;799 &middot; <em id="barDays">—</em> left</span></div>
+  <a href="#tickets" class="btn">Reserve &rarr;</a>
+</div>
 <div class="toast" id="toast" role="status"></div>
 
 <script>
@@ -355,43 +329,51 @@ const PRICES={"Women Stag":799,"Men Stag":999,"Couple":1499};
 const EVENT_DATE=new Date("2026-10-31T20:00:00+05:30");
 /* ============================ */
 let bk={type:"Women Stag",qty:1};
-const cdd=document.getElementById('cd-d'),cdh=document.getElementById('cd-h'),cdm=document.getElementById('cd-m'),cds=document.getElementById('cd-s');
-function tick(){const diff=EVENT_DATE-new Date(),p=n=>String(n).padStart(2,'0');if(diff<=0)return;cdd.textContent=p(Math.floor(diff/864e5));cdh.textContent=p(Math.floor(diff/36e5)%24);cdm.textContent=p(Math.floor(diff/6e4)%60);cds.textContent=p(Math.floor(diff/1e3)%60);}
+const cdd=document.getElementById('cd-d'),cdh=document.getElementById('cd-h'),cdm=document.getElementById('cd-m'),cds=document.getElementById('cd-s'),barDays=document.getElementById('barDays');
+function tick(){const diff=EVENT_DATE-new Date(),p=n=>String(n).padStart(2,'0');if(diff<=0)return;const d=Math.floor(diff/864e5);cdd.textContent=p(d);cdh.textContent=p(Math.floor(diff/36e5)%24);cdm.textContent=p(Math.floor(diff/6e4)%60);cds.textContent=p(Math.floor(diff/1e3)%60);barDays.textContent=d+' days';}
 setInterval(tick,1000);tick();
 function selectTicket(el){document.querySelectorAll('.ticket').forEach(t=>{t.classList.remove('sel');t.querySelector('.pick').textContent='Select';});el.classList.add('sel');el.querySelector('.pick').textContent='Selected';bk.type=el.dataset.type;document.getElementById('unitLabel').textContent=bk.type==='Couple'?'couples':'entries';draw();}
 function bump(d){bk.qty=Math.min(20,Math.max(1,bk.qty+d));document.getElementById('qty').value=bk.qty;draw();}
 function draw(){const price=PRICES[bk.type],total=price*bk.qty,heads=bk.type==='Couple'?bk.qty*2:bk.qty;document.getElementById('orderLine').textContent=`${bk.qty} × ${bk.type} · ${heads} guest${heads>1?'s':''}`;document.getElementById('totalNum').textContent=total.toLocaleString('en-IN');}
-function showToast(m){const t=document.getElementById('toast');t.textContent=m;t.classList.add('show');setTimeout(()=>t.classList.remove('show'),3600);}
-function reserve(){const name=document.getElementById('name').value.trim(),phone=document.getElementById('phone').value.trim(),email=document.getElementById('email').value.trim();if(!name){showToast('Tell us your name first.');document.getElementById('name').focus();return;}if(phone.replace(/\D/g,'').length<10){showToast('Add a valid phone number.');document.getElementById('phone').focus();return;}const price=PRICES[bk.type],total=price*bk.qty,heads=bk.type==='Couple'?bk.qty*2:bk.qty;const msg=`COFFEE GRAVE Booking Request\n----------------------\nName: ${name}\nPhone: ${phone}${email?`\nEmail: ${email}`:''}\nTicket: ${bk.type}\nQuantity: ${bk.qty} (approx ${heads} guest${heads>1?'s':''})\nTotal: Rs ${total.toLocaleString('en-IN')}\nEvent: 31.10.2026 · Saturday · 8 PM\n----------------------\nPlease confirm my spot!`;window.open(`https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(msg)}`,'_blank');showToast('Opening WhatsApp to confirm…');}
+function showToast(m){const t=document.getElementById('toast');t.textContent=m;t.classList.add('show');setTimeout(()=>t.classList.remove('show'),3400);}
+function reserve(){const name=document.getElementById('name').value.trim(),phone=document.getElementById('phone').value.trim(),email=document.getElementById('email').value.trim();if(!name){showToast('Tell us your name first.');document.getElementById('name').focus();return;}if(phone.replace(/\D/g,'').length<10){showToast('Add a valid phone number.');document.getElementById('phone').focus();return;}const price=PRICES[bk.type],total=price*bk.qty,heads=bk.type==='Couple'?bk.qty*2:bk.qty;const msg=`COFFEE GRAVE Booking Request\n----------------------\nName: ${name}\nPhone: ${phone}${email?`\nEmail: ${email}`:''}\nPass: ${bk.type}\nQuantity: ${bk.qty} (approx ${heads} guest${heads>1?'s':''})\nTotal: Rs ${total.toLocaleString('en-IN')}\nEvent: 31.10.2026 Saturday 8PM\n----------------------\nPlease confirm my spot!`;window.open(`https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(msg)}`,'_blank');showToast('Opening WhatsApp to confirm…');}
 window.selectTicket=selectTicket;window.bump=bump;window.reserve=reserve;draw();
 
-/* ambient sound */
-const sound={ctx:null,playing:false,gain:null,start(){if(this.playing)return;const AC=window.AudioContext||window.webkitAudioContext;this.ctx=new AC();const m=this.ctx.createGain();m.gain.value=0;m.connect(this.ctx.destination);this.gain=m;[55,55.4].forEach(f=>{const o=this.ctx.createOscillator();o.type='sawtooth';o.frequency.value=f;const g=this.ctx.createGain();g.gain.value=.05;const lp=this.ctx.createBiquadFilter();lp.type='lowpass';lp.frequency.value=220;o.connect(lp);lp.connect(g);g.connect(m);o.start();});const buf=this.ctx.createBuffer(1,this.ctx.sampleRate*2,this.ctx.sampleRate),dt=buf.getChannelData(0);for(let i=0;i<dt.length;i++)dt[i]=Math.random()*2-1;const n=this.ctx.createBufferSource();n.buffer=buf;n.loop=true;const nf=this.ctx.createBiquadFilter();nf.type='bandpass';nf.frequency.value=320;nf.Q.value=.6;const ng=this.ctx.createGain();ng.gain.value=.04;n.connect(nf);nf.connect(ng);ng.connect(m);n.start();m.gain.linearRampToValueAtTime(.5,this.ctx.currentTime+1.4);this.playing=true;},stop(){if(!this.playing)return;this.gain.gain.linearRampToValueAtTime(0,this.ctx.currentTime+.5);setTimeout(()=>{this.ctx.close();this.playing=false;},600);}};
-const sb=document.getElementById('sound');sb.addEventListener('click',()=>{if(sound.playing){sound.stop();sb.classList.remove('on');sb.textContent='Sound off';}else{sound.start();sb.classList.add('on');sb.textContent='Sound on';showToast('Ambient dread engaged.');}});
+/* ===== interactions ===== */
+// mystery word cycle
+const myst=document.getElementById('mystery');
+const words=['???','iykyk','after dark','the dead','???'];let wi=0;
+setInterval(()=>{wi=(wi+1)%words.length;myst.style.transition='opacity .25s ease';myst.style.opacity='0';setTimeout(()=>{myst.textContent=words[wi];myst.style.opacity='1';},250);},2400);
 
 /* ===== MOTION (GSAP) ===== */
-const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+const reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
+function revealAll(){document.querySelectorAll('.rise').forEach(e=>{e.style.opacity=1;e.style.transform='none';});document.querySelectorAll('.maskline > span').forEach(e=>e.style.transform='none');}
 if(!reduce && window.gsap){
   gsap.registerPlugin(ScrollTrigger);
-  // signature: masked headline lines rise from their baseline
-  gsap.to('.hero h1 .maskline > span',{y:'0%',duration:0.9,ease:'power3.out',stagger:0.11,delay:0.15});
-  // hero supporting + poster fade up
-  gsap.to('.hero .rise',{opacity:1,y:0,duration:0.7,ease:'power2.out',stagger:0.08,delay:0.7});
-  // section entrances: heading, then parts, staggered, on enter
-  gsap.utils.toArray('.run, .tix, .night-flow, .faq, .foot').forEach(sec=>{
-    const parts=sec.querySelectorAll('.rise');
-    if(!parts.length)return;
-    gsap.to(parts,{opacity:1,y:0,duration:0.7,ease:'power2.out',stagger:0.07,
-      scrollTrigger:{trigger:sec,start:'top 78%'}});
+  // signature: masked headline lines rise
+  gsap.to('.hero h1 .maskline > span',{y:'0%',duration:0.9,ease:'expo.out',stagger:0.1,delay:0.15});
+  gsap.to('.hero .rise',{opacity:1,y:0,duration:0.7,ease:'power3.out',stagger:0.1,delay:0.65});
+
+  // scroll scene: day -> night wipe (locked to scrollbar)
+  const wipe=document.getElementById('wipe'),turnAm=document.getElementById('turnAm'),turnPm=document.getElementById('turnPm');
+  ScrollTrigger.create({
+    trigger:'.turn',start:'top top',end:'bottom bottom',scrub:0.5,
+    onUpdate:self=>{const p=self.progress;
+      wipe.style.height=Math.min(130,p*150)+'%';
+      turnAm.style.opacity=String(Math.max(0,1-p*2.2));
+      turnPm.style.opacity=String(Math.max(0,(p-0.45)*2.6));
+    }
   });
-  // run-of-show lines reveal individually
-  gsap.utils.toArray('.run li').forEach(li=>{
-    gsap.to(li,{opacity:1,y:0,duration:0.6,ease:'power3.out',scrollTrigger:{trigger:li,start:'top 88%'}});
-  });
-}else{
-  document.querySelectorAll('.rise').forEach(e=>{e.style.opacity=1;e.style.transform='none';});
-  document.querySelectorAll('.maskline > span').forEach(e=>e.style.transform='none');
-}
+
+  // section entrances, varied
+  gsap.to('.reveal .copy .rise',{opacity:1,y:0,duration:0.8,ease:'power3.out',stagger:0.12,scrollTrigger:{trigger:'.reveal',start:'top 72%'}});
+  gsap.fromTo('.reveal .posterwrap',{opacity:0,scale:0.92,rotate:0},{opacity:1,scale:1,rotate:3,duration:1,ease:'power3.out',scrollTrigger:{trigger:'.reveal',start:'top 72%'}});
+  gsap.to('.run .rise',{opacity:1,y:0,duration:0.7,ease:'expo.out',stagger:0.08,scrollTrigger:{trigger:'.run',start:'top 78%'}});
+  gsap.utils.toArray('.tix .rise, .faq .rise').forEach(el=>{gsap.to(el,{opacity:1,y:0,duration:0.7,ease:'power3.out',scrollTrigger:{trigger:el,start:'top 86%'}});});
+
+  // sticky reserve bar after hero
+  ScrollTrigger.create({trigger:'.hero',start:'bottom top',onEnter:()=>document.getElementById('bar').classList.add('show'),onLeaveBack:()=>document.getElementById('bar').classList.remove('show')});
+}else{ revealAll(); document.getElementById('bar').classList.add('show'); }
 </script>
 </body>
 </html>
