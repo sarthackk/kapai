@@ -3,560 +3,395 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
-<title>COFFEE GRAVE · Kapai — Descend</title>
-<meta name="description" content="Kapai presents COFFEE GRAVE — an invite-only Halloween party. 31.10.2026. Descend into the grave in 3D and claim your spot." />
-<meta name="theme-color" content="#0a0708" />
-<meta property="og:title" content="COFFEE GRAVE — Kapai's Invite-Only Halloween Party" />
-<meta property="og:description" content="31.10.2026 · Saturday · AM for coffee, PM for ??? Descend into the grave." />
+<title>Coffee Grave. Kapai's invite-only Halloween night, 31 Oct 2026</title>
+<meta name="description" content="AM for coffee, PM for ???. Kapai's café dies at sundown and becomes Coffee Grave, an invite-only Halloween night. Saturday 31 October 2026. Reserve your plot." />
+<meta name="theme-color" content="#0b0708" />
+<meta property="og:title" content="Coffee Grave: an invite-only Halloween night by Kapai" />
+<meta property="og:description" content="AM for coffee, PM for ???. Sat 31 Oct 2026. Possessed by a special DJ set. Reserve your plot." />
 <meta property="og:image" content="assets/coffee-grave-poster.jpg" />
-<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='22' fill='%23e30613'/><text y='.9em' font-size='60' x='50%' text-anchor='middle' dy='0.08em'>⚰</text></svg>" />
+<meta property="og:type" content="website" />
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' fill='%23e30613'/><text y='.9em' font-size='62' x='50%' text-anchor='middle' dy='0.06em'>&#9880;</text></svg>" />
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-<link href="https://fonts.googleapis.com/css2?family=Anton&family=Oswald:wght@300;400;500;600;700&family=Pirata+One&family=Special+Elite&display=swap" rel="stylesheet" />
+<link href="https://fonts.googleapis.com/css2?family=TikTok+Sans:wdth,wght@75..150,300..900&display=swap" rel="stylesheet" />
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
 <style>
   :root{
-    --blood:#e30613;--blood-deep:#9a0008;--ember:#ff2a1a;
-    --ink:#0a0708;--panel:#17100f;--bone:#efe6d6;--bone-dim:#b7ab9a;--ash:#7d7066;
-    --line:rgba(227,6,19,.22);--line-soft:rgba(239,230,214,.12);
-    --f-display:'Anton',Impact,sans-serif;--f-goth:'Pirata One',cursive;
-    --f-body:'Oswald',system-ui,sans-serif;--f-type:'Special Elite','Courier New',monospace;
+    /* palette: subject colours (blood-red / black / bone), dealt proportions kept */
+    --bg:#0b0708; --ink:#f2e9d8; --muted:#9a8f82;
+    --blood:#e30613; --blood-ink:#0b0708;
+    --bone:#efe6d6; --bone-ink:#0b0708;
+    --deep:#7d0007; --deep-ink:#efe6d6;
+    --black:#0b0708; --black-ink:#f2e9d8;
+
+    --gutter:clamp(20px,5vw,64px);
+    --maxw:1360px;
+
+    --step-small:clamp(0.875rem, 0.82rem + 0.2vw, 0.95rem);
+    --step-body:clamp(1.0625rem, 1rem + 0.28vw, 1.2rem);
+    --step-lead:clamp(1.3rem, 1.1rem + 0.9vw, 1.9rem);
+    --step-head:clamp(2.2rem, 1.2rem + 4.2vw, 4.4rem);
+    --step-display:clamp(3.4rem, 0.6rem + 11.6vw, 11rem);
+
+    --f: "TikTok Sans", system-ui, sans-serif;
   }
   *{margin:0;padding:0;box-sizing:border-box}
-  html{scroll-behavior:auto}
-  body{background:#05060a;color:var(--bone);font-family:var(--f-body);line-height:1.5;overflow-x:hidden;-webkit-font-smoothing:antialiased}
-  a{color:inherit;text-decoration:none}::selection{background:var(--blood);color:#fff}
-  img{display:block;max-width:100%}
+  html{scroll-behavior:smooth}
+  body{background:var(--bg);color:var(--ink);font-family:var(--f);font-size:var(--step-body);line-height:1.45;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+  a{color:inherit;text-decoration:none}
+  img,video{display:block;max-width:100%}
+  ::selection{background:var(--blood);color:#fff}
 
-  /* 3D canvas, pinned */
-  #c3d{position:fixed;inset:0;z-index:0}
-  #c3d canvas{display:block;width:100%;height:100%}
-  .loader{position:fixed;inset:0;z-index:40;display:grid;place-items:center;background:#05060a;transition:opacity .8s;font-family:var(--f-type);letter-spacing:4px;color:var(--ash);font-size:12px}
-  .loader.gone{opacity:0;pointer-events:none}
-  .loader .lg{text-align:center}
-  .loader .lg b{display:block;font-family:var(--f-display);font-size:26px;letter-spacing:3px;color:var(--bone);margin-bottom:12px}
-  .loader .bar{width:160px;height:3px;background:rgba(255,255,255,.1);margin:14px auto 0;border-radius:3px;overflow:hidden}
-  .loader .bar i{display:block;height:100%;width:0;background:var(--blood);transition:width .3s}
+  .display{font-weight:800;font-variation-settings:"wdth" 150;text-transform:uppercase;line-height:0.9;letter-spacing:-0.01em}
+  .wrap{max-width:var(--maxw);margin:0 auto;padding-inline:var(--gutter)}
 
-  /* text beats over the 3D */
-  .beats{position:fixed;inset:0;z-index:2;pointer-events:none}
-  .beat{position:absolute;left:0;right:0;text-align:center;padding:0 22px;opacity:0;will-change:opacity,transform}
-  .beat.b1{top:16%}
-  .beat .kick{font-family:var(--f-type);font-size:11px;letter-spacing:5px;color:var(--ember);text-transform:uppercase;margin-bottom:14px}
-  .beat .title{font-family:var(--f-display);font-size:clamp(66px,20vw,150px);line-height:.84;letter-spacing:1px;text-transform:uppercase}
-  .beat .title .o{color:transparent;-webkit-text-stroke:2px var(--blood);display:block;filter:drop-shadow(0 0 22px rgba(227,6,19,.5))}
-  .beat.b2{top:44%}
-  .beat.b2 .l{font-family:var(--f-display);font-size:clamp(22px,6.4vw,38px);letter-spacing:2px;text-transform:uppercase;text-shadow:0 2px 20px #000}
-  .beat.b2 .s{font-family:var(--f-goth);font-size:clamp(18px,5vw,26px);color:var(--ember);margin-top:10px}
-  .beat.b3{top:38%}
-  .beat.b3 .big{font-family:var(--f-display);font-size:clamp(46px,15vw,96px);letter-spacing:3px;color:var(--bone);text-shadow:0 0 30px rgba(227,6,19,.6),3px 3px 0 #300;line-height:.9}
-  .beat.b3 .sm{font-family:var(--f-type);letter-spacing:9px;font-size:13px;color:var(--ember);margin-top:10px}
-  .beat.b4{top:auto;bottom:16%}
-  .beat.b4 .cue{font-family:var(--f-type);font-size:13px;letter-spacing:3px;color:var(--bone);text-transform:uppercase;animation:bob 1.6s infinite;text-shadow:0 2px 14px #000,0 0 20px rgba(0,0,0,.9)}
-  @keyframes bob{0%,100%{transform:translateY(0)}50%{transform:translateY(7px)}}
-  .scrollcue{position:fixed;bottom:30px;left:0;right:0;text-align:center;z-index:3;font-family:var(--f-type);font-size:12px;letter-spacing:3px;color:var(--bone-dim);text-transform:uppercase;pointer-events:none}
-  .scrollcue .ar{display:block;font-size:20px;margin-top:6px;animation:bob 1.6s infinite}
+  /* ---------------- HERO ---------------- */
+  .hero{position:relative;min-height:100svh;background:var(--black);color:var(--black-ink);display:flex;flex-direction:column;overflow:hidden}
+  .topbar{display:flex;align-items:center;justify-content:space-between;padding:20px var(--gutter);position:relative;z-index:5}
+  .mark{font-weight:800;font-variation-settings:"wdth" 120;font-size:var(--step-small);letter-spacing:0.02em;text-transform:uppercase}
+  .mark b{color:var(--blood)}
+  .nav{display:flex;gap:22px}
+  .nav a{font-size:var(--step-small);text-transform:uppercase;font-weight:500;color:var(--muted)}
+  .nav a:hover{color:var(--ink)}
 
-  #scroller{position:relative;z-index:1;height:560vh}
+  .hero-body{flex:1;display:flex;align-items:center;padding:0 var(--gutter)}
+  .hero h1{width:100%;font-variation-settings:"wdth" 135;font-size:clamp(2.3rem, 9vw, 7.6rem);line-height:0.9;letter-spacing:-0.03em}
+  .hero h1 .ln{display:block;white-space:nowrap}
+  .hero h1 .l2{text-align:right}
+  .hero h1 .q{color:var(--blood)}
+  .flag{display:inline-block;background:var(--blood);color:var(--blood-ink);font-weight:800;font-variation-settings:"wdth" 120;text-transform:uppercase;font-size:var(--step-small);letter-spacing:.04em;padding:10px 16px}
+  .hero-foot{display:flex;flex-wrap:nowrap;align-items:flex-end;justify-content:space-between;gap:28px;padding:0 var(--gutter) clamp(24px,5vh,44px);position:relative;z-index:4}
+  .hero-foot .btn{flex:none}
+  .hero-foot .say{max-width:40ch;font-size:var(--step-lead);color:var(--ink);line-height:1.25}
+  .hero-foot .say b{color:var(--bone)}
+  .btn{display:inline-block;background:var(--blood);color:var(--blood-ink);font-weight:800;font-variation-settings:"wdth" 120;text-transform:uppercase;font-size:var(--step-lead);letter-spacing:.01em;padding:18px 30px;border:none;cursor:pointer;transition:transform .12s ease, background .12s ease}
+  .btn:hover{background:var(--bone);color:var(--bone-ink)}
+  .btn:active{transform:translateY(2px)}
 
-  .mininav{position:fixed;top:0;left:0;right:0;z-index:60;display:flex;align-items:center;justify-content:space-between;padding:10px 16px;transform:translateY(-110%);transition:.35s;backdrop-filter:blur(10px);background:linear-gradient(180deg,rgba(10,7,8,.92),rgba(10,7,8,.4));border-bottom:1px solid var(--line)}
-  .mininav.show{transform:none}
-  .mininav .b{display:flex;align-items:center;gap:9px}
-  .mininav .mk{width:30px;height:30px;border-radius:7px;background:var(--blood);display:grid;place-items:center;color:#fff;font-size:15px;box-shadow:0 0 14px rgba(227,6,19,.5)}
-  .mininav .b b{font-family:var(--f-display);font-size:14px;letter-spacing:1.5px}
-  .mininav a.cta{font-family:var(--f-display);letter-spacing:2px;font-size:13px;padding:8px 16px;border-radius:3px;background:var(--blood);color:#fff}
-  .prog{position:fixed;left:0;top:0;height:3px;width:100%;z-index:66;background:transparent}
-  .prog i{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--blood),var(--ember));box-shadow:0 0 10px rgba(227,6,19,.7)}
+  @media(max-width:860px){
+    .hero-body{grid-template-columns:1fr;align-content:center;gap:28px;padding-top:4vh}
+    .hero-poster{max-width:280px;justify-self:start;order:2}
+    .hero-foot{flex-direction:column;align-items:stretch}
+    .hero-foot .btn{text-align:center}
+  }
 
-  /* ---------- RSVP + CONTENT ---------- */
-  .wrap{max-width:620px;margin:0 auto;padding:0 18px}
-  .sheet{position:relative;z-index:5;background:var(--ink);box-shadow:0 -40px 80px rgba(0,0,0,.8)}
-  .sheet::before{content:"";position:absolute;top:-60px;left:0;right:0;height:60px;background:linear-gradient(180deg,transparent,var(--ink))}
-  section.blk{padding:54px 0}
-  .eye{font-family:var(--f-type);font-size:11px;letter-spacing:4px;color:var(--ember);text-transform:uppercase;display:flex;gap:10px;align-items:center}
-  .eye::before{content:"⚰";filter:grayscale(1) brightness(1.5)}
-  .big-t{font-family:var(--f-display);font-size:clamp(40px,12vw,64px);line-height:.92;letter-spacing:1px;text-transform:uppercase;margin-top:10px}
-  .sub{color:var(--bone-dim);margin-top:12px;font-size:15.5px}
-  .count{display:flex;gap:8px;margin-top:22px}
-  .count .cell{flex:1;background:rgba(23,16,15,.7);border:1px solid var(--line);border-radius:9px;padding:12px 4px;text-align:center}
-  .count .n{font-family:var(--f-display);font-size:30px;line-height:1}
-  .count .k{font-family:var(--f-type);font-size:9px;letter-spacing:2px;color:var(--ash);text-transform:uppercase;margin-top:5px}
-  .tl-wrap{margin-top:16px;border-left:2px solid var(--line)}
-  .tl{position:relative;padding:0 0 26px 30px}
-  .tl::before{content:"";position:absolute;left:-9px;top:4px;width:15px;height:15px;border-radius:50%;background:var(--ink);border:2px solid var(--blood);box-shadow:0 0 10px rgba(227,6,19,.6)}
-  .tl:last-child{padding-bottom:0}
-  .tl .tm{font-family:var(--f-display);font-size:19px;color:var(--ember);letter-spacing:1px}
-  .tl .ev{font-family:var(--f-display);font-size:20px;letter-spacing:1px;text-transform:uppercase;margin:1px 0 3px}
-  .tl .d{color:var(--bone-dim);font-size:13.5px}
-  .tk{display:grid;gap:14px;margin-top:18px}
-  .ticket{position:relative;cursor:pointer;background:var(--panel);border:1px solid var(--line);border-radius:14px;overflow:hidden;transition:.2s}
-  .ticket.sel{border-color:var(--blood);box-shadow:0 0 0 2px var(--blood),0 16px 40px rgba(227,6,19,.3)}
-  .ticket .top{padding:18px 20px;display:flex;justify-content:space-between;align-items:flex-start;gap:12px}
-  .ticket .lbl{font-family:var(--f-type);font-size:10px;letter-spacing:2px;color:var(--ash);text-transform:uppercase}
-  .ticket h3{font-family:var(--f-display);font-size:26px;letter-spacing:1px;text-transform:uppercase;margin:4px 0 2px}
-  .ticket .for{color:var(--bone-dim);font-size:13px}
-  .ticket .price{font-family:var(--f-display);font-size:34px;line-height:1;text-align:right;white-space:nowrap}
-  .ticket .price .cur{color:var(--ember);font-size:20px;vertical-align:super}
-  .ticket .price .per{display:block;font-family:var(--f-body);font-size:11px;color:var(--ash);letter-spacing:1px;text-align:right}
-  .ticket .ribbon{position:absolute;top:13px;right:-30px;transform:rotate(45deg);background:var(--blood);color:#fff;font-family:var(--f-type);font-size:9px;letter-spacing:2px;padding:4px 38px;z-index:2}
-  .ticket .foot{display:flex;align-items:center;gap:9px;padding:0 20px 16px;color:var(--bone-dim);font-size:12.5px}
-  .ticket .dot{width:16px;height:16px;border-radius:50%;border:2px solid var(--blood);display:inline-grid;place-items:center;flex-shrink:0}
-  .ticket.sel .dot{background:var(--blood)}.ticket.sel .dot::after{content:"";width:6px;height:6px;border-radius:50%;background:#fff}
-  .ticket .inc{list-style:none;padding:0 20px 18px;margin-top:-2px;display:grid;gap:8px}
-  .ticket .inc li{display:flex;gap:9px;font-size:13px;color:var(--bone)}
-  .ticket .inc li::before{content:"✚";color:var(--blood)}
-  .book{margin-top:22px;background:var(--panel);border:1px solid var(--line);border-radius:16px;padding:22px}
-  .book h3{font-family:var(--f-display);font-size:24px;letter-spacing:1px;text-transform:uppercase;margin-bottom:16px}
-  .fld{margin-bottom:14px}
-  .fld label{display:block;font-family:var(--f-type);font-size:10px;letter-spacing:2px;color:var(--ash);text-transform:uppercase;margin-bottom:6px}
-  .fld input{width:100%;padding:13px;border-radius:9px;border:1px solid var(--line-soft);background:rgba(0,0,0,.4);color:var(--bone);font-family:var(--f-body);font-size:16px}
-  .fld input:focus{outline:none;border-color:var(--blood);box-shadow:0 0 0 3px rgba(227,6,19,.16)}
-  .fld input::placeholder{color:#5c5048}
-  .qty{display:inline-flex;border:1px solid var(--line-soft);border-radius:9px;overflow:hidden}
-  .qty button{width:46px;height:48px;background:rgba(0,0,0,.4);border:none;color:var(--blood);font-size:22px;font-family:var(--f-display);cursor:pointer}
-  .qty button:active{background:var(--blood);color:#fff}
-  .qty input{width:54px;text-align:center;border:none;border-inline:1px solid var(--line-soft);background:rgba(0,0,0,.4);color:var(--bone);font-size:16px}
-  .order{margin-top:18px;border:1px dashed var(--line);border-radius:12px;padding:16px 18px;background:linear-gradient(135deg,rgba(154,0,8,.16),rgba(0,0,0,.25))}
-  .order .ln{display:flex;justify-content:space-between;font-size:14px;color:var(--bone-dim);margin-bottom:7px}
-  .order .grand{display:flex;justify-content:space-between;align-items:baseline;margin-top:12px;padding-top:12px;border-top:1px solid var(--line)}
-  .order .grand .k{font-family:var(--f-type);font-size:11px;letter-spacing:2px;color:var(--ash);text-transform:uppercase}
-  .order .grand .v{font-family:var(--f-display);font-size:38px}.order .grand .v .cur{color:var(--ember);font-size:22px;vertical-align:super}
-  .reserve{width:100%;margin-top:18px;padding:17px;border:none;border-radius:11px;cursor:pointer;color:#fff;background:linear-gradient(135deg,var(--ember),var(--blood-deep));font-family:var(--f-display);font-size:22px;letter-spacing:3px;box-shadow:0 12px 36px rgba(227,6,19,.4)}
-  .reserve:active{transform:translateY(1px)}
-  .fine{text-align:center;margin-top:12px;font-family:var(--f-type);font-size:11px;color:var(--ash)}.fine b{color:var(--ember)}
-  .info-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:16px}
-  .info{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:18px 16px}
-  .info .k{font-family:var(--f-type);font-size:10px;letter-spacing:2px;color:var(--ash);text-transform:uppercase}
-  .info .v{font-family:var(--f-display);font-size:20px;text-transform:uppercase;margin-top:7px}
-  .info .x{color:var(--bone-dim);font-size:12.5px;margin-top:3px}
-  .faq{border-top:1px solid var(--line);margin-top:16px}
-  .q{border-bottom:1px solid var(--line);padding:18px 0;cursor:pointer}
-  .q .qh{display:flex;justify-content:space-between;gap:16px;align-items:center}
-  .q .qt{font-family:var(--f-display);font-size:18px;letter-spacing:.5px;text-transform:uppercase}
-  .q .ic{color:var(--blood);font-size:24px;font-family:var(--f-display);transition:.25s}
-  .q.open .ic{transform:rotate(45deg)}
-  .q .a{max-height:0;overflow:hidden;transition:max-height .3s ease;color:var(--bone-dim);font-size:14px}
-  .q.open .a{max-height:220px;margin-top:10px}
-  footer{text-align:center;padding:48px 18px 60px;border-top:1px solid var(--line);margin-top:30px}
-  footer .big{font-family:var(--f-display);font-size:clamp(44px,16vw,96px);line-height:.85;letter-spacing:2px;text-transform:uppercase;color:transparent;-webkit-text-stroke:1.4px var(--blood-deep)}
-  footer .s{font-family:var(--f-type);color:var(--bone-dim);font-size:12px;letter-spacing:1px;margin-top:16px}footer .s a{color:var(--ember)}
-  .sound{position:fixed;right:14px;bottom:14px;z-index:65;width:44px;height:44px;border-radius:50%;cursor:pointer;background:rgba(23,16,15,.85);border:1px solid var(--line);color:var(--bone-dim);display:grid;place-items:center;font-size:17px;backdrop-filter:blur(6px)}
-  .sound.on{color:var(--ember);border-color:var(--blood);box-shadow:0 0 16px rgba(227,6,19,.4)}
-  .toast{position:fixed;left:50%;bottom:72px;transform:translateX(-50%) translateY(140px);z-index:99;background:#120c0d;border:1px solid var(--blood);color:var(--bone);padding:13px 20px;border-radius:10px;font-family:var(--f-type);font-size:12.5px;transition:.35s;box-shadow:0 14px 44px rgba(0,0,0,.6);max-width:90vw;text-align:center}
+  /* ---------------- NIGHT (pinned title, pictures pass) ---------------- */
+  .night{position:relative;background:var(--bg);color:var(--ink)}
+  .night-pin{position:sticky;top:0;height:100svh;display:flex;align-items:center;justify-content:center;pointer-events:none;z-index:3}
+  .night-pin h2{font-size:clamp(3rem,13vw,12rem);line-height:0.82;text-align:center;color:var(--bone);mix-blend-mode:normal}
+  .night-flow{position:relative;z-index:2;max-width:var(--maxw);margin:0 auto;padding:12svh var(--gutter)}
+  .frame{position:relative;width:min(78vw,520px);margin:0 0 42svh}
+  .frame:nth-child(even){margin-left:auto}
+  .frame figure{margin:0;position:relative}
+  .frame img{width:100%;aspect-ratio:4/5;object-fit:cover;filter:grayscale(1) contrast(1.15) brightness(.92)}
+  .poster-frame{width:min(70vw,360px)}
+  .poster-frame video{width:100%;aspect-ratio:9/16;max-height:88svh;object-fit:cover;border:12px solid var(--bg)}
+  .poster-frame .flag{position:absolute;top:-12px;left:-12px;z-index:3}
+  .frame figcaption{margin-top:14px;max-width:34ch}
+  .frame .cap-k{display:block;font-weight:800;font-variation-settings:"wdth" 120;text-transform:uppercase;font-size:var(--step-lead);color:var(--blood);line-height:1}
+  .frame .cap-t{display:block;margin-top:6px;color:var(--ink);font-size:var(--step-body)}
+  @media(max-width:860px){.night-pin h2{font-size:17vw}.frame{width:82%;margin-bottom:26svh}}
+
+  /* ---------------- RUN OF SHOW (poster list) ---------------- */
+  .run{background:var(--bone);color:var(--bone-ink);padding:clamp(60px,9vw,120px) 0}
+  .run h2{font-size:var(--step-head);margin:0 0 clamp(26px,4vw,48px)}
+  .run ul{list-style:none}
+  .run li{display:flex;align-items:baseline;justify-content:space-between;gap:16px;padding:clamp(4px,1vw,10px) 0}
+  .run li .ev{font-size:clamp(2.2rem,8.4vw,7rem);line-height:0.96;transition:color .12s ease}
+  .run li .ev:hover{color:var(--blood)}
+  .run li .tm{font-weight:800;font-variation-settings:"wdth" 120;font-size:var(--step-lead);white-space:nowrap;font-variant-numeric:tabular-nums}
+  @media(max-width:860px){
+    .run li{flex-direction:column;align-items:flex-start;gap:2px;padding:10px 0}
+    .run li .tm{font-size:var(--step-body);color:var(--deep)}
+  }
+
+  /* ---------------- TICKETS ---------------- */
+  .tix{background:var(--deep);color:var(--deep-ink);padding:clamp(60px,9vw,120px) 0}
+  .tix h2{font-size:var(--step-head);margin:0 0 10px}
+  .tix .intro{max-width:52ch;color:var(--bone);font-size:var(--step-lead);margin-bottom:clamp(26px,4vw,44px)}
+  .count{display:flex;gap:10px;margin-bottom:clamp(30px,5vw,48px);flex-wrap:wrap}
+  .count .c{background:var(--black);color:var(--black-ink);padding:14px 10px;min-width:86px;text-align:center;flex:1;max-width:120px}
+  .count .n{font-weight:800;font-variation-settings:"wdth" 130;font-size:clamp(2rem,6vw,3rem);line-height:1}
+  .count .k{text-transform:uppercase;font-size:var(--step-small);color:var(--muted);margin-top:4px;letter-spacing:.06em}
+  .tk{display:grid;grid-template-columns:repeat(3,1fr);gap:clamp(12px,1.6vw,20px)}
+  .ticket{background:var(--bone);color:var(--bone-ink);position:relative;cursor:pointer;display:flex;flex-direction:column;border:3px solid transparent;transition:border-color .12s ease}
+  .ticket:hover{border-color:var(--black)}
+  .ticket.sel{border-color:var(--blood)}
+  .ticket .main{padding:22px 22px 18px;flex:1}
+  .ticket .tier{font-size:clamp(1.6rem,3.4vw,2.2rem);line-height:1}
+  .ticket .who{color:var(--deep);font-weight:600;font-size:var(--step-body);margin-top:6px}
+  .ticket ul{list-style:none;margin-top:16px;display:grid;gap:7px}
+  .ticket ul li{font-size:var(--step-body);padding-left:18px;position:relative}
+  .ticket ul li::before{content:"+";position:absolute;left:0;color:var(--blood);font-weight:800}
+  .ticket .stub{border-top:3px dashed var(--deep);padding:16px 22px;display:flex;align-items:center;justify-content:space-between;gap:12px}
+  .ticket .price{font-weight:800;font-variation-settings:"wdth" 130;font-size:clamp(2.2rem,5vw,3rem);line-height:1}
+  .ticket .price .cur{color:var(--blood);font-size:.55em;vertical-align:super}
+  .ticket .pick{text-transform:uppercase;font-weight:800;font-variation-settings:"wdth" 120;font-size:var(--step-small);letter-spacing:.05em;color:var(--deep)}
+  .ticket.sel .pick{color:var(--blood)}
+  .ticket.best::after{content:"Best value";position:absolute;top:0;right:0;background:var(--blood);color:var(--blood-ink);font-weight:800;font-variation-settings:"wdth" 120;text-transform:uppercase;font-size:var(--step-small);padding:6px 12px;letter-spacing:.04em}
+
+  .book{margin-top:clamp(26px,4vw,40px);background:var(--black);color:var(--black-ink);padding:clamp(22px,3vw,34px)}
+  .book h3{font-size:var(--step-lead);text-transform:uppercase;font-weight:800;font-variation-settings:"wdth" 120;margin-bottom:18px}
+  .grid2{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+  .fld{display:flex;flex-direction:column;gap:7px}
+  .fld label{text-transform:uppercase;font-size:var(--step-small);color:var(--muted);letter-spacing:.05em;font-weight:600}
+  .fld input{background:var(--bg);color:var(--ink);border:2px solid #2a1f1c;padding:14px;font-family:var(--f);font-size:var(--step-body)}
+  .fld input:focus{outline:none;border-color:var(--blood)}
+  .fld input::placeholder{color:#6b5f57}
+  .qty{display:inline-flex;border:2px solid #2a1f1c;width:fit-content}
+  .qty button{width:52px;height:52px;background:var(--bg);color:var(--blood);border:none;font-size:1.6rem;font-weight:800;cursor:pointer;font-family:var(--f)}
+  .qty button:hover{background:var(--blood);color:var(--blood-ink)}
+  .qty input{width:62px;text-align:center;background:var(--bg);color:var(--ink);border:none;border-inline:2px solid #2a1f1c;font-size:var(--step-body)}
+  .total{margin-top:20px;display:flex;align-items:baseline;justify-content:space-between;gap:12px;border-top:3px solid #2a1f1c;padding-top:18px}
+  .total .k{text-transform:uppercase;font-size:var(--step-small);color:var(--muted);letter-spacing:.06em}
+  .total .v{font-weight:800;font-variation-settings:"wdth" 130;font-size:clamp(2.2rem,6vw,3.4rem);line-height:1}
+  .total .v .cur{color:var(--blood);font-size:.5em;vertical-align:super}
+  .book .btn{width:100%;margin-top:18px;text-align:center}
+  .note{margin-top:12px;text-align:center;font-size:var(--step-small);color:var(--muted)}
+  .note b{color:var(--blood)}
+  @media(max-width:860px){.tk{grid-template-columns:1fr}.grid2{grid-template-columns:1fr}}
+
+  /* ---------------- FAQ (band per question) ---------------- */
+  .faq-head{background:var(--blood);color:var(--blood-ink);min-height:40svh;display:flex;align-items:flex-end}
+  .faq-head h2{font-size:clamp(3rem,13vw,10rem);line-height:0.82;padding:0 var(--gutter) clamp(28px,4vw,52px)}
+  .band{padding:clamp(34px,4vw,56px) 0}
+  .band:nth-child(odd){background:var(--bg);color:var(--ink)}
+  .band:nth-child(even){background:var(--bone);color:var(--bone-ink)}
+  .band .row{display:grid;grid-template-columns:5fr 1fr 6fr;align-items:start}
+  .band .q{font-size:clamp(1.4rem,3vw,2rem);font-weight:800;font-variation-settings:"wdth" 110;line-height:1.05}
+  .band .a{grid-column:3;font-size:var(--step-body);line-height:1.5}
+  @media(max-width:860px){.band .row{grid-template-columns:1fr}.band .a{grid-column:1;margin-top:12px}}
+
+  /* ---------------- FOOTER (contact as headline) ---------------- */
+  .foot{background:var(--blood);color:var(--blood-ink);min-height:92svh;display:flex;flex-direction:column;justify-content:space-between;padding:clamp(34px,5vw,56px) 0}
+  .foot-top{display:flex;flex-wrap:wrap;justify-content:space-between;gap:16px}
+  .foot-top .notes{display:grid;gap:4px;font-size:var(--step-body)}
+  .foot-top a.totop{font-weight:800;font-variation-settings:"wdth" 120;text-transform:uppercase;font-size:var(--step-small);letter-spacing:.05em}
+  .foot .big{font-size:clamp(3rem,13vw,11rem);line-height:0.82;margin-top:auto}
+  .foot .big a{display:inline-block}
+  .foot-meta{margin-top:clamp(28px,4vw,48px);display:flex;flex-wrap:wrap;justify-content:space-between;gap:12px;font-size:var(--step-small)}
+  .credits{max-width:92ch;color:var(--blood-ink);font-size:var(--step-small);line-height:1.5;opacity:.82}
+  .credits a{text-decoration:underline}
+
+  .sound{position:fixed;left:16px;bottom:16px;z-index:40;background:var(--black);color:var(--muted);border:2px solid var(--blood);cursor:pointer;font-family:var(--f);font-weight:800;font-variation-settings:"wdth" 120;text-transform:uppercase;font-size:var(--step-small);letter-spacing:.05em;padding:12px 16px}
+  .sound.on{color:var(--blood)}
+  .toast{position:fixed;left:50%;bottom:80px;transform:translateX(-50%) translateY(140px);z-index:50;background:var(--black);color:var(--ink);border:2px solid var(--blood);padding:14px 20px;font-size:var(--step-small);transition:transform .3s ease;max-width:90vw;text-align:center}
   .toast.show{transform:translateX(-50%) translateY(0)}
-  @media(min-width:760px){.tk{grid-template-columns:1fr 1fr 1fr}}
+
+  /* motion helpers */
+  .rise{opacity:0;transform:translateY(26px)}
+  .maskline{display:block;overflow:hidden}
+  .maskline > span{display:block;transform:translateY(110%)}
+  @media (prefers-reduced-motion: reduce){
+    .rise{opacity:1;transform:none}
+    .maskline > span{transform:none}
+    .night-pin{position:relative;height:auto;padding:8svh 0}
+    html{scroll-behavior:auto}
+  }
 </style>
 </head>
 <body>
 
-<div id="c3d"></div>
-<div class="loader" id="loader"><div class="lg"><b>COFFEE GRAVE</b>digging the grave…<div class="bar"><i id="lbar"></i></div></div></div>
+<!-- ===================== HERO ===================== -->
+<header class="hero">
+  <div class="topbar">
+    <div class="mark">KAPAI <b>&#9880; COFFEE GRAVE</b></div>
+    <nav class="nav"><a href="#night">The night</a><a href="#tickets">Tickets</a><a href="#faq">FAQ</a></nav>
+  </div>
 
-<div class="beats">
-  <div class="beat b1" id="b1"><div class="kick">Kapai Coffee House &amp; Bistro · presents</div></div>
-  <div class="beat b2" id="b2"><div class="l">An Invite-Only</div><div class="l">Halloween Party</div><div class="s">AM for coffee · PM for ???</div></div>
-  <div class="beat b3" id="b3"><div class="big">31·10·2026</div><div class="sm">S A T U R D A Y</div></div>
-  <div class="beat b4" id="b4"><div class="cue">↓ claim your grave ↓</div></div>
-</div>
-<div class="scrollcue" id="scue">Scroll to descend<span class="ar">↓</span></div>
+  <div class="hero-body">
+    <h1 class="display">
+      <span class="ln maskline"><span>AM for coffee.</span></span>
+      <span class="ln maskline l2"><span>PM for <span class="q">???</span></span></span>
+    </h1>
+  </div>
 
-<div id="scroller"></div>
+  <div class="hero-foot">
+    <p class="say rise">Kapai's café dies at sundown and wakes up as <b>Coffee Grave</b>, an invite-only Halloween night. <b>Saturday 31 October 2026</b>, 8 PM till late. Possessed by a special DJ set.</p>
+    <a href="#tickets" class="btn rise">Reserve your plot</a>
+  </div>
+</header>
 
-<div class="mininav" id="mininav">
-  <a href="index.html" class="b"><span class="mk">⚰</span><b>COFFEE GRAVE</b></a>
-  <a href="#rsvp" class="cta">Reserve</a>
-</div>
-<div class="prog"><i id="progbar"></i></div>
+<!-- ===================== THE NIGHT ===================== -->
+<section class="night" id="night">
+  <div class="night-pin"><h2 class="display">After<br/>dark</h2></div>
+  <div class="night-flow">
+    <div class="frame poster-frame">
+      <figure>
+        <span class="flag">Invite only</span>
+        <video autoplay muted loop playsinline poster="assets/coffee-grave-poster.jpg"><source src="assets/coffee-grave-poster.mp4" type="video/mp4" /></video>
+        <figcaption><span class="cap-k">The invitation</span><span class="cap-t">One night only. If the coffin poster found you, you're on the list.</span></figcaption>
+      </figure>
+    </div>
+    <div class="frame">
+      <figure>
+        <img src="assets/goodnight-my-children.jpg" width="1024" height="683" alt="A cemetery statue and stone obelisk in silhouette against a dim sky" loading="lazy" decoding="async" />
+        <figcaption><span class="cap-k">The café dies</span><span class="cap-t">At 8 PM the shutters come down and the lights go red. What was a coffee house is a crypt.</span></figcaption>
+      </figure>
+    </div>
+    <div class="frame">
+      <figure>
+        <img src="assets/silhouette-branches-at-dusk.jpg" width="1024" height="744" alt="A bare dead tree in silhouette against a heavy clouded sky" loading="lazy" decoding="async" />
+        <figcaption><span class="cap-k">The doors creak</span><span class="cap-t">Costumes on, wristbands out, graveyard brews poured, spiked and un-spiked.</span></figcaption>
+      </figure>
+    </div>
+    <div class="frame">
+      <figure>
+        <img src="assets/saturnine.jpg" width="1024" height="715" alt="Bare branches over a dark city skyline with pale light arcs in the sky" loading="lazy" decoding="async" />
+        <figcaption><span class="cap-k">Possessed</span><span class="cap-t">A special DJ set takes the room past midnight. This is the "PM for ???" part.</span></figcaption>
+      </figure>
+    </div>
+  </div>
+</section>
 
-<!-- ============ RSVP + CONTENT ============ -->
-<div class="sheet">
-  <section class="blk" id="show">
-    <div class="wrap">
-      <div class="eye">The order of the night</div>
-      <h2 class="big-t">Run of<br/>the Dead</h2>
-      <p class="sub">One night only. The café dies at sundown and wakes up as something else.</p>
-      <div class="tl-wrap">
-        <div class="tl"><div class="tm">8:00 PM</div><div class="ev">Doors Creak Open</div><div class="d">Entry begins. Grab your wristband and welcome brew.</div></div>
-        <div class="tl"><div class="tm">9:30 PM</div><div class="ev">Graveyard Specials</div><div class="d">The spooky menu goes live — spiked and un-spiked.</div></div>
-        <div class="tl"><div class="tm">10:30 PM</div><div class="ev">Possessed — DJ Set</div><div class="d">A special guest set takes over. The "PM for ???" part.</div></div>
-        <div class="tl"><div class="tm">12:00 AM</div><div class="ev">Best Costume Ritual</div><div class="d">The crowd crowns the most hauntingly good fit.</div></div>
-        <div class="tl"><div class="tm">Late</div><div class="ev">Last Rites</div><div class="d">We go till the last soul leaves. No curfew for the cursed.</div></div>
+<!-- ===================== RUN OF SHOW ===================== -->
+<section class="run" id="show">
+  <div class="wrap">
+    <h2 class="display rise">Run of the dead</h2>
+    <ul>
+      <li class="rise"><span class="ev display">Doors creak open</span><span class="tm">8:00 PM</span></li>
+      <li class="rise"><span class="ev display">Graveyard specials</span><span class="tm">9:30 PM</span></li>
+      <li class="rise"><span class="ev display">Possessed. DJ set</span><span class="tm">10:30 PM</span></li>
+      <li class="rise"><span class="ev display">Best costume ritual</span><span class="tm">12:00 AM</span></li>
+      <li class="rise"><span class="ev display">Last rites</span><span class="tm">Till late</span></li>
+    </ul>
+  </div>
+</section>
+
+<!-- ===================== TICKETS ===================== -->
+<section class="tix" id="tickets">
+  <div class="wrap">
+    <h2 class="display rise">Claim a grave</h2>
+    <p class="intro rise">Invite-only and capped. Pick your plot. Once the coffins are full, they stay shut.</p>
+
+    <div class="count rise">
+      <div class="c"><div class="n" id="cd-d">00</div><div class="k">Days</div></div>
+      <div class="c"><div class="n" id="cd-h">00</div><div class="k">Hrs</div></div>
+      <div class="c"><div class="n" id="cd-m">00</div><div class="k">Min</div></div>
+      <div class="c"><div class="n" id="cd-s">00</div><div class="k">Sec</div></div>
+    </div>
+
+    <div class="tk">
+      <div class="ticket sel rise" data-type="Women Stag" onclick="selectTicket(this)">
+        <div class="main">
+          <div class="tier display">Women Stag</div>
+          <div class="who">Entry for one</div>
+          <ul><li>One wristband</li><li>Welcome graveyard brew</li><li>Full DJ-set access</li></ul>
+        </div>
+        <div class="stub"><span class="price"><span class="cur">&#8377;</span>799</span><span class="pick">Selected</span></div>
+      </div>
+      <div class="ticket rise" data-type="Men Stag" onclick="selectTicket(this)">
+        <div class="main">
+          <div class="tier display">Men Stag</div>
+          <div class="who">Entry for one</div>
+          <ul><li>One wristband</li><li>Welcome graveyard brew</li><li>Full DJ-set access</li></ul>
+        </div>
+        <div class="stub"><span class="price"><span class="cur">&#8377;</span>999</span><span class="pick">Select</span></div>
+      </div>
+      <div class="ticket best rise" data-type="Couple" onclick="selectTicket(this)">
+        <div class="main">
+          <div class="tier display">Couple</div>
+          <div class="who">Entry for two</div>
+          <ul><li>Two wristbands</li><li>Two brews + a shared shot</li><li>Priority entry</li></ul>
+        </div>
+        <div class="stub"><span class="price"><span class="cur">&#8377;</span>1499</span><span class="pick">Select</span></div>
       </div>
     </div>
-  </section>
 
-  <section class="blk" id="rsvp">
-    <div class="wrap">
-      <div class="eye">Reserve before the crypt fills</div>
-      <h2 class="big-t">Claim a Grave</h2>
-      <p class="sub">Invite-only and capped. Pick your plot — once the coffins are full, they stay shut.</p>
-      <div class="count">
-        <div class="cell"><div class="n" id="d">00</div><div class="k">Days</div></div>
-        <div class="cell"><div class="n" id="h">00</div><div class="k">Hrs</div></div>
-        <div class="cell"><div class="n" id="m">00</div><div class="k">Min</div></div>
-        <div class="cell"><div class="n" id="s">00</div><div class="k">Sec</div></div>
+    <div class="book rise">
+      <h3>Who's being buried?</h3>
+      <div class="grid2">
+        <div class="fld"><label for="name">Full name</label><input id="name" type="text" placeholder="Who dares enter?" /></div>
+        <div class="fld"><label for="phone">Phone / WhatsApp</label><input id="phone" type="tel" placeholder="10-digit number" /></div>
       </div>
-      <div class="tk">
-        <div class="ticket sel" data-type="Women Stag" onclick="selectTicket(this)">
-          <div class="top"><div><div class="lbl">Solo soul</div><h3>Women Stag</h3><div class="for">Entry for one.</div></div><div class="price"><span class="cur">₹</span>799<span class="per">/ entry</span></div></div>
-          <ul class="inc"><li>Entry for one</li><li>Welcome graveyard brew</li><li>Full DJ-set access</li></ul>
-          <div class="foot"><span class="dot"></span><span class="pk">Selected</span></div>
-        </div>
-        <div class="ticket" data-type="Men Stag" onclick="selectTicket(this)">
-          <div class="top"><div><div class="lbl">Solo soul</div><h3>Men Stag</h3><div class="for">Entry for one.</div></div><div class="price"><span class="cur">₹</span>999<span class="per">/ entry</span></div></div>
-          <ul class="inc"><li>Entry for one</li><li>Welcome graveyard brew</li><li>Full DJ-set access</li></ul>
-          <div class="foot"><span class="dot"></span><span class="pk">Select</span></div>
-        </div>
-        <div class="ticket" data-type="Couple" onclick="selectTicket(this)">
-          <div class="ribbon">BEST VALUE</div>
-          <div class="top"><div><div class="lbl">Two souls, one grave</div><h3>Couple</h3><div class="for">Entry for two.</div></div><div class="price"><span class="cur">₹</span>1499<span class="per">/ couple</span></div></div>
-          <ul class="inc"><li>Entry for two</li><li>Two welcome brews + a shared shot</li><li>Priority entry</li></ul>
-          <div class="foot"><span class="dot"></span><span class="pk">Select</span></div>
+      <div class="grid2" style="margin-top:16px">
+        <div class="fld"><label for="email">Email (optional)</label><input id="email" type="email" placeholder="you@haunted.com" /></div>
+        <div class="fld"><label for="qty">How many <span id="unitLabel">entries</span>?</label>
+          <div class="qty"><button type="button" onclick="bump(-1)" aria-label="Fewer">&#8722;</button><input id="qty" type="number" value="1" min="1" max="20" readonly /><button type="button" onclick="bump(1)" aria-label="More">+</button></div>
         </div>
       </div>
-      <div class="book">
-        <h3>Who's being buried?</h3>
-        <div class="fld"><label>Full name</label><input id="name" type="text" placeholder="Who dares enter?" /></div>
-        <div class="fld"><label>Phone / WhatsApp</label><input id="phone" type="tel" placeholder="10-digit number" /></div>
-        <div class="fld"><label>Email (optional)</label><input id="email" type="email" placeholder="you@haunted.com" /></div>
-        <div class="fld"><label>How many <span id="unitLabel">entries</span>?</label>
-          <div class="qty"><button type="button" onclick="bump(-1)">−</button><input id="qty" type="number" value="1" min="1" max="20" readonly /><button type="button" onclick="bump(1)">+</button></div>
-        </div>
-        <div class="order">
-          <div class="ln"><span id="orderLine">1 × Women Stag</span><span id="orderSub">₹799</span></div>
-          <div class="ln"><span>Heads at the party</span><span id="heads">1 guest</span></div>
-          <div class="grand"><span class="k">Total due</span><span class="v"><span class="cur">₹</span><span id="totalNum">799</span></span></div>
-        </div>
-        <button class="reserve" onclick="reserve()">Reserve My Grave →</button>
-        <div class="fine">Sends you to <b>WhatsApp</b> to confirm · No payment on this page</div>
-      </div>
+      <div class="total"><span class="k" id="orderLine">1 × Women Stag · 1 guest</span><span class="v"><span class="cur">&#8377;</span><span id="totalNum">799</span></span></div>
+      <button class="btn" onclick="reserve()">Reserve my grave</button>
+      <p class="note">Sends you to <b>WhatsApp</b> to confirm with Kapai · no payment on this page</p>
     </div>
-  </section>
+  </div>
+</section>
 
-  <section class="blk">
-    <div class="wrap">
-      <div class="eye">Before you rise</div>
-      <h2 class="big-t" style="font-size:clamp(32px,10vw,48px)">Know the Rules</h2>
-      <div class="info-grid">
-        <div class="info"><div class="k">Date</div><div class="v">31 Oct '26</div><div class="x">Saturday night</div></div>
-        <div class="info"><div class="k">Doors</div><div class="v">8 PM</div><div class="x">Till the last soul leaves</div></div>
-        <div class="info"><div class="k">Dress code</div><div class="v">Costume</div><div class="x">Or all-black. No basics.</div></div>
-        <div class="info"><div class="k">Entry</div><div class="v">Invite only</div><div class="x">Reserve to get on the list</div></div>
-      </div>
+<!-- ===================== FAQ ===================== -->
+<section id="faq">
+  <div class="faq-head"><h2 class="display">Whispers<br/>from the crypt</h2></div>
+  <div class="band"><div class="wrap"><div class="row"><div class="q">Is it really invite-only?</div><div class="a">Yes. Capacity is limited. Reserving here puts in your request. Kapai confirms your spot over WhatsApp and adds you to the guest list.</div></div></div></div>
+  <div class="band"><div class="wrap"><div class="row"><div class="q">How do I pay?</div><div class="a">No payment on this page. Once you reserve, we confirm on WhatsApp and share payment details, or you settle at the door, your choice.</div></div></div></div>
+  <div class="band"><div class="wrap"><div class="row"><div class="q">What's "AM for coffee, PM for ???"</div><div class="a">Kapai is your coffee house by day. For one night, after dark, it becomes something else entirely. If you know, you know.</div></div></div></div>
+  <div class="band"><div class="wrap"><div class="row"><div class="q">What's the dress code?</div><div class="a">Costume, or all black. No basics. The best fit of the night wins the costume ritual at midnight.</div></div></div></div>
+  <div class="band"><div class="wrap"><div class="row"><div class="q">Can I come alone?</div><div class="a">Absolutely. Grab a stag entry. Plenty of souls to meet in the crypt.</div></div></div></div>
+</section>
+
+<!-- ===================== FOOTER ===================== -->
+<footer class="foot">
+  <div class="wrap foot-top">
+    <div class="notes">
+      <span>Kapai Coffee House &amp; Bistro</span>
+      <span>Saturday 31 October 2026 · 8 PM till late</span>
+      <span>Invite-only · costume mandatory</span>
     </div>
-  </section>
+    <a href="#top" class="totop">Back to top &#8599;</a>
+  </div>
+  <div class="wrap big"><a href="#tickets" class="display">Reserve<br/>your plot</a></div>
+  <div class="wrap">
+    <p class="credits">Pictures: <a href="https://www.flickr.com/photos/97224989@N00/4621214025">&ldquo;Goodnight, my children&rdquo;</a> by fallingwater123, <a href="https://creativecommons.org/licenses/by/2.0/">CC BY 2.0</a>; <a href="https://www.flickr.com/photos/90692748@N04/8382963216">&ldquo;Silhouette branches at dusk&rdquo;</a> by docoverachiever, <a href="https://creativecommons.org/licenses/by/2.0/">CC BY 2.0</a>; <a href="https://www.flickr.com/photos/91256982@N00/2756664204">&ldquo;saturnine&rdquo;</a> by mugley, <a href="https://creativecommons.org/licenses/by-sa/2.0/">CC BY-SA 2.0</a>, via Flickr.</p>
+    <div class="foot-meta"><span>Kapai</span><span>Coffee Grave</span><span>2026</span></div>
+  </div>
+</footer>
 
-  <section class="blk">
-    <div class="wrap">
-      <div class="eye">Whispers from the crypt</div>
-      <h2 class="big-t" style="font-size:clamp(32px,10vw,48px)">Questions</h2>
-      <div class="faq">
-        <div class="q" onclick="this.classList.toggle('open')"><div class="qh"><div class="qt">Is it really invite-only?</div><div class="ic">+</div></div><div class="a">Yes. Capacity is limited. Reserving puts in your request — Kapai confirms your spot over WhatsApp.</div></div>
-        <div class="q" onclick="this.classList.toggle('open')"><div class="qh"><div class="qt">How do I pay?</div><div class="ic">+</div></div><div class="a">No payment here. We confirm on WhatsApp and share details, or you settle at the door.</div></div>
-        <div class="q" onclick="this.classList.toggle('open')"><div class="qh"><div class="qt">What's "AM for coffee, PM for ???"</div><div class="ic">+</div></div><div class="a">Kapai is your coffee house by day. For one night, after dark, it becomes something else. *iykyk*</div></div>
-        <div class="q" onclick="this.classList.toggle('open')"><div class="qh"><div class="qt">Can I come alone?</div><div class="ic">+</div></div><div class="a">Absolutely — grab a stag entry. Plenty of souls to meet in the crypt.</div></div>
-      </div>
-    </div>
-  </section>
+<button class="sound" id="sound" aria-label="Toggle ambient sound">Sound off</button>
+<div class="toast" id="toast" role="status"></div>
 
-  <footer>
-    <div class="big">COFFEE GRAVE</div>
-    <div class="s">31.10.2026 · Saturday · an invite-only Halloween party by <a href="index.html">Kapai</a></div>
-    <div class="s" style="margin-top:6px">AM for coffee, PM for ??? *iykyk*</div>
-  </footer>
-</div>
-
-<div class="sound" id="sound" title="Ambient dread">🔇</div>
-<div class="toast" id="toast"></div>
-
-<!-- ============ 3D ENGINE ============ -->
-<script type="module">
-import * as THREE from 'https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js';
-
-const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
-const V = { p:0 };
-const lerp=(a,b,t)=>a+(b-a)*t;
-const clamp=(v,a,b)=>Math.min(b,Math.max(a,v));
-const smooth=t=>t*t*(3-2*t);
-function seg(p,a,b){ return clamp((p-a)/(b-a),0,1); }
-
-/* ---------- renderer / scene / camera ---------- */
-const host=document.getElementById('c3d');
-const renderer=new THREE.WebGLRenderer({antialias:true,alpha:false,powerPreference:'high-performance'});
-renderer.setPixelRatio(Math.min(devicePixelRatio,2));
-renderer.setSize(innerWidth,innerHeight);
-renderer.outputColorSpace=THREE.SRGBColorSpace;
-host.appendChild(renderer.domElement);
-
-const scene=new THREE.Scene();
-scene.fog=new THREE.FogExp2(0x0b1016,0.030);
-const camera=new THREE.PerspectiveCamera(60,innerWidth/innerHeight,0.1,200);
-camera.position.set(0,5.5,12);
-
-/* ---------- lights ---------- */
-const amb=new THREE.AmbientLight(0x4a4150,0.95); scene.add(amb);
-const moon=new THREE.DirectionalLight(0xcfe0ff,2.1); moon.position.set(-6,14,10); scene.add(moon);
-const moonFill=new THREE.DirectionalLight(0x8294c4,0.7); moonFill.position.set(6,7,-4); scene.add(moonFill);
-const keyFront=new THREE.PointLight(0xdfe8ff,1.1,40,2); keyFront.position.set(0,5,10); scene.add(keyFront);
-const coffinLight=new THREE.PointLight(0xff2a1a,0,10,2); coffinLight.position.set(0,0.4,0); scene.add(coffinLight);
-const underA=new THREE.PointLight(0xff1a10,0,30,2); underA.position.set(-4,-41,2); scene.add(underA);
-const underB=new THREE.PointLight(0xff3020,0,30,2); underB.position.set(4,-41,2); scene.add(underB);
-const underTop=new THREE.PointLight(0xe30613,0,26,2); underTop.position.set(0,-36,0); scene.add(underTop);
-
-/* ---------- textures via canvas ---------- */
-function noiseTex(w,h,base,streak){
-  const c=document.createElement('canvas');c.width=w;c.height=h;const x=c.getContext('2d');
-  x.fillStyle=base;x.fillRect(0,0,w,h);
-  for(let i=0;i<w*h*0.14;i++){const px=Math.random()*w,py=Math.random()*h,a=Math.random()*0.5;
-    x.fillStyle=`rgba(0,0,0,${a})`;x.fillRect(px,py,1.5,1.5);}
-  if(streak){x.strokeStyle='rgba(227,6,19,0.25)';x.lineWidth=1.2;
-    for(let i=0;i<22;i++){x.beginPath();const sx=Math.random()*w;x.moveTo(sx,Math.random()*h);
-      x.lineTo(sx+(Math.random()*40-20),Math.random()*h);x.stroke();}}
-  const t=new THREE.CanvasTexture(c);t.wrapS=t.wrapT=THREE.RepeatWrapping;return t;
-}
-function stoneTitleTex(){
-  const c=document.createElement('canvas');c.width=512;c.height=600;const x=c.getContext('2d');
-  const g=x.createLinearGradient(0,0,0,600);g.addColorStop(0,'#6b655b');g.addColorStop(1,'#48433b');
-  x.fillStyle=g;x.fillRect(0,0,512,600);
-  x.fillStyle='rgba(0,0,0,0.22)';for(let i=0;i<11000;i++)x.fillRect(Math.random()*512,Math.random()*600,1.4,1.4);
-  x.textAlign='center';
-  function engrave(txt,y,size,font){x.font=`${size}px ${font}`;x.fillStyle='rgba(0,0,0,.55)';x.fillText(txt,258,y+2);x.fillStyle='#211c16';x.fillText(txt,256,y);}
-  engrave('✦ R · I · P ✦',110,34,'"Special Elite", monospace');
-  engrave('COFFEE',270,110,'Anton, Impact, sans-serif');
-  engrave('GRAVE',380,110,'Anton, Impact, sans-serif');
-  engrave('☨',470,60,'Anton, sans-serif');
-  engrave('31 · 10 · 2026',540,32,'"Special Elite", monospace');
-  const t=new THREE.CanvasTexture(c);t.anisotropy=4;return t;
-}
-
-/* ---------- ground + graveyard ---------- */
-const dirtTex=noiseTex(256,256,'#0e0c0a',false);dirtTex.repeat.set(8,8);
-const ground=new THREE.Mesh(new THREE.PlaneGeometry(120,120),
-  new THREE.MeshStandardMaterial({map:dirtTex,color:0x1a1713,roughness:1,metalness:0}));
-ground.rotation.x=-Math.PI/2;ground.position.y=0;scene.add(ground);
-
-/* tombstone geometry (rounded-top slab) */
-function tombGeo(w,h,d){
-  const s=new THREE.Shape();const r=w/2;
-  s.moveTo(-w/2,0);s.lineTo(-w/2,h-r);s.absarc(0,h-r,r,Math.PI,0,true);s.lineTo(w/2,0);s.lineTo(-w/2,0);
-  return new THREE.ExtrudeGeometry(s,{depth:d,bevelEnabled:true,bevelThickness:0.04,bevelSize:0.04,bevelSegments:1});
-}
-const stoneMat=new THREE.MeshStandardMaterial({color:0x5b554b,roughness:.95,metalness:0});
-// central engraved tombstone
-const centerStone=new THREE.Mesh(tombGeo(3.6,4.0,0.5),stoneMat);
-centerStone.position.set(0,0,-3.2);scene.add(centerStone);
-const titlePlane=new THREE.Mesh(new THREE.PlaneGeometry(3.2,3.75),
-  new THREE.MeshBasicMaterial({map:stoneTitleTex(),transparent:true}));
-titlePlane.position.set(0,2.05,-2.63);scene.add(titlePlane);
-
-// scattered tombstones
-const rng=(a,b)=>a+Math.random()*(b-a);
-for(let i=0;i<14;i++){
-  const t=new THREE.Mesh(tombGeo(rng(.7,1.4),rng(1.1,2.2),0.3),stoneMat);
-  const ang=rng(0,Math.PI*2),rad=rng(5,22);
-  t.position.set(Math.cos(ang)*rad,0,-Math.abs(Math.sin(ang)*rad)-2);
-  t.rotation.y=rng(-.4,.4);t.rotation.z=rng(-.05,.05);scene.add(t);
-}
-
-/* ---------- 3D COFFIN ---------- */
-function coffinShape(){
-  const s=new THREE.Shape();
-  s.moveTo(0,2.3);          // head top center
-  s.lineTo(0.62,1.9);       // head corner
-  s.lineTo(0.95,0.9);       // shoulder
-  s.lineTo(0.5,-2.3);       // foot
-  s.lineTo(-0.5,-2.3);
-  s.lineTo(-0.95,0.9);
-  s.lineTo(-0.62,1.9);
-  s.lineTo(0,2.3);
-  return s;
-}
-const woodBody=new THREE.MeshStandardMaterial({color:0x7a4a33,roughness:.7,metalness:.05});
-const woodLid=new THREE.MeshStandardMaterial({color:0x8d5940,roughness:.65,metalness:.05});
-const bodyGeo=new THREE.ExtrudeGeometry(coffinShape(),{depth:0.62,bevelEnabled:true,bevelThickness:.05,bevelSize:.06,bevelSegments:2});
-const coffin=new THREE.Group();
-const body=new THREE.Mesh(bodyGeo,woodBody);
-body.rotation.x=-Math.PI/2;           // lay flat
-body.scale.set(0.82,0.82,0.82);
-coffin.add(body);
-// interior glow plane (emissive) sitting just below lid
-const glowMat=new THREE.MeshBasicMaterial({color:0xff2a1a,transparent:true,opacity:0});
-const glow=new THREE.Mesh(new THREE.PlaneGeometry(1.5,4.0),glowMat);
-glow.rotation.x=-Math.PI/2;glow.position.y=0.42;glow.scale.set(.82,.82,.82);coffin.add(glow);
-// lid group with hinge at head
-const lidGeo=new THREE.ExtrudeGeometry(coffinShape(),{depth:0.12,bevelEnabled:true,bevelThickness:.04,bevelSize:.05,bevelSegments:1});
-const lid=new THREE.Mesh(lidGeo,woodLid);
-lid.rotation.x=-Math.PI/2;lid.scale.set(.82,.82,.82);
-const lidPivot=new THREE.Group();
-lidPivot.position.set(0,0.52,-1.88);     // hinge near head (−Z after layout)
-lid.position.set(0,0,1.88);              // offset so shape extends from hinge
-lidPivot.add(lid);
-coffin.add(lidPivot);
-coffin.position.set(0,0.0,0.4);
-scene.add(coffin);
-
-/* ---------- FALL SHAFT (tunnel) ---------- */
-const tunnelTex=noiseTex(256,512,'#140d0a',true);tunnelTex.repeat.set(3,8);
-const tunnel=new THREE.Mesh(
-  new THREE.CylinderGeometry(3.2,3.2,40,24,1,true),
-  new THREE.MeshStandardMaterial({map:tunnelTex,color:0x2a1c14,roughness:1,side:THREE.BackSide}));
-tunnel.position.set(0,-18,0.4);scene.add(tunnel);
-// roots: thin cylinders on tunnel walls
-const rootMat=new THREE.MeshStandardMaterial({color:0x3a0a08,roughness:.9,emissive:0x3a0000,emissiveIntensity:.3});
-for(let i=0;i<28;i++){
-  const r=new THREE.Mesh(new THREE.CylinderGeometry(rng(.02,.06),rng(.02,.05),rng(1.2,3.2),5),rootMat);
-  const ang=rng(0,Math.PI*2),y=rng(-3,-36);
-  r.position.set(Math.cos(ang)*3.0,y,0.4+Math.sin(ang)*3.0);
-  r.rotation.z=rng(-1,1);r.rotation.x=rng(-1,1);scene.add(r);
-}
-
-/* ---------- UNDERGROUND CHAMBER ---------- */
-const chamberMat=new THREE.MeshStandardMaterial({color:0x160b0a,roughness:1,side:THREE.BackSide});
-const chamber=new THREE.Mesh(new THREE.BoxGeometry(22,16,22),chamberMat);
-chamber.position.set(0,-43,0);scene.add(chamber);
-// poster
-const texLoader=new THREE.TextureLoader();
-const posterMat=new THREE.MeshStandardMaterial({color:0x222222,roughness:.6,emissive:0x000000});
-const poster=new THREE.Mesh(new THREE.PlaneGeometry(5.4,9.6),posterMat);
-poster.position.set(0,-42,-6);scene.add(poster);
-texLoader.load('assets/poster-m.jpg',tex=>{
-  tex.colorSpace=THREE.SRGBColorSpace;
-  posterMat.map=tex;posterMat.emissiveMap=tex;posterMat.emissive=new THREE.Color(0xffffff);
-  posterMat.emissiveIntensity=0.55;posterMat.color=new THREE.Color(0xffffff);posterMat.needsUpdate=true;
-  finishLoad();
-}, undefined, finishLoad);
-// poster frame
-const frame=new THREE.Mesh(new THREE.BoxGeometry(5.9,10.1,0.2),new THREE.MeshStandardMaterial({color:0x0c0809,roughness:.8}));
-frame.position.set(0,-42,-6.15);scene.add(frame);
-
-/* ---------- EMBERS (points) ---------- */
-function emberSprite(){const c=document.createElement('canvas');c.width=c.height=64;const x=c.getContext('2d');
-  const g=x.createRadialGradient(32,32,0,32,32,32);g.addColorStop(0,'rgba(255,180,80,1)');g.addColorStop(.4,'rgba(255,60,20,.8)');g.addColorStop(1,'rgba(255,0,0,0)');
-  x.fillStyle=g;x.fillRect(0,0,64,64);return new THREE.CanvasTexture(c);}
-const EN=reduce?0:(innerWidth<760?140:260);
-const eGeo=new THREE.BufferGeometry();const ePos=new Float32Array(EN*3);const eVel=new Float32Array(EN);
-for(let i=0;i<EN;i++){ePos[i*3]=rng(-10,10);ePos[i*3+1]=rng(-56,8);ePos[i*3+2]=rng(-10,10);eVel[i]=rng(.004,.02);}
-eGeo.setAttribute('position',new THREE.BufferAttribute(ePos,3));
-const embers=new THREE.Points(eGeo,new THREE.PointsMaterial({size:.14,map:emberSprite(),transparent:true,depthWrite:false,blending:THREE.AdditiveBlending,color:0xff7a30}));
-scene.add(embers);
-
-/* ---------- CAMERA PATH ---------- */
-const stops=[
-  {p:0.00,pos:[0,3.8,9.5],tgt:[0,2.0,-2]},
-  {p:0.16,pos:[0,3.2,6.0],tgt:[0,1.0,-1]},
-  {p:0.36,pos:[0,2.4,2.8],tgt:[0,0.1,0]},
-  {p:0.44,pos:[0,0.9,0.9],tgt:[0,-4,0.3]},
-  {p:0.52,pos:[0,-3,0.5],tgt:[0,-10,0.4]},
-  {p:0.70,pos:[0,-26,0.5],tgt:[0,-34,0.4]},
-  {p:0.80,pos:[0,-39.5,5.2],tgt:[0,-42,-4]},
-  {p:1.00,pos:[0,-41.5,4.6],tgt:[0,-42,-6]}
-];
-const vA=new THREE.Vector3(),vB=new THREE.Vector3(),tA=new THREE.Vector3(),tB=new THREE.Vector3(),camT=new THREE.Vector3();
-function camAt(p){
-  let i=0;while(i<stops.length-2 && p>stops[i+1].p)i++;
-  const s0=stops[i],s1=stops[i+1];
-  const lt=smooth(clamp((p-s0.p)/(s1.p-s0.p),0,1));
-  vA.fromArray(s0.pos);vB.fromArray(s1.pos);tA.fromArray(s0.tgt);tB.fromArray(s1.tgt);
-  camera.position.lerpVectors(vA,vB,lt);
-  camT.lerpVectors(tA,tB,lt);camera.lookAt(camT);
-}
-
-/* ---------- beats ---------- */
-const B1=document.getElementById('b1'),B2=document.getElementById('b2'),B3=document.getElementById('b3'),B4=document.getElementById('b4'),SCUE=document.getElementById('scue');
-function winOp(p,a,b,c,d){ if(p<a||p>d)return 0; if(p<b)return (p-a)/(b-a); if(p>c)return 1-(p-c)/(d-c); return 1; }
-function beats(p){
-  B1.style.opacity=p<0.11?1:clamp(1-(p-0.11)/0.05,0,1);
-  B2.style.opacity=winOp(p,0.19,0.23,0.33,0.39);
-  B3.style.opacity=winOp(p,0.50,0.55,0.64,0.69);
-  B4.style.opacity=winOp(p,0.80,0.85,1.01,1.02);
-  SCUE.style.opacity=clamp(1-p*12,0,1);
-  const ty=(1-(B1.style.opacity))* -10;
-}
-
-/* ---------- fog + lights by descent ---------- */
-const fogNight=new THREE.Color(0x0b1016),fogBlood=new THREE.Color(0x1a0305),fogTmp=new THREE.Color();
-function world(p,t){
-  const dz=seg(p,0.30,0.72);
-  fogTmp.copy(fogNight).lerp(fogBlood,dz);scene.fog.color.copy(fogTmp);
-  scene.fog.density=lerp(0.030,0.055,dz);
-  moon.intensity=lerp(1.1,0.0,seg(p,0.30,0.55));
-  moonFill.intensity=lerp(0.4,0.0,seg(p,0.30,0.55));
-  coffinLight.intensity=lerp(0,4.2,seg(p,0.22,0.45))*(1-seg(p,0.5,0.62));
-  glowMat.opacity=seg(p,0.22,0.45)*(1-seg(p,0.52,0.64))*0.9;
-  // lid open
-  lidPivot.rotation.x=-seg(p,0.18,0.42)*2.2;
-  // underground lights pulse
-  const pulse=0.6+Math.sin(t*0.004)*0.4;
-  const u=seg(p,0.66,0.82);
-  underA.intensity=u*3.2*pulse;underB.intensity=u*3.2*(1.4-pulse);underTop.intensity=u*2.4;
-  posterMat.emissiveIntensity=0.3+u*0.5;
-}
-
-/* ---------- particles ---------- */
-function stepEmbers(dz){
-  const pos=eGeo.attributes.position.array;
-  for(let i=0;i<EN;i++){pos[i*3+1]+=eVel[i]*(1+dz*6);
-    if(pos[i*3+1]>8-dz*0){/*keep*/}
-    if(pos[i*3+1]>8){pos[i*3+1]=-56;}
-  }
-  eGeo.attributes.position.needsUpdate=true;
-}
-
-/* ---------- loop ---------- */
-let loaded=false;
-function finishLoad(){ if(loaded)return;loaded=true;
-  const l=document.getElementById('loader');document.getElementById('lbar').style.width='100%';
-  setTimeout(()=>l.classList.add('gone'),250);
-}
-setTimeout(finishLoad,3500); // safety
-const progbar=document.getElementById('progbar'),mininav=document.getElementById('mininav');
-function render(t){
-  requestAnimationFrame(render);
-  const p=V.p;
-  camAt(p);world(p,t);beats(p);
-  if(EN)stepEmbers(seg(p,0.44,0.72));
-  progbar.style.width=(p*100).toFixed(1)+'%';
-  mininav.classList.toggle('show',p>0.04);
-  renderer.render(scene,camera);
-}
-requestAnimationFrame(render);
-
-/* progressive loader bar */
-let lp=0;const li=setInterval(()=>{lp=Math.min(90,lp+Math.random()*25);document.getElementById('lbar').style.width=lp+'%';if(loaded)clearInterval(li);},200);
-
-/* ---------- GSAP ScrollTrigger ---------- */
-gsap.registerPlugin(ScrollTrigger);
-ScrollTrigger.create({
-  trigger:'#scroller',start:'top top',end:'bottom bottom',scrub:0.6,
-  onUpdate:self=>{V.p=self.progress;}
-});
-
-addEventListener('resize',()=>{
-  camera.aspect=innerWidth/innerHeight;camera.updateProjectionMatrix();
-  renderer.setSize(innerWidth,innerHeight);ScrollTrigger.refresh();
-});
-
-</script>
-
-<!-- ============ BOOKING + SOUND ============ -->
 <script>
+/* ===== GO-LIVE SETTINGS ===== */
 const WHATSAPP_NUMBER="919999999999";
 const PRICES={"Women Stag":799,"Men Stag":999,"Couple":1499};
 const EVENT_DATE=new Date("2026-10-31T20:00:00+05:30");
+/* ============================ */
 let bk={type:"Women Stag",qty:1};
-const d_=document.getElementById('d'),h_=document.getElementById('h'),m_=document.getElementById('m'),s_=document.getElementById('s');
-function tick(){const diff=EVENT_DATE-new Date(),p=n=>String(n).padStart(2,'0');if(diff<=0)return;d_.textContent=p(Math.floor(diff/864e5));h_.textContent=p(Math.floor(diff/36e5)%24);m_.textContent=p(Math.floor(diff/6e4)%60);s_.textContent=p(Math.floor(diff/1e3)%60);}
+const cdd=document.getElementById('cd-d'),cdh=document.getElementById('cd-h'),cdm=document.getElementById('cd-m'),cds=document.getElementById('cd-s');
+function tick(){const diff=EVENT_DATE-new Date(),p=n=>String(n).padStart(2,'0');if(diff<=0)return;cdd.textContent=p(Math.floor(diff/864e5));cdh.textContent=p(Math.floor(diff/36e5)%24);cdm.textContent=p(Math.floor(diff/6e4)%60);cds.textContent=p(Math.floor(diff/1e3)%60);}
 setInterval(tick,1000);tick();
-function selectTicket(el){document.querySelectorAll('.ticket').forEach(t=>{t.classList.remove('sel');t.querySelector('.pk').textContent='Select';});el.classList.add('sel');el.querySelector('.pk').textContent='Selected';bk.type=el.dataset.type;document.getElementById('unitLabel').textContent=bk.type==='Couple'?'couples':'entries';draw();}
+function selectTicket(el){document.querySelectorAll('.ticket').forEach(t=>{t.classList.remove('sel');t.querySelector('.pick').textContent='Select';});el.classList.add('sel');el.querySelector('.pick').textContent='Selected';bk.type=el.dataset.type;document.getElementById('unitLabel').textContent=bk.type==='Couple'?'couples':'entries';draw();}
 function bump(d){bk.qty=Math.min(20,Math.max(1,bk.qty+d));document.getElementById('qty').value=bk.qty;draw();}
-function draw(){const price=PRICES[bk.type],total=price*bk.qty,heads=bk.type==='Couple'?bk.qty*2:bk.qty;document.getElementById('orderLine').textContent=`${bk.qty} × ${bk.type}`;document.getElementById('orderSub').textContent='₹'+(price*bk.qty).toLocaleString('en-IN');document.getElementById('heads').textContent=heads+(heads>1?' guests':' guest');document.getElementById('totalNum').textContent=total.toLocaleString('en-IN');}
+function draw(){const price=PRICES[bk.type],total=price*bk.qty,heads=bk.type==='Couple'?bk.qty*2:bk.qty;document.getElementById('orderLine').textContent=`${bk.qty} × ${bk.type} · ${heads} guest${heads>1?'s':''}`;document.getElementById('totalNum').textContent=total.toLocaleString('en-IN');}
 function showToast(m){const t=document.getElementById('toast');t.textContent=m;t.classList.add('show');setTimeout(()=>t.classList.remove('show'),3600);}
-function reserve(){const name=document.getElementById('name').value.trim(),phone=document.getElementById('phone').value.trim(),email=document.getElementById('email').value.trim();if(!name){showToast('⚠ Tell us your name first.');document.getElementById('name').focus();return;}if(phone.replace(/\D/g,'').length<10){showToast('⚠ Add a valid phone number.');document.getElementById('phone').focus();return;}const price=PRICES[bk.type],total=price*bk.qty,heads=bk.type==='Couple'?bk.qty*2:bk.qty;const msg=`⚰ COFFEE GRAVE — Booking Request ⚰\n──────────────────────\nName: ${name}\nPhone: ${phone}${email?`\nEmail: ${email}`:''}\nTicket: ${bk.type}\nQuantity: ${bk.qty}  (≈ ${heads} guest${heads>1?'s':''})\nTotal: ₹${total.toLocaleString('en-IN')}\nEvent: 31.10.2026 · Saturday · 8 PM\n──────────────────────\nPlease confirm my spot! 🖤`;window.open(`https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(msg)}`,'_blank');showToast('Opening WhatsApp to confirm…');}
-window.selectTicket=selectTicket;window.bump=bump;window.reserve=reserve;
+function reserve(){const name=document.getElementById('name').value.trim(),phone=document.getElementById('phone').value.trim(),email=document.getElementById('email').value.trim();if(!name){showToast('Tell us your name first.');document.getElementById('name').focus();return;}if(phone.replace(/\D/g,'').length<10){showToast('Add a valid phone number.');document.getElementById('phone').focus();return;}const price=PRICES[bk.type],total=price*bk.qty,heads=bk.type==='Couple'?bk.qty*2:bk.qty;const msg=`COFFEE GRAVE Booking Request\n----------------------\nName: ${name}\nPhone: ${phone}${email?`\nEmail: ${email}`:''}\nTicket: ${bk.type}\nQuantity: ${bk.qty} (approx ${heads} guest${heads>1?'s':''})\nTotal: Rs ${total.toLocaleString('en-IN')}\nEvent: 31.10.2026 · Saturday · 8 PM\n----------------------\nPlease confirm my spot!`;window.open(`https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(msg)}`,'_blank');showToast('Opening WhatsApp to confirm…');}
+window.selectTicket=selectTicket;window.bump=bump;window.reserve=reserve;draw();
+
+/* ambient sound */
 const sound={ctx:null,playing:false,gain:null,start(){if(this.playing)return;const AC=window.AudioContext||window.webkitAudioContext;this.ctx=new AC();const m=this.ctx.createGain();m.gain.value=0;m.connect(this.ctx.destination);this.gain=m;[55,55.4].forEach(f=>{const o=this.ctx.createOscillator();o.type='sawtooth';o.frequency.value=f;const g=this.ctx.createGain();g.gain.value=.05;const lp=this.ctx.createBiquadFilter();lp.type='lowpass';lp.frequency.value=220;o.connect(lp);lp.connect(g);g.connect(m);o.start();});const buf=this.ctx.createBuffer(1,this.ctx.sampleRate*2,this.ctx.sampleRate),dt=buf.getChannelData(0);for(let i=0;i<dt.length;i++)dt[i]=Math.random()*2-1;const n=this.ctx.createBufferSource();n.buffer=buf;n.loop=true;const nf=this.ctx.createBiquadFilter();nf.type='bandpass';nf.frequency.value=320;nf.Q.value=.6;const ng=this.ctx.createGain();ng.gain.value=.04;n.connect(nf);nf.connect(ng);ng.connect(m);n.start();m.gain.linearRampToValueAtTime(.5,this.ctx.currentTime+1.4);this.playing=true;},stop(){if(!this.playing)return;this.gain.gain.linearRampToValueAtTime(0,this.ctx.currentTime+.5);setTimeout(()=>{this.ctx.close();this.playing=false;},600);}};
-const sb=document.getElementById('sound');sb.addEventListener('click',()=>{if(sound.playing){sound.stop();sb.classList.remove('on');sb.textContent='🔇';}else{sound.start();sb.classList.add('on');sb.textContent='🔊';showToast('Ambient dread engaged. 🕯️');}});
-draw();
+const sb=document.getElementById('sound');sb.addEventListener('click',()=>{if(sound.playing){sound.stop();sb.classList.remove('on');sb.textContent='Sound off';}else{sound.start();sb.classList.add('on');sb.textContent='Sound on';showToast('Ambient dread engaged.');}});
+
+/* ===== MOTION (GSAP) ===== */
+const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+if(!reduce && window.gsap){
+  gsap.registerPlugin(ScrollTrigger);
+  // signature: masked headline lines rise from their baseline
+  gsap.to('.hero h1 .maskline > span',{y:'0%',duration:0.9,ease:'power3.out',stagger:0.11,delay:0.15});
+  // hero supporting + poster fade up
+  gsap.to('.hero .rise',{opacity:1,y:0,duration:0.7,ease:'power2.out',stagger:0.08,delay:0.7});
+  // section entrances: heading, then parts, staggered, on enter
+  gsap.utils.toArray('.run, .tix, .night-flow, .faq, .foot').forEach(sec=>{
+    const parts=sec.querySelectorAll('.rise');
+    if(!parts.length)return;
+    gsap.to(parts,{opacity:1,y:0,duration:0.7,ease:'power2.out',stagger:0.07,
+      scrollTrigger:{trigger:sec,start:'top 78%'}});
+  });
+  // run-of-show lines reveal individually
+  gsap.utils.toArray('.run li').forEach(li=>{
+    gsap.to(li,{opacity:1,y:0,duration:0.6,ease:'power3.out',scrollTrigger:{trigger:li,start:'top 88%'}});
+  });
+}else{
+  document.querySelectorAll('.rise').forEach(e=>{e.style.opacity=1;e.style.transform='none';});
+  document.querySelectorAll('.maskline > span').forEach(e=>e.style.transform='none');
+}
 </script>
 </body>
 </html>
