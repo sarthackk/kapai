@@ -53,16 +53,31 @@
   @media(max-width:620px){nav .links{display:none}}
 
   /* ---------------- HERO (DAY) ---------------- */
-  .hero{position:relative;min-height:100svh;background:var(--bone);color:var(--bone-ink);display:flex;flex-direction:column;justify-content:center;padding:84px var(--gutter) 40px;overflow:hidden}
-  .hero h1{font-variation-settings:"wdth" 135;font-size:clamp(2.6rem, 11vw, 9rem);line-height:0.9;letter-spacing:-0.03em;text-transform:uppercase;font-weight:800}
+  .hero{position:relative;min-height:100svh;background:var(--bone);color:var(--bone-ink);display:flex;flex-direction:column;padding-top:72px;overflow:hidden}
+  .hero .grain{position:absolute;inset:0;z-index:1;pointer-events:none;opacity:.55;mix-blend-mode:multiply;
+    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.8' numOctaves='2'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");background-size:170px}
+  .hero-grid{flex:1;display:grid;grid-template-columns:1.1fr 0.9fr;align-items:center;gap:clamp(18px,4vw,56px);padding:clamp(20px,5vh,60px) var(--gutter);position:relative;z-index:2}
+  .hero h1{font-variation-settings:"wdth" 135;font-size:clamp(2.8rem, 8.2vw, 7.2rem);line-height:0.84;letter-spacing:-0.03em;text-transform:uppercase;font-weight:800}
   .hero h1 .l2{color:var(--deep)}
   .hero h1 .l2 .m{color:var(--blood)}
-  .hero-meta{margin-top:clamp(20px,4vh,40px);display:flex;flex-wrap:wrap;align-items:center;gap:16px 26px}
+  .hero-meta{margin-top:clamp(22px,3.4vh,40px);display:flex;flex-wrap:wrap;align-items:center;gap:14px 24px}
   .hero-meta .when{font-weight:800;font-variation-settings:"wdth" 120;text-transform:uppercase;font-size:var(--lead);letter-spacing:.02em}
   .hero-meta .when b{color:var(--blood)}
-  .scrollcue{position:absolute;bottom:22px;left:50%;transform:translateX(-50%);font-size:var(--small);text-transform:uppercase;letter-spacing:.2em;color:var(--bone-ink);opacity:.6;display:flex;flex-direction:column;align-items:center;gap:6px}
+  .poster-cut{position:relative;justify-self:end;width:min(100%,350px);transform:rotate(5deg);will-change:transform}
+  .poster-cut video{width:100%;aspect-ratio:9/16;max-height:64svh;object-fit:cover;border:11px solid var(--bone-ink)}
+  .poster-cut .stamp{position:absolute;top:-20px;left:-24px;z-index:3;background:var(--blood);color:#fff;font-weight:800;font-variation-settings:"wdth" 120;text-transform:uppercase;font-size:var(--lead);letter-spacing:.03em;padding:9px 16px;transform:rotate(-8deg)}
+  .hero-marquee{position:relative;z-index:2;background:var(--blood);color:#fff;overflow:hidden;white-space:nowrap;padding:12px 0;border-block:3px solid var(--bone-ink)}
+  .hero-marquee .track{display:inline-flex;gap:34px;font-weight:800;font-variation-settings:"wdth" 120;text-transform:uppercase;font-size:var(--body);letter-spacing:.04em;animation:marq 26s linear infinite}
+  .hero-marquee .track span{display:flex;gap:34px;padding-right:34px}
+  @keyframes marq{to{transform:translateX(-50%)}}
+  .scrollcue{position:absolute;bottom:64px;left:var(--gutter);font-size:var(--small);text-transform:uppercase;letter-spacing:.2em;color:var(--bone-ink);opacity:.55;display:flex;align-items:center;gap:10px;z-index:2}
   .scrollcue .a{animation:bob 1.6s infinite}
   @keyframes bob{0%,100%{transform:translateY(0)}50%{transform:translateY(6px)}}
+  @media(max-width:820px){
+    .hero-grid{grid-template-columns:1fr;gap:26px;align-content:center}
+    .poster-cut{order:-1;justify-self:start;max-width:220px;margin-left:18px}
+    .scrollcue{display:none}
+  }
 
   /* ---------------- TURN (day -> night) ---------------- */
   .turn{position:relative;height:200vh;background:var(--bone)}
@@ -182,7 +197,8 @@
     .maskline > span{transform:none}
     .turn{height:auto}.turn-stage{position:relative;height:auto;padding:60px 0}
     .turn-wipe{display:none}.turn-pm{position:relative;opacity:1}.turn-am{display:none}
-    .scrollcue,.bob{animation:none}
+    .hero-marquee .track{animation:none}
+    .scrollcue .a{animation:none}
   }
 </style>
 </head>
@@ -195,13 +211,29 @@
 
 <!-- ===== HERO (DAY) ===== -->
 <header class="hero">
-  <h1 class="display">
-    <span class="maskline"><span>AM for coffee.</span></span>
-    <span class="maskline l2"><span>PM for <span class="m" id="mystery">???</span></span></span>
-  </h1>
-  <div class="hero-meta">
-    <span class="when rise">Sat <b>31 Oct 2026</b> &middot; 8PM &middot; Invite only</span>
-    <a href="#tickets" class="btn rise">Reserve a pass</a>
+  <div class="grain"></div>
+  <div class="hero-grid">
+    <div class="hero-left">
+      <h1 class="display">
+        <span class="maskline"><span>AM for</span></span>
+        <span class="maskline"><span>coffee.</span></span>
+        <span class="maskline l2"><span>PM for <span class="m" id="mystery">???</span></span></span>
+      </h1>
+      <div class="hero-meta">
+        <span class="when rise">Sat <b>31 Oct 2026</b> &middot; 8PM &middot; Invite only</span>
+        <a href="#tickets" class="btn rise">Reserve a pass</a>
+      </div>
+    </div>
+    <div class="poster-cut">
+      <span class="stamp">Invite only</span>
+      <video autoplay muted loop playsinline poster="assets/coffee-grave-poster.jpg"><source src="assets/coffee-grave-poster.mp4" type="video/mp4" /></video>
+    </div>
+  </div>
+  <div class="hero-marquee" aria-hidden="true">
+    <div class="track">
+      <span>Possessed by a special DJ set &#9733; Costumes mandatory &#9733; One night only &#9733; AM for coffee, PM for ??? &#9733;&nbsp;</span>
+      <span>Possessed by a special DJ set &#9733; Costumes mandatory &#9733; One night only &#9733; AM for coffee, PM for ??? &#9733;&nbsp;</span>
+    </div>
   </div>
   <div class="scrollcue">Scroll into the night<span class="a">&darr;</span></div>
 </header>
@@ -340,19 +372,33 @@ function reserve(){const name=document.getElementById('name').value.trim(),phone
 window.selectTicket=selectTicket;window.bump=bump;window.reserve=reserve;draw();
 
 /* ===== interactions ===== */
-// mystery word cycle
+// mystery scramble-reveal + cycle
 const myst=document.getElementById('mystery');
-const words=['???','iykyk','after dark','the dead','???'];let wi=0;
-setInterval(()=>{wi=(wi+1)%words.length;myst.style.transition='opacity .25s ease';myst.style.opacity='0';setTimeout(()=>{myst.textContent=words[wi];myst.style.opacity='1';},250);},2400);
+const words=['???','iykyk','?!?','iykyk','???'];let wi=0;
+const _sc='?#@%&!*0101XØ';
+function scrambleTo(target){
+  clearInterval(myst._iv);let f=0;const steps=16;
+  myst._iv=setInterval(()=>{f++;const rv=Math.floor(target.length*f/steps);let s='';
+    for(let i=0;i<target.length;i++)s+= i<rv? target[i] : _sc[Math.random()*_sc.length|0];
+    myst.textContent=s; if(f>=steps){clearInterval(myst._iv);myst.textContent=target;}
+  },45);
+}
 
 /* ===== MOTION (GSAP) ===== */
 const reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
 function revealAll(){document.querySelectorAll('.rise').forEach(e=>{e.style.opacity=1;e.style.transform='none';});document.querySelectorAll('.maskline > span').forEach(e=>e.style.transform='none');}
 if(!reduce && window.gsap){
   gsap.registerPlugin(ScrollTrigger);
-  // signature: masked headline lines rise
-  gsap.to('.hero h1 .maskline > span',{y:'0%',duration:0.9,ease:'expo.out',stagger:0.1,delay:0.15});
-  gsap.to('.hero .rise',{opacity:1,y:0,duration:0.7,ease:'power3.out',stagger:0.1,delay:0.65});
+  // signature: choreographed hero entrance
+  const tl=gsap.timeline({defaults:{ease:'expo.out'}});
+  tl.from('.hero-marquee',{yPercent:100,opacity:0,duration:0.7,ease:'power2.out'},0)
+    .to('.hero h1 .maskline > span',{y:'0%',duration:0.95,stagger:0.1},0.1)
+    .from('.poster-cut',{autoAlpha:0,xPercent:12,duration:1.1,ease:'power4.out'},0.25)
+    .from('.poster-cut .stamp',{scale:0,rotate:-35,transformOrigin:'center center',duration:0.5,ease:'back.out(1.5)'},0.95)
+    .to('.hero-meta .rise',{opacity:1,y:0,duration:0.7,stagger:0.12,ease:'power3.out'},0.7)
+    .add(()=>scrambleTo('???'),0.95);
+  // keep the mystery cycling
+  setInterval(()=>{wi=(wi+1)%words.length;scrambleTo(words[wi]);},2800);
 
   // scroll scene: day -> night wipe (locked to scrollbar)
   const wipe=document.getElementById('wipe'),turnAm=document.getElementById('turnAm'),turnPm=document.getElementById('turnPm');
